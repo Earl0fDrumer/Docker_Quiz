@@ -1,5 +1,4 @@
-stages:
-   - documentation
+stages:   
    - quality
    - build
    - unit_test
@@ -9,51 +8,15 @@ variables:
   GIT_STRATEGY: clone
   TIMEOUT: 10m
 
-docs:
-   stage: documentation
-   script:
-      - make docs
-   artifacts:
-      paths:
-         - docs/code/src
-
-versionInfo:
-   stage: documentation
-   script:
-      - make version
-
 styleCheck:
    stage: quality
    script:
       - make style
 
-staticAnalysis:
-   stage: quality
-   script:
-      - make static
-
-buildTests:
+build:
    stage: build
+   tags:
+      - "docker"
    script:
-      - make test_project
-   artifacts:
-      paths:
-         - test_project
-
-unitTests:
-   stage: unit_test
-   script:
-      - test_project
-
-memoryLeaks:
-   stage: active_tests
-   script:
-      - make memcheck
-
-coverage:
-   stage: active_tests
-   script:
-      - make coverage
-   artifacts:
-     paths:
-        - coverage
+      - make docker
+      
