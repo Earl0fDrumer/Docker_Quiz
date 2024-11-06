@@ -1,7 +1,4 @@
-# ShapeREST
-This assignment has you extend a REST service that performs geometric calculations.
+# Selene
+This is the base code for the course project. Adapt as needed.
 
-## Circle
-[http://localhost:8000/circle?equation=area&radius=2](http://localhost:8000/circle?equation=area&radius=2)
-
-[http://localhost:8000/circle?equation=perimeter&radius=4](http://localhost:8000/circle?equation=perimeter&radius=4)
+[http://localhost:8000/selene](http://localhost:8000/selene)
