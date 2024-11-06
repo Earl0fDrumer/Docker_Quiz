@@ -1,7 +1,7 @@
 
 #include <iostream>
 
-#include "selene/AreaTest.hpp"
+#include "selene/SeleneTest.hpp"
 
 void runTests() { OATPP_RUN_TEST(SeleneTest); }
 

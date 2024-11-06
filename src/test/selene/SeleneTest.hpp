@@ -1,5 +1,5 @@
-#ifndef AreaTest_hpp
-#define AreaTest_hpp
+#ifndef SeleneTest_hpp
+#define SeleneTest_hpp
 
 #include "oatpp-test/UnitTest.hpp"
 
@@ -9,4 +9,4 @@ class SeleneTest : public oatpp::test::UnitTest {
   void onRun() override;
 };
 
-#endif  // AreaTest_hpp
+#endif  // SeleneTest_hpp
