@@ -8,7 +8,7 @@
 #include "oatpp/core/macro/component.hpp"
 #include "oatpp/web/server/api/ApiController.hpp"
 
-#include OATPP_CODEGEN_BEGIN(ApiController)  ///< Begin Codegen
+#include OATPP_CODEGEN_BEGIN(ApiController)  ///< Begin Codegen Hi there!
 
 class SeleneController : public oatpp::web::server::api::ApiController {
  public:
