@@ -9,8 +9,8 @@ This is the base code for the course project. Adapt as needed.
  * **Topic 4 - Random Question Type** [http://localhost:8000/selene](http://localhost:8000/selene/t4/random) [Not Implemented]
 
 
-## <Topic 1>
- * **Multiple Choice:** [http://localhost:8000/selene/mc](http://localhost:8000/selene/mc) [Not Implemented]
+## <Topic 1: Software Engineering>
+ * **Multiple Choice:** [http://localhost:8000/SE/MC](http://localhost:8000/SE/MC)
  * **True/False:** [http://localhost:8000/selene/tf](http://localhost:8000/selene/tf) [Not Implemented]    
  * **Short Answer:** [http://localhost:8000/selene/sa](http://localhost:8000/selene/sa) [Not Implemented]  
  * **Matching:** [http://localhost:8000/selene/match](http://localhost:8000/selene/match) [Not Implemented]  
