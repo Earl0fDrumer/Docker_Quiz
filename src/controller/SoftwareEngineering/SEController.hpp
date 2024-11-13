@@ -5,7 +5,7 @@
 
 #include "../service/Question.hpp"
 #include "../dto/SeleneDTOs.hpp"
-#include "../dto/MultipleChoiceDTOs.hpp"
+#include "../dto/SoftEnggMCDTOs.hpp"
 #include "oatpp/core/macro/codegen.hpp"
 #include "oatpp/core/macro/component.hpp"
 #include "oatpp/web/server/api/ApiController.hpp"
