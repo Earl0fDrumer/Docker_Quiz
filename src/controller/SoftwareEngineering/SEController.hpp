@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "src/service/SoftwareEngineering/Question.hpp"
+#include "src/service/SoftwareEngineering/MC_Question.hpp"
 #include "src/dto/SeleneDTOs.hpp"
 #include "src/dto/SoftEnggMC_DTOs.hpp"
 #include "oatpp/core/macro/codegen.hpp"
@@ -24,12 +24,17 @@ class SEController : public oatpp::web::server::api::ApiController {
 
   ADD_CORS(getMCQuestion)  // Needed to allow for cross domain access
   ENDPOINT("GET", "/SE/MC", getMCQuestion) {
-    auto dto = ResultSE_MC::createShared();
+    auto dto = Result_MC::createShared();
 
     MultipleChoice question;
 
     dto->questionText = question.getQuestionText();
-    dto->correctAnswer = question.getCorrectAnswer();
+    std::vector<std::string> Answers = question.getAnswers();
+    dto->optionA = Answers[0];
+    dto->optionB = Answers[1];
+    dto->optionC = Answers[2];
+    dto->optionD = Answers[3];
+
     return createDtoResponse(Status::CODE_200, dto);
   }  // GET
 };  // End of SEController

@@ -7,12 +7,15 @@
 
 #include OATPP_CODEGEN_BEGIN(DTO)
 
-class ResultSE_MC : public oatpp::DTO {
-  DTO_INIT(ResultSE_MC, DTO /* Extends */)
+class Result_MC : public oatpp::DTO {
+  DTO_INIT(Result_MC, DTO /* Extends */)
 
   // DTO_FIELD(String, result);
   DTO_FIELD(String, questionText);
-  DTO_FIELD(String, correctAnswer);
+  DTO_FIELD(String, optionA);
+  DTO_FIELD(String, optionB);
+  DTO_FIELD(String, optionC);
+  DTO_FIELD(String, optionD);
 };
 
 #include OATPP_CODEGEN_END(DTO)
