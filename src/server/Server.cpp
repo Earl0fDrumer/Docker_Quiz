@@ -1,6 +1,7 @@
 #include "oatpp/network/Server.hpp"
 
 #include "../controller/SeleneController.hpp"
+#include "../controller/SoftwareEngineering/SEController.hpp"
 #include "ServerComponents.hpp"
 #include "oatpp/core/macro/codegen.hpp"
 #include "oatpp/network/tcp/server/ConnectionProvider.hpp"
@@ -17,6 +18,10 @@ void run() {
   /* Create SeleneController and add all of its endpoints to router */
   auto controller = std::make_shared<SeleneController>();
   router->addController(controller);
+
+  /* Create SeController and add all of its endpoints to router */
+  auto SE_Controller = std::make_shared<SEController>();
+  router->addController(SE_Controller);
 
   /* Create HTTP connection handler with router */
   auto connectionHandler =

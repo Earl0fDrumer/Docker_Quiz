@@ -3,9 +3,9 @@
 
 #include <memory>
 
-#include "../service/Question.hpp"
-#include "../dto/SeleneDTOs.hpp"
-#include "../dto/SoftEnggMCDTOs.hpp"
+#include "src/service/SoftwareEngineering/Question.hpp"
+#include "src/dto/SeleneDTOs.hpp"
+#include "src/dto/SoftEnggMC_DTOs.hpp"
 #include "oatpp/core/macro/codegen.hpp"
 #include "oatpp/core/macro/component.hpp"
 #include "oatpp/web/server/api/ApiController.hpp"
@@ -24,7 +24,7 @@ class SEController : public oatpp::web::server::api::ApiController {
 
   ADD_CORS(getMCQuestion)  // Needed to allow for cross domain access
   ENDPOINT("GET", "/SE/MC", getMCQuestion) {
-    auto dto = Result::createShared();
+    auto dto = ResultSE_MC::createShared();
 
     MultipleChoice question;
 
