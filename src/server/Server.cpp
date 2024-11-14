@@ -19,7 +19,7 @@ void run() {
   auto controller = std::make_shared<SeleneController>();
   router->addController(controller);
 
-  /* Create SeController and add all of its endpoints to router */
+  /* Create SEController and add all of its endpoints to router */
   auto SE_Controller = std::make_shared<SEController>();
   router->addController(SE_Controller);
 
