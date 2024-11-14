@@ -51,12 +51,12 @@ void MC_Test::onRun() {
         OATPP_ASSERT(response->getStatusCode() == 200);
 
         /* Read response body as MessageDto */
-        // auto message =
-        //     response->readBodyToDto<oatpp::Object<Result>>(objectMapper.get());
+        auto message =
+            response->readBodyToDto<oatpp::Object<Result_MC>>(objectMapper.get());
 
-        // /* Assert that received message is as expected */
-        // OATPP_ASSERT(message);
-        // OATPP_ASSERT(message->questionText == "What is SE?");
+        /* Assert that received message is as expected */
+        OATPP_ASSERT(message);
+        OATPP_ASSERT(message->questionText == "What is SE?");
       },
       std::chrono::minutes(10) /* test timeout */);
 
