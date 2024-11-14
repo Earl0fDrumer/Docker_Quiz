@@ -2,8 +2,12 @@
 #include <iostream>
 
 #include "selene/SeleneTest.hpp"
+#include "src/test/SoftwareEngineering/MC_Test.hpp"
 
-void runTests() { OATPP_RUN_TEST(SeleneTest); }
+void runTests() { 
+  OATPP_RUN_TEST(SeleneTest); 
+  OATPP_RUN_TEST(MC_Test); 
+  }
 
 int main() {
   oatpp::base::Environment::init();

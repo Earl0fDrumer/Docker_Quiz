@@ -1,0 +1,25 @@
+{
+    "questions": [
+      {
+        "question": "What is SE?",
+        "answers": {
+          "a": "Branch of computer science that deals with the design, development, testing, and maintenance of software applications",
+          "b": "When you combine different software programs together to engineer a new program",
+          "c": "Branch of computer science that deals with creating and maintaing the hardware of PCs",
+          "d": "Branch of computer science that deals with the creation, deletion, and maintance of Serialized Exponents (SE)"
+        },
+        "correct_answer": "a"
+      },
+      {
+        "question": "What is the largest planet in our Solar System?",
+        "answers": {
+          "a": "Earth",
+          "b": "Jupiter",
+          "c": "Saturn",
+          "d": "Mars"
+        },
+        "correct_answer": "b"
+      }
+    ]
+  }
+  

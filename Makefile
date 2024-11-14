@@ -7,8 +7,10 @@ LINKFLAGS_TEST = $(LINKFLAGS_APP) -loatpp-test
 SRC_DIR_SERVER = src/server
 SRC_DIR_DTO = src/dto
 SRC_DIR_CONTROLLER = src/controller
+SRC_DIR_SERVICE_MC_QUESTION = src/service/SoftwareEngineering
 SRC_DIR_TESTS = src/test
 SRC_DIR_TESTS_Selene = src/test/selene
+SRC_DIR_TESTS_MC_TEST = src/test/SoftwareEngineering
 
 GCOV = gcov
 LCOV = lcov
@@ -42,6 +44,7 @@ $(PROGRAM_SERVER): $(SRC_DIR_SERVER) $(SRC_DIR_SERVICE)
 	$(CXX) $(CXXFLAGS) -o $(PROGRAM_SERVER) $(OATPP_INCLUDE) \
 	$(SRC_DIR_SERVER)/*.cpp \
 	$(SRC_DIR_DTO)/*.hpp \
+	$(SRC_DIR_SERVICE_MC_QUESTION)/*.hpp \
 	$(SRC_DIR_CONTROLLER)/*.hpp	$(LINKFLAGS_APP)
 
 docker:
@@ -56,6 +59,7 @@ stop:
 $(TEST_SERVER): $(SRC_DIR_TESTS)
 	$(CXX) $(CXXFLAGS) -o $(TEST_SERVER) $(OATPP_INCLUDE) \
 	$(SRC_DIR_TESTS_Selene)/*.cpp \
+	$(SRC_DIR_TESTS_MC_TEST)/*.cpp \
 	$(SRC_DIR_TESTS)/*.cpp $(LINKFLAGS_TEST)
 
 static: ${SRC_DIR_SERVER} ${SRC_DIR_CLIENT} ${SRC_DIR_SERVICE} ${TEST_DIR}
