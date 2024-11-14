@@ -12,19 +12,20 @@ class MultipleChoice {
         readDataFile();
 
         QuestionText = jsonFileData["questions"][0]["question"];
+        CorrectAnswer = jsonFileData["questions"][0]["correct_answer"];
         Answers.push_back(jsonFileData["questions"][0]["answers"]["a"]);
         Answers.push_back(jsonFileData["questions"][0]["answers"]["b"]);
         Answers.push_back(jsonFileData["questions"][0]["answers"]["c"]);
         Answers.push_back(jsonFileData["questions"][0]["answers"]["d"]);
      }
       
-      int readDataFile() {
+      void readDataFile() {
         std::string filePath = "src/QuestionData/SoftwareEngineering/MultipleChoice.json";
 
         std::ifstream inputFile(filePath);
 
         if (!inputFile.is_open()) {
-            return 1;
+          throw std::ios_base::failure("Error: failed to open file: " + filePath);
         }
 
         inputFile >> jsonFileData;
@@ -41,7 +42,7 @@ class MultipleChoice {
      }
 
      std::vector<std::string> getAnswers() {
-      return Answers;
+        return Answers;
      }
 
      private:
