@@ -2,8 +2,8 @@
 #define VC_Controller_hpp
 
 #include <memory>
-#include "src/service/VersionControl/VC_MC_Question.hpp"  // Service for VC questions
-#include "src/dto/VersionControl/VCMC_DTOs.hpp"           // DTOs for VC
+#include "src/service/VersionControl/VC_MC_Question.hpp"
+#include "src/dto/VersionControl/VCMC_DTOs.hpp"
 #include "oatpp/core/macro/codegen.hpp"
 #include "oatpp/core/macro/component.hpp"
 #include "oatpp/web/server/api/ApiController.hpp"
