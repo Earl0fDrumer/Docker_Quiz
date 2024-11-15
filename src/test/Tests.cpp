@@ -3,10 +3,12 @@
 
 #include "selene/SeleneTest.hpp"
 #include "src/test/SoftwareEngineering/MC_Test.hpp"
+#include "DesignPatterns/DP_Test.hpp"
 
 void runTests() { 
   OATPP_RUN_TEST(SeleneTest); 
   OATPP_RUN_TEST(MC_Test); 
+  OATPP_RUN_TEST(DP_Test);
   }
 
 int main() {
