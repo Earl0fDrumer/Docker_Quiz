@@ -1,0 +1,14 @@
+{
+  "questions": [
+    {
+      "question": "Which design pattern ensures a class has only one instance and provides a global point of access to it?",
+      "answers": {
+        "a": "Factory Pattern",
+        "b": "Singleton Pattern",
+        "c": "Observer Pattern",
+        "d": "Strategy Pattern"
+      },
+      "correct_answer": "b"
+    }
+  ]
+}
