@@ -1,0 +1,25 @@
+{
+    "questions": [
+      {
+        "question": "Which command is used to initialize a Git repository?",
+        "answers": {
+          "a": "git init",
+          "b": "git start",
+          "c": "git begin",
+          "d": "git create"
+        },
+        "correct_answer": "a"
+      },
+      {
+        "question": "Which command is used to check the status of a Git repository?",
+        "answers": {
+          "a": "git check",
+          "b": "git status",
+          "c": "git state",
+          "d": "git inspect"
+        },
+        "correct_answer": "b"
+      }
+    ]
+  }
+  
