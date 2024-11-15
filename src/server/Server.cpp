@@ -2,6 +2,7 @@
 
 #include "../controller/SeleneController.hpp"
 #include "../controller/SoftwareEngineering/SEController.hpp"
+#include "../controller/VersionControl/VCController.hpp"
 #include "ServerComponents.hpp"
 #include "oatpp/core/macro/codegen.hpp"
 #include "oatpp/network/tcp/server/ConnectionProvider.hpp"
@@ -22,6 +23,10 @@ void run() {
   /* Create SEController and add all of its endpoints to router */
   auto SE_Controller = std::make_shared<SEController>();
   router->addController(SE_Controller);
+
+  /* Create VCController and add all of its endpoints to router */
+  auto VC_Controller = std::make_shared<VCController>();  // Instantiate VCController
+  router->addController(VC_Controller);  // Register VCController in the router
 
   /* Create HTTP connection handler with router */
   auto connectionHandler =
