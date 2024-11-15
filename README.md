@@ -27,7 +27,7 @@ This is the base code for the course project. Adapt as needed.
  * **Short Answer:** [http://localhost:8000/selene/sa](http://localhost:8000/selene/sa) [Not Implemented]  
  * **Matching:** [http://localhost:8000/selene/match](http://localhost:8000/selene/match) [Not Implemented]  
  
-## <Design Patterns>
+## <Topic 4: Design Patterns>
  * **Multiple Choice:** [http://localhost:8200/DP/MC](http://localhost:8200/DP/MC)
  * **True/False:** [http://localhost:8000/selene/tf](http://localhost:8000/selene/tf) [Not Implemented]    
  * **Short Answer:** [http://localhost:8000/selene/sa](http://localhost:8000/selene/sa) [Not Implemented]  
