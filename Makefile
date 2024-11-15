@@ -9,14 +9,15 @@ SRC_DIR_DTO = src/dto
 SRC_DIR_CONTROLLER = src/controller
 SRC_DIR_SERVICE_MC_QUESTION = src/service/SoftwareEngineering
 SRC_DIR_SERVICE_DP_QUESTION = src/service/DesignPatterns
+SRC_DIR_SERVICE_VC_QUESTION = src/service/VersionControl
 SRC_DIR_CONTROLLER_DP = src/controller/DesignPatterns
 SRC_DIR_DTO_DP = src/dto/DesignPatterns
-SRC_DIR_SERVICE_VC_QUESTION = src/service/VersionControl
 SRC_DIR_TESTS = src/test
 SRC_DIR_TESTS_Selene = src/test/selene
 SRC_DIR_TESTS_MC_TEST = src/test/SoftwareEngineering
 SRC_DIR_TESTS_DP_TEST = src/test/DesignPatterns
 SRC_DIR_TESTS_VC_TEST = src/test/VersionControl
+SRC_DIR_TESTS_OOD_MC_TEST = src/test/OOD
 
 GCOV = gcov
 LCOV = lcov
@@ -71,6 +72,7 @@ $(TEST_SERVER): $(SRC_DIR_TESTS) $(SRC_DIR_TESTS_MC_TEST) $(SRC_DIR_TESTS_DP_TES
 	$(CXX) $(CXXFLAGS) -o $(TEST_SERVER) $(OATPP_INCLUDE) \
 	$(SRC_DIR_TESTS_Selene)/*.cpp \
 	$(SRC_DIR_TESTS_MC_TEST)/*.cpp \
+	$(SRC_DIR_TESTS_OOD_MC_TEST)/*.cpp \
 	$(SRC_DIR_TESTS_DP_TEST)/*.cpp \
 	$(SRC_DIR_TESTS_VC_TEST)/*.cpp \
 	$(SRC_DIR_TESTS)/*.cpp $(LINKFLAGS_TEST)
