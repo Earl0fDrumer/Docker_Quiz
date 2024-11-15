@@ -11,10 +11,12 @@ SRC_DIR_SERVICE_MC_QUESTION = src/service/SoftwareEngineering
 SRC_DIR_SERVICE_DP_QUESTION = src/service/DesignPatterns
 SRC_DIR_CONTROLLER_DP = src/controller/DesignPatterns
 SRC_DIR_DTO_DP = src/dto/DesignPatterns
+SRC_DIR_SERVICE_VC_QUESTION = src/service/VersionControl
 SRC_DIR_TESTS = src/test
 SRC_DIR_TESTS_Selene = src/test/selene
 SRC_DIR_TESTS_MC_TEST = src/test/SoftwareEngineering
 SRC_DIR_TESTS_DP_TEST = src/test/DesignPatterns
+SRC_DIR_TESTS_VC_TEST = src/test/VersionControl
 
 GCOV = gcov
 LCOV = lcov
@@ -44,16 +46,17 @@ clean:
 	doxygen/html \
 	obj bin \
 
-$(PROGRAM_SERVER): $(SRC_DIR_SERVER) $(SRC_DIR_SERVICE_MC_QUESTION) $(SRC_DIR_SERVICE_DP_QUESTION)
+$(PROGRAM_SERVER): $(SRC_DIR_SERVER) $(SRC_DIR_SERVICE_MC_QUESTION) $(SRC_DIR_SERVICE_DP_QUESTION_MC_QUESTION) $(SRC_DIR_SERVICE_VC_QUESTION)
 	$(CXX) $(CXXFLAGS) -o $(PROGRAM_SERVER) $(OATPP_INCLUDE) \
 	$(SRC_DIR_SERVER)/*.cpp \
 	$(SRC_DIR_DTO)/*.hpp \
 	$(SRC_DIR_DTO_DP)/*.hpp \
 	$(SRC_DIR_SERVICE_MC_QUESTION)/*.hpp \
 	$(SRC_DIR_SERVICE_DP_QUESTION)/*.hpp \
+	$(SRC_DIR_SERVICE_VC_QUESTION)/*.hpp \
 	$(SRC_DIR_CONTROLLER)/*.hpp \
 	$(SRC_DIR_CONTROLLER_DP)/*.hpp \
-	$(LINKFLAGS_APP)
+ $(LINKFLAGS_APP)
 
 docker:
 	docker build --pull --rm -f "Dockerfile" -t selene:latest "."
@@ -64,11 +67,12 @@ start:
 stop:
 	docker compose -f "compose.yml" down
 
-$(TEST_SERVER): $(SRC_DIR_TESTS) $(SRC_DIR_TESTS_MC_TEST) $(SRC_DIR_TESTS_DP_TEST)
+$(TEST_SERVER): $(SRC_DIR_TESTS) $(SRC_DIR_TESTS_MC_TEST) $(SRC_DIR_TESTS_DP_TEST) $(SRC_DIR_TESTS_Selene) $(SRC_DIR_TESTS_MC_TEST) $(SRC_DIR_TESTS_VC_TEST)
 	$(CXX) $(CXXFLAGS) -o $(TEST_SERVER) $(OATPP_INCLUDE) \
 	$(SRC_DIR_TESTS_Selene)/*.cpp \
 	$(SRC_DIR_TESTS_MC_TEST)/*.cpp \
 	$(SRC_DIR_TESTS_DP_TEST)/*.cpp \
+	$(SRC_DIR_TESTS_VC_TEST)/*.cpp \
 	$(SRC_DIR_TESTS)/*.cpp $(LINKFLAGS_TEST)
 
 static: ${SRC_DIR_SERVER} ${SRC_DIR_CLIENT} ${SRC_DIR_SERVICE_MC_QUESTION} ${SRC_DIR_SERVICE_DP_QUESTION} ${TEST_DIR}

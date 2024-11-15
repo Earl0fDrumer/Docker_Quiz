@@ -1,30 +1,31 @@
-
 #include <iostream>
 
 #include "selene/SeleneTest.hpp"
 #include "src/test/SoftwareEngineering/MC_Test.hpp"
 #include "DesignPatterns/DP_Test.hpp"
+#include "src/test/VersionControl/VC_Test.hpp"
 
 void runTests() { 
   OATPP_RUN_TEST(SeleneTest); 
   OATPP_RUN_TEST(MC_Test); 
   OATPP_RUN_TEST(DP_Test);
-  }
+  OATPP_RUN_TEST(VC_Test);
+}
 
 int main() {
   oatpp::base::Environment::init();
 
-  runTests();
+  std::cout << "[INFO] Running all tests..." << std::endl;
 
-  /* Print how much objects were created during app running, and what have
-   * left-probably leaked */
-  /* Disable object counting for release builds using '-D
-   * OATPP_DISABLE_ENV_OBJECT_COUNTERS' flag for better performance */
+  try {
+    runTests();
+  } catch (const std::exception& e) {
+    std::cerr << "[ERROR] Exception while running tests: " << e.what() << std::endl;
+  }
+
   std::cout << "\nEnvironment:\n";
-  std::cout << "objectsCount = " << oatpp::base::Environment::getObjectsCount()
-            << "\n";
-  std::cout << "objectsCreated = "
-            << oatpp::base::Environment::getObjectsCreated() << "\n\n";
+  std::cout << "objectsCount = " << oatpp::base::Environment::getObjectsCount() << "\n";
+  std::cout << "objectsCreated = " << oatpp::base::Environment::getObjectsCreated() << "\n\n";
 
   OATPP_ASSERT(oatpp::base::Environment::getObjectsCount() == 0);
 
