@@ -2,6 +2,7 @@
 
 #include "../controller/SeleneController.hpp"
 #include "../controller/SoftwareEngineering/SEController.hpp"
+#include "../controller/DesignPatterns/DPController.hpp"
 #include "../controller/VersionControl/VCController.hpp"
 #include "ServerComponents.hpp"
 #include "oatpp/core/macro/codegen.hpp"
@@ -23,6 +24,10 @@ void run() {
   /* Create SEController and add all of its endpoints to router */
   auto SE_Controller = std::make_shared<SEController>();
   router->addController(SE_Controller);
+
+  /* Create DPController and add all of its endpoints to router */
+  auto DP_Controller = std::make_shared<DPController>();
+  router->addController(DP_Controller);
 
   /* Create VCController and add all of its endpoints to router */
   auto VC_Controller = std::make_shared<VCController>();  // Instantiate VCController
