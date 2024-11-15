@@ -8,11 +8,11 @@ SRC_DIR_SERVER = src/server
 SRC_DIR_DTO = src/dto
 SRC_DIR_CONTROLLER = src/controller
 SRC_DIR_SERVICE_MC_QUESTION = src/service/SoftwareEngineering
-SRC_DIR_SERVICE_VC_QUESTION = src/service/VersionControl  # Added VersionControl service
+SRC_DIR_SERVICE_VC_QUESTION = src/service/VersionControl
 SRC_DIR_TESTS = src/test
 SRC_DIR_TESTS_Selene = src/test/selene
 SRC_DIR_TESTS_MC_TEST = src/test/SoftwareEngineering
-SRC_DIR_TESTS_VC_TEST = src/test/VersionControl  # Added VersionControl tests
+SRC_DIR_TESTS_VC_TEST = src/test/VersionControl
 
 GCOV = gcov
 LCOV = lcov
@@ -66,8 +66,8 @@ $(TEST_SERVER): $(SRC_DIR_TESTS) $(SRC_DIR_TESTS_Selene) $(SRC_DIR_TESTS_MC_TEST
 	$(SRC_DIR_TESTS_VC_TEST)/*.cpp \
 	$(SRC_DIR_TESTS)/*.cpp $(LINKFLAGS_TEST)
 
-static: ${SRC_DIR_SERVER} ${SRC_DIR_CLIENT} ${SRC_DIR_SERVICE_MC_QUESTION} ${SRC_DIR_SERVICE_VC_QUESTION} ${TEST_DIR}
-	${STATIC_ANALYSIS} --verbose --enable=all ${SRC_DIR_SERVER} ${SRC_DIR_CLIENT} ${SRC_DIR_SERVICE_MC_QUESTION} ${SRC_DIR_SERVICE_VC_QUESTION} ${TEST_DIR} ${SRC_INCLUDE} --suppress=missingInclude
+static: ${SRC_DIR_SERVER} ${SRC_DIR_CLIENT} ${SRC_DIR_SERVICE} ${TEST_DIR}
+	${STATIC_ANALYSIS} --verbose --enable=all ${SRC_DIR_SERVER} ${SRC_DIR_CLIENT} ${SRC_DIR_SERVICE} ${TEST_DIR} ${SRC_INCLUDE} --suppress=missingInclude
 
-style: ${SRC_DIR_SERVICE_MC_QUESTION} ${SRC_DIR_SERVICE_VC_QUESTION} ${SRC_INCLUDE}
+style: ${SRC_DIR_SERVICE} ${SRC_INCLUDE}
 	${STYLE_CHECK} src/controller/* src/dto/* src/server/* src/service/*/* src/test/*/* src/test/*.cpp
