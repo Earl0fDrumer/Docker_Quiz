@@ -1,0 +1,25 @@
+{
+    "questions": [
+      {
+        "question": "What does OOD stand for?",
+        "answers": {
+          "a": "Officer of the Day",
+          "b": "Object Oriented Design",
+          "c": "Office of Oncologic Diseases",
+          "d": "All of the above"
+        },
+        "correct_answer": "d"
+      },
+      {
+        "question": "Question Description",
+        "answers": {
+          "a": "Answer A",
+          "b": "Answer B",
+          "c": "Answer C",
+          "d": "Answer D"
+        },
+        "correct_answer": "b"
+      }
+    ]
+  }
+  

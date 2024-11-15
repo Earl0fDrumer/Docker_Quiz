@@ -1,31 +1,33 @@
 #include "src/service/json.hpp"
-
 #include <vector>
 #include <string>
 #include <fstream>
 
 using json = nlohmann::json;
 
-class MultipleChoice {
+class MultipleChoice2 {
     public:
-     MultipleChoice() {
+      MultipleChoice2();
+      ~MultipleChoice2();
+      
+      MultipleChoice2(std::string path) {
+        filePath = path;
         readDataFile();
 
         QuestionText = jsonFileData["questions"][0]["question"];
-        CorrectAnswer = jsonFileData["questions"][0]["correct_answer"];
         Answers.push_back(jsonFileData["questions"][0]["answers"]["a"]);
         Answers.push_back(jsonFileData["questions"][0]["answers"]["b"]);
         Answers.push_back(jsonFileData["questions"][0]["answers"]["c"]);
         Answers.push_back(jsonFileData["questions"][0]["answers"]["d"]);
      }
-      
+    
       void readDataFile() {
-        std::string filePath = "src/QuestionData/SoftwareEngineering/MultipleChoice.json";
+        //std::string filePath = "src/QuestionData/SoftwareEngineering/MultipleChoice.json";
 
         std::ifstream inputFile(filePath);
 
         if (!inputFile.is_open()) {
-          throw std::ios_base::failure("Error: failed to open file: " + filePath);
+            throw std::ios_base::failure("Error: Failed to open file: " + filePath);
         }
 
         inputFile >> jsonFileData;
@@ -42,12 +44,14 @@ class MultipleChoice {
      }
 
      std::vector<std::string> getAnswers() {
-        return Answers;
+      return Answers;
      }
 
      private:
+      std::string filePath;
       json jsonFileData;
       std::string QuestionText;
       std::string CorrectAnswer;
       std::vector<std::string> Answers;
 };
+
