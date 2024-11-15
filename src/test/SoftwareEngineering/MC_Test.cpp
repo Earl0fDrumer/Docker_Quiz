@@ -57,6 +57,11 @@ void MC_Test::onRun() {
         /* Assert that received message is as expected */
         OATPP_ASSERT(message);
         OATPP_ASSERT(message->questionText == "What is SE?");
+        OATPP_ASSERT(message->optionA == "Branch of computer science that deals with the design, development, testing, and maintenance of software applications");
+        OATPP_ASSERT(message->optionB == "When you combine different software programs together to engineer a new program");
+        OATPP_ASSERT(message->optionC == "Branch of computer science that deals with creating and maintaing the hardware of PCs");
+        OATPP_ASSERT(message->optionD == "Branch of computer science that deals with the creation, deletion, and maintance of Serialized Exponents (SE)");
+
       },
       std::chrono::minutes(10) /* test timeout */);
 
