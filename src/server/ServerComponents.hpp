@@ -23,7 +23,7 @@ class ServerComponent {
       serverConnectionProvider)
   ([] {
     return oatpp::network::tcp::server::ConnectionProvider::createShared(
-        {"0.0.0.0", 8000, oatpp::network::Address::IP_4});
+        {"0.0.0.0", 8200, oatpp::network::Address::IP_4});
   }());
 
   /**
