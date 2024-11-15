@@ -2,7 +2,6 @@
 #define VC_Controller_hpp
 
 #include <memory>
-
 #include "src/service/VersionControl/VC_MC_Question.hpp"  // Service for VC questions
 #include "src/dto/VersionControl/VCMC_DTOs.hpp"           // DTOs for VC
 #include "oatpp/core/macro/codegen.hpp"
@@ -16,15 +15,20 @@ class VCController : public oatpp::web::server::api::ApiController {
   VCController(OATPP_COMPONENT(std::shared_ptr<ObjectMapper>, objectMapper))
       : oatpp::web::server::api::ApiController(objectMapper) {}
 
-  ADD_CORS(getMCQuestion)
+  ADD_CORS(getMCQuestion)  // Allow cross-origin requests
   ENDPOINT("GET", "/VC/MC", getMCQuestion) {
     try {
-      auto dto = VCResult_MC::createShared();  // Replace with your DTO
+      auto dto = VCResult_MC::createShared();  // Create DTO instance
 
-      VC_MC_Question question;  // Instance of your question logic class
+      VC_MC_Question question;  // Instantiate the question service class
 
+      // Populate the DTO with question data
       dto->questionText = question.getQuestionText();
       std::vector<std::string> Answers = question.getAnswers();
+
+      if (Answers.size() < 4) {
+        throw std::runtime_error("Insufficient answers provided in question");
+      }
 
       dto->optionA = Answers[0];
       dto->optionB = Answers[1];
@@ -34,7 +38,7 @@ class VCController : public oatpp::web::server::api::ApiController {
       return createDtoResponse(Status::CODE_200, dto);
     } catch (const std::exception& e) {
       OATPP_LOGE("VCController", "Error: %s", e.what());
-      return createResponse(Status::CODE_500, "Internal Server Error");
+      return createResponse(Status::CODE_500, "Internal Server Error: " + std::string(e.what()));
     } catch (...) {
       OATPP_LOGE("VCController", "Unknown error occurred");
       return createResponse(Status::CODE_500, "Internal Server Error");
@@ -45,3 +49,4 @@ class VCController : public oatpp::web::server::api::ApiController {
 #include OATPP_CODEGEN_END(ApiController)  ///< End Codegen
 
 #endif /* VC_Controller_hpp */
+

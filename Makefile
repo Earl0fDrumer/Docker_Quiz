@@ -47,7 +47,7 @@ $(PROGRAM_SERVER): $(SRC_DIR_SERVER) $(SRC_DIR_SERVICE)
 	$(SRC_DIR_SERVER)/*.cpp \
 	$(SRC_DIR_DTO)/*.hpp \
 	$(SRC_DIR_SERVICE_MC_QUESTION)/*.hpp \
-	$(SRC_DIR_SERVICE_VC_QUESTION)/*.hpp \   # Added VC Service
+	$(SRC_DIR_SERVICE_VC_QUESTION)/*.hpp \  # Added VC service
 	$(SRC_DIR_CONTROLLER)/*.hpp $(LINKFLAGS_APP)
 
 docker:
@@ -71,4 +71,3 @@ static: ${SRC_DIR_SERVER} ${SRC_DIR_CLIENT} ${SRC_DIR_SERVICE} ${TEST_DIR}
 
 style: ${SRC_DIR_SERVICE} ${SRC_INCLUDE}
 	${STYLE_CHECK} src/controller/* src/dto/* src/server/* src/service/*/* src/test/*/* src/test/*.cpp
-
