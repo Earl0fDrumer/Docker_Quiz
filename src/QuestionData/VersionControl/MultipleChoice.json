@@ -1,0 +1,14 @@
+{
+  "questions": [
+      {
+          "question": "Which command is used to initialize a Git repository?",
+          "answers": {
+              "a": "git init",
+              "b": "git start",
+              "c": "git begin",
+              "d": "git create"
+          },
+          "correct_answer": "a"
+      }
+  ]
+}

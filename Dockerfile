@@ -7,7 +7,7 @@ WORKDIR ./selene
 RUN make testServer
 RUN ./testServer
 
-EXPOSE 8000 8000
+EXPOSE 8200 8200
 
 RUN make seleneServer
 ENTRYPOINT ["./seleneServer"]

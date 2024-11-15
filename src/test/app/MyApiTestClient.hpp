@@ -1,4 +1,3 @@
-
 #ifndef MyApiTestClient_hpp
 #define MyApiTestClient_hpp
 
@@ -18,6 +17,8 @@ class MyApiTestClient : public oatpp::web::client::ApiClient {
   API_CALL("GET", "/selene", getSelene)
   API_CALL("GET", "/SE/MC", getMCQuestion)
   API_CALL("GET", "/OOD/MC", getMCQuestion2)
+  API_CALL("GET", "/DP/MC", getDPQuestion)
+  API_CALL("GET", "/VC/MC", getVCQuestion)
 };
 
 /* End Api Client code generation */
