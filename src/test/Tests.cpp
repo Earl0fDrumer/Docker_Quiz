@@ -1,13 +1,14 @@
-
 #include <iostream>
 
 #include "selene/SeleneTest.hpp"
 #include "src/test/SoftwareEngineering/MC_Test.hpp"
+#include "src/test/VersionControl/VC_Test.hpp"  // Include VC_Test
 
 void runTests() { 
   OATPP_RUN_TEST(SeleneTest); 
   OATPP_RUN_TEST(MC_Test); 
-  }
+  OATPP_RUN_TEST(VC_Test);  // Add VC_Test to the test runner
+}
 
 int main() {
   oatpp::base::Environment::init();
@@ -30,3 +31,4 @@ int main() {
 
   return 0;
 }
+

@@ -38,6 +38,9 @@ class VC_MC_Question {
   }
 
   std::string getQuestionText() {
+    if (simulateError) {
+      throw std::runtime_error("Simulated question retrieval error");
+    }
     return QuestionText;
   }
 
@@ -49,11 +52,17 @@ class VC_MC_Question {
     return Answers;
   }
 
+  // Simulate error for testing purposes
+  void setSimulateError(bool value) {
+    simulateError = value;
+  }
+
  private:
   json jsonFileData;
   std::string QuestionText;
   std::string CorrectAnswer;
   std::vector<std::string> Answers;
+  bool simulateError = false;  // Default to false, can be toggled for testing
 };
 
 #endif /* VC_MC_Question_hpp */

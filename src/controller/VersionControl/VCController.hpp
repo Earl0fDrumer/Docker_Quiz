@@ -13,33 +13,34 @@
 
 class VCController : public oatpp::web::server::api::ApiController {
  public:
-  /**
-   * Constructor with object mapper.
-   * @param objectMapper - default object mapper used to serialize/deserialize
-   * DTOs.
-   */
   VCController(OATPP_COMPONENT(std::shared_ptr<ObjectMapper>, objectMapper))
       : oatpp::web::server::api::ApiController(objectMapper) {}
 
-  ADD_CORS(getMCQuestion)  // Allow cross-domain access
+  ADD_CORS(getMCQuestion)
   ENDPOINT("GET", "/VC/MC", getMCQuestion) {
-    auto dto = VCResult_MC::createShared();  // Replace with your DTO
+    try {
+      auto dto = VCResult_MC::createShared();  // Replace with your DTO
 
-    VC_MC_Question question;  // Instance of your question logic class
+      VC_MC_Question question;  // Instance of your question logic class
 
-    // Fetch the question details
-    dto->questionText = question.getQuestionText();
-    std::vector<std::string> Answers = question.getAnswers();
+      dto->questionText = question.getQuestionText();
+      std::vector<std::string> Answers = question.getAnswers();
 
-    // Assign answers to DTO fields
-    dto->optionA = Answers[0];
-    dto->optionB = Answers[1];
-    dto->optionC = Answers[2];
-    dto->optionD = Answers[3];
+      dto->optionA = Answers[0];
+      dto->optionB = Answers[1];
+      dto->optionC = Answers[2];
+      dto->optionD = Answers[3];
 
-    return createDtoResponse(Status::CODE_200, dto);
-  }  // GET
-};  // End of VCController
+      return createDtoResponse(Status::CODE_200, dto);
+    } catch (const std::exception& e) {
+      OATPP_LOGE("VCController", "Error: %s", e.what());
+      return createResponse(Status::CODE_500, "Internal Server Error");
+    } catch (...) {
+      OATPP_LOGE("VCController", "Unknown error occurred");
+      return createResponse(Status::CODE_500, "Internal Server Error");
+    }
+  }
+};
 
 #include OATPP_CODEGEN_END(ApiController)  ///< End Codegen
 
