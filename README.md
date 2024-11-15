@@ -10,7 +10,7 @@ This is the base code for the course project. Adapt as needed.
 
 
 ## <Topic 1: Software Engineering>
- * **Multiple Choice:** [http://localhost:8000/SE/MC](http://localhost:8000/SE/MC)
+ * **Multiple Choice:** [http://localhost:8200/SE/MC](http://localhost:8000/SE/MC)
  * **True/False:** [http://localhost:8000/selene/tf](http://localhost:8000/selene/tf) [Not Implemented]    
  * **Short Answer:** [http://localhost:8000/selene/sa](http://localhost:8000/selene/sa) [Not Implemented]  
  * **Matching:** [http://localhost:8000/selene/match](http://localhost:8000/selene/match) [Not Implemented]  
@@ -22,7 +22,7 @@ This is the base code for the course project. Adapt as needed.
  * **Matching:** [http://localhost:8000/selene/match](http://localhost:8000/selene/match) [Not Implemented]  
  
 ## <Topic 3: Version Control>
- * **Multiple Choice:** [http://localhost:8000/VC/MC](http://localhost:8000/VC/MC)
+ * **Multiple Choice:** [http://localhost:8200/VC/MC](http://localhost:8000/VC/MC)
  * **True/False:** [http://localhost:8000/selene/tf](http://localhost:8000/selene/tf) [Not Implemented]    
  * **Short Answer:** [http://localhost:8000/selene/sa](http://localhost:8000/selene/sa) [Not Implemented]  
  * **Matching:** [http://localhost:8000/selene/match](http://localhost:8000/selene/match) [Not Implemented]  
