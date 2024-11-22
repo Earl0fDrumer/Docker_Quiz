@@ -3,7 +3,7 @@
 #include <iostream>
 #include <memory>
 
-#include "../../controller/SoftwareEngineering/SEController.hpp"
+#include "src/controller/OOD/OOD_Controller.hpp"
 #include "../app/MyApiTestClient.hpp"
 #include "../app/TestComponent.hpp"
 #include "oatpp-test/web/ClientServerTestRunner.hpp"
@@ -21,7 +21,7 @@ void MC_Test::onRun() {
                   objectMapper);
 
   /* Add SeleneController endpoints to the router of the test server */
-  runner.addController(std::make_shared<SEController>());
+  runner.addController(std::make_shared<OOD_Controller>());
 
   /* Run test */
   runner.run(

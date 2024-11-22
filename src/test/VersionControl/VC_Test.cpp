@@ -3,7 +3,7 @@
 #include <iostream>
 #include <memory>
 
-#include "../../controller/VersionControl/VCController.hpp"
+#include "src/controller/OOD/OOD_Controller.hpp"
 #include "../app/MyApiTestClient.hpp"
 #include "../app/TestComponent.hpp"
 #include "oatpp-test/web/ClientServerTestRunner.hpp"
@@ -14,7 +14,7 @@ void VC_Test::onRun() {
 
   oatpp::test::web::ClientServerTestRunner runner;
 
-  runner.addController(std::make_shared<VCController>());
+  runner.addController(std::make_shared<OOD_Controller>());
 
   runner.run(
       [this, &runner] {
@@ -29,7 +29,7 @@ void VC_Test::onRun() {
         auto response = client->getVCQuestion();
         OATPP_ASSERT(response->getStatusCode() == 200);
 
-        auto message = response->readBodyToDto<oatpp::Object<VCResult_MC>>(objectMapper.get());
+        auto message = response->readBodyToDto<oatpp::Object<Result_MC>>(objectMapper.get());
 
         OATPP_ASSERT(message);
         OATPP_ASSERT(message->questionText == "Which command is used to initialize a Git repository?");
