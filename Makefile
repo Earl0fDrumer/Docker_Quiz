@@ -8,10 +8,7 @@ SRC_DIR_SERVER = src/server
 SRC_DIR_DTO = src/dto
 SRC_DIR_CONTROLLER = src/controller
 SRC_DIR_SERVICE_MC_QUESTION = src/service/SoftwareEngineering
-SRC_DIR_SERVICE_DP_QUESTION = src/service/DesignPatterns
 SRC_DIR_SERVICE_VC_QUESTION = src/service/VersionControl
-SRC_DIR_CONTROLLER_DP = src/controller/DesignPatterns
-SRC_DIR_DTO_DP = src/dto/DesignPatterns
 SRC_DIR_TESTS = src/test
 SRC_DIR_TESTS_Selene = src/test/selene
 SRC_DIR_TESTS_MC_TEST = src/test/SoftwareEngineering
@@ -51,12 +48,9 @@ $(PROGRAM_SERVER): $(SRC_DIR_SERVER) $(SRC_DIR_SERVICE_MC_QUESTION) $(SRC_DIR_SE
 	$(CXX) $(CXXFLAGS) -o $(PROGRAM_SERVER) $(OATPP_INCLUDE) \
 	$(SRC_DIR_SERVER)/*.cpp \
 	$(SRC_DIR_DTO)/*.hpp \
-	$(SRC_DIR_DTO_DP)/*.hpp \
 	$(SRC_DIR_SERVICE_MC_QUESTION)/*.hpp \
-	$(SRC_DIR_SERVICE_DP_QUESTION)/*.hpp \
 	$(SRC_DIR_SERVICE_VC_QUESTION)/*.hpp \
 	$(SRC_DIR_CONTROLLER)/*.hpp \
-	$(SRC_DIR_CONTROLLER_DP)/*.hpp \
  $(LINKFLAGS_APP)
 
 docker:

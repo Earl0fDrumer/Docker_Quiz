@@ -3,7 +3,7 @@
 #include "../controller/SeleneController.hpp"
 #include "../controller/SoftwareEngineering/SEController.hpp"
 #include "../controller/OOD/OOD_Controller.hpp"
-#include "../controller/DesignPatterns/DPController.hpp"
+// #include "../controller/DesignPatterns/DPController.hpp"
 #include "../controller/VersionControl/VCController.hpp"
 #include "ServerComponents.hpp"
 #include "oatpp/core/macro/codegen.hpp"
@@ -31,8 +31,8 @@ void run() {
   router->addController(obj_OOD_Controller);
   
   /* Create DPController and add all of its endpoints to router */
-  auto DP_Controller = std::make_shared<DPController>();
-  router->addController(DP_Controller);
+  // auto DP_Controller = std::make_shared<DPController>();
+  // router->addController(DP_Controller);
 
   /* Create VCController and add all of its endpoints to router */
   auto VC_Controller = std::make_shared<VCController>();  // Instantiate VCController

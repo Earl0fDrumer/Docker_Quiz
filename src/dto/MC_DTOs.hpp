@@ -6,8 +6,8 @@
 
 #include OATPP_CODEGEN_BEGIN(DTO)
 
-class Result_MC2 : public oatpp::DTO {
-  DTO_INIT(Result_MC2, DTO /* Extends */)
+class Result_MC : public oatpp::DTO {
+  DTO_INIT(Result_MC, DTO /* Extends */)
 
   DTO_FIELD(String, questionText);
   DTO_FIELD(String, optionA);

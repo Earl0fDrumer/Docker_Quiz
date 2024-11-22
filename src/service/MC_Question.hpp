@@ -6,10 +6,7 @@
 using json = nlohmann::json;
 
 class MultipleChoice2 {
-    public:
-      MultipleChoice2();
-      ~MultipleChoice2();
-      
+    public:  
       MultipleChoice2(std::string path) {
         filePath = path;
         readDataFile();

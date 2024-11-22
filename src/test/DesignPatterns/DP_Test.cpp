@@ -3,7 +3,7 @@
 #include <iostream>
 #include <memory>
 
-#include "../../controller/DesignPatterns/DPController.hpp"
+#include "src/controller/OOD/OOD_Controller.hpp"
 #include "../app/MyApiTestClient.hpp"
 #include "../app/TestComponent.hpp"
 #include "oatpp-test/web/ClientServerTestRunner.hpp"
@@ -16,8 +16,8 @@ void DP_Test::onRun() {
   // Create client-server test runner
   oatpp::test::web::ClientServerTestRunner runner;
 
-  // Add DPController endpoints to the router of the test server
-  runner.addController(std::make_shared<DPController>());
+  // Add OOD_Controller endpoints to the router of the test server
+  runner.addController(std::make_shared<OOD_Controller>());
 
   // Run test
   runner.run(
@@ -40,7 +40,7 @@ void DP_Test::onRun() {
         OATPP_ASSERT(response->getStatusCode() == 200);
 
         // Read response body as DPResult_MC DTO
-        auto message = response->readBodyToDto<oatpp::Object<DPResult_MC>>(objectMapper.get());
+        auto message = response->readBodyToDto<oatpp::Object<Result_MC>>(objectMapper.get());
 
         // Assert that received message is as expected
         OATPP_ASSERT(message);

@@ -22,17 +22,16 @@ class OOD_Controller : public oatpp::web::server::api::ApiController {
   OOD_Controller(OATPP_COMPONENT(std::shared_ptr<ObjectMapper>, objectMapper))
       : oatpp::web::server::api::ApiController(objectMapper) {}
 
-  ADD_CORS(getMCQuestion2)  // Needed to allow for cross domain access
-  ENDPOINT("GET", "/OOD/MC", getMCQuestion2) {
+  ADD_CORS(getMCQuestion)  // Needed to allow for cross domain access
+  ENDPOINT("GET", "/OOD/MC", getMCQuestion) {
 
-    auto obj_dto = Result_MC2::createShared();
-    //MultipleChoice question;
+    auto obj_dto = Result_MC::createShared();
     std::string path = "src/QuestionData/ObjectOrientedDesign/MultipleChoice.json";
     
-    auto obj_question = new MultipleChoice2(path);
+    MultipleChoice2 question = MultipleChoice2(path);
 
-    obj_dto->questionText = obj_question->getQuestionText();
-    std::vector<std::string> Answers = obj_question->getAnswers();
+    obj_dto->questionText = question.getQuestionText();
+    std::vector<std::string> Answers = question.getAnswers();
     obj_dto->optionA = Answers[0];
     obj_dto->optionB = Answers[1];
     obj_dto->optionC = Answers[2];
@@ -40,6 +39,35 @@ class OOD_Controller : public oatpp::web::server::api::ApiController {
 
     return createDtoResponse(Status::CODE_200, obj_dto);
   }  // GET
+
+  ADD_CORS(getDP_MCQuestion)
+  ENDPOINT("GET", "/DP/MC", getDP_MCQuestion) {
+    try {
+      auto dto = Result_MC::createShared();
+      std::string path = "src/QuestionData/DesignPatterns/MultipleChoice.json";
+      MultipleChoice2 question = MultipleChoice2(path);
+
+      dto->questionText = question.getQuestionText();
+      std::vector<std::string> Answers = question.getAnswers();
+
+      if (Answers.size() < 4) {
+        throw std::runtime_error("Insufficient answers provided in question");
+      }
+
+      dto->optionA = Answers[0];
+      dto->optionB = Answers[1];
+      dto->optionC = Answers[2];
+      dto->optionD = Answers[3];
+
+      return createDtoResponse(Status::CODE_200, dto);
+    } catch (const std::exception& e) {
+      OATPP_LOGE("DPController", "Error: %s", e.what());
+      return createResponse(Status::CODE_500, "Internal Server Error");
+    } catch (...) {
+      OATPP_LOGE("DPController", "Unknown error occurred");
+      return createResponse(Status::CODE_500, "Internal Server Error");
+    }
+  }
 
 };  // End of SEController
 

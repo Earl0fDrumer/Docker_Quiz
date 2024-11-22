@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "src/service/SoftwareEngineering/MC_Question.hpp"
-#include "src/dto/SoftwareEngineering/SoftEnggMC_DTOs.hpp"
+#include "src/dto/MC_DTOs.hpp"
 #include "oatpp/core/macro/codegen.hpp"
 #include "oatpp/core/macro/component.hpp"
 #include "oatpp/web/server/api/ApiController.hpp"

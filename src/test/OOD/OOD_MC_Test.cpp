@@ -52,7 +52,7 @@ void OOD_MC_Test::onRun() {
 
         /* Read response body as MessageDto */
         auto message =
-            response->readBodyToDto<oatpp::Object<Result_MC2>>(objectMapper.get());
+            response->readBodyToDto<oatpp::Object<Result_MC>>(objectMapper.get());
 
         /* Assert that received message is as expected */
         OATPP_ASSERT(message);
