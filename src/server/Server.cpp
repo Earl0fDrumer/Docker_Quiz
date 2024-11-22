@@ -1,10 +1,7 @@
 #include "oatpp/network/Server.hpp"
 
 #include "../controller/SeleneController.hpp"
-#include "../controller/SoftwareEngineering/SEController.hpp"
-#include "../controller/OOD/OOD_Controller.hpp"
-// #include "../controller/DesignPatterns/DPController.hpp"
-#include "../controller/VersionControl/VCController.hpp"
+#include "../controller/MultipleChoice/MC_Controller.hpp"
 #include "ServerComponents.hpp"
 #include "oatpp/core/macro/codegen.hpp"
 #include "oatpp/network/tcp/server/ConnectionProvider.hpp"
@@ -23,8 +20,8 @@ void run() {
   router->addController(controller);
 
   /* Create OODController and add all of its endpoints to router */
-  auto obj_OOD_Controller = std::make_shared<OOD_Controller>();
-  router->addController(obj_OOD_Controller);
+  auto obj_MC_Controller = std::make_shared<MC_Controller>();
+  router->addController(obj_MC_Controller);
 
   /* Create HTTP connection handler with router */
   auto connectionHandler =

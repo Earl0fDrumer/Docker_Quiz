@@ -6,7 +6,7 @@
 class OOD_MC_Test : public oatpp::test::UnitTest {
  public:
   OOD_MC_Test() : UnitTest("TEST[OOD_MC_Test]") {}
-  void onRun() override;
+  inline void onRun() override;
 };
 
 #endif  // OOD_MC_TEST_HPP

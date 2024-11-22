@@ -3,21 +3,21 @@
 #include <iostream>
 #include <memory>
 
-#include "src/controller/OOD/OOD_Controller.hpp"
+#include "src/controller/MultipleChoice/MC_Controller.hpp"
 #include "../app/MyApiTestClient.hpp"
 #include "../app/TestComponent.hpp"
 #include "oatpp-test/web/ClientServerTestRunner.hpp"
 #include "oatpp/web/client/HttpRequestExecutor.hpp"
 
-void DP_Test::onRun() {
+void DP_MC_Test::onRun() {
   // Register test components
   TestComponent component;
 
   // Create client-server test runner
   oatpp::test::web::ClientServerTestRunner runner;
 
-  // Add OOD_Controller endpoints to the router of the test server
-  runner.addController(std::make_shared<OOD_Controller>());
+  // Add MC_Controller endpoints to the router of the test server
+  runner.addController(std::make_shared<MC_Controller>());
 
   // Run test
   runner.run(
@@ -36,7 +36,7 @@ void DP_Test::onRun() {
         auto client = MyApiTestClient::createShared(requestExecutor, objectMapper);
 
         // Call server API
-        auto response = client->getDPQuestion();
+        auto response = client->getDP_MCQuestion();
         OATPP_ASSERT(response->getStatusCode() == 200);
 
         // Read response body as DPResult_MC DTO

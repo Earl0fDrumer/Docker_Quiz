@@ -1,17 +1,21 @@
 #include <iostream>
 
 #include "selene/SeleneTest.hpp"
-#include "src/test/SoftwareEngineering/MC_Test.hpp"
-#include "src/test/OOD/OOD_MC_Test.hpp"
-#include "DesignPatterns/DP_Test.hpp"
-#include "src/test/VersionControl/VC_Test.hpp"
+#include "src/test/MultipleChoiceTests/DP_Test.cpp"
+#include "src/test/MultipleChoiceTests/DP_Test.hpp"
+#include "src/test/MultipleChoiceTests/OOD_Test.cpp"
+#include "src/test/MultipleChoiceTests/OOD_Test.hpp"
+#include "src/test/MultipleChoiceTests/SE_Test.cpp"
+#include "src/test/MultipleChoiceTests/SE_Test.hpp"
+#include "src/test/MultipleChoiceTests/VC_Test.cpp"
+#include "src/test/MultipleChoiceTests/VC_Test.hpp"
 
 void runTests() { 
   OATPP_RUN_TEST(SeleneTest); 
-  OATPP_RUN_TEST(MC_Test); 
+  OATPP_RUN_TEST(DP_MC_Test); 
   OATPP_RUN_TEST(OOD_MC_Test); 
-  OATPP_RUN_TEST(DP_Test);
-  OATPP_RUN_TEST(VC_Test);
+  OATPP_RUN_TEST(SE_MC_Test);
+  OATPP_RUN_TEST(VC_MC_Test);
 }
 
 int main() {

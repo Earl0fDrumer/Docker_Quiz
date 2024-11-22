@@ -3,18 +3,18 @@
 #include <iostream>
 #include <memory>
 
-#include "src/controller/OOD/OOD_Controller.hpp"
+#include "src/controller/MultipleChoice/MC_Controller.hpp"
 #include "../app/MyApiTestClient.hpp"
 #include "../app/TestComponent.hpp"
 #include "oatpp-test/web/ClientServerTestRunner.hpp"
 #include "oatpp/web/client/HttpRequestExecutor.hpp"
 
-void VC_Test::onRun() {
+void VC_MC_Test::onRun() {
   TestComponent component;
 
   oatpp::test::web::ClientServerTestRunner runner;
 
-  runner.addController(std::make_shared<OOD_Controller>());
+  runner.addController(std::make_shared<MC_Controller>());
 
   runner.run(
       [this, &runner] {
@@ -26,7 +26,7 @@ void VC_Test::onRun() {
 
         auto client = MyApiTestClient::createShared(requestExecutor, objectMapper);
 
-        auto response = client->getVCQuestion();
+        auto response = client->getVC_MCQuestion();
         OATPP_ASSERT(response->getStatusCode() == 200);
 
         auto message = response->readBodyToDto<oatpp::Object<Result_MC>>(objectMapper.get());

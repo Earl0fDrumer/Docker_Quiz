@@ -1,15 +1,15 @@
-#include "MC_Test.hpp"
+#include "OOD_Test.hpp"
 
 #include <iostream>
 #include <memory>
 
-#include "src/controller/OOD/OOD_Controller.hpp"
+#include "../../controller/MultipleChoice/MC_Controller.hpp"
 #include "../app/MyApiTestClient.hpp"
 #include "../app/TestComponent.hpp"
 #include "oatpp-test/web/ClientServerTestRunner.hpp"
 #include "oatpp/web/client/HttpRequestExecutor.hpp"
 
-void MC_Test::onRun() {
+void OOD_MC_Test::onRun() {
   /* Register test components */
   TestComponent component;
 
@@ -21,7 +21,7 @@ void MC_Test::onRun() {
                   objectMapper);
 
   /* Add SeleneController endpoints to the router of the test server */
-  runner.addController(std::make_shared<OOD_Controller>());
+  runner.addController(std::make_shared<MC_Controller>());
 
   /* Run test */
   runner.run(
@@ -45,7 +45,7 @@ void MC_Test::onRun() {
             MyApiTestClient::createShared(requestExecutor, objectMapper);
 
         /* Call server API */
-        auto response = client->getMCQuestion();
+        auto response = client->getOOD_MCQuestion();
 
         /* Assert that server responds with 200 */
         OATPP_ASSERT(response->getStatusCode() == 200);
@@ -56,12 +56,7 @@ void MC_Test::onRun() {
 
         /* Assert that received message is as expected */
         OATPP_ASSERT(message);
-        OATPP_ASSERT(message->questionText == "What is SE?");
-        OATPP_ASSERT(message->optionA == "Branch of computer science that deals with the design, development, testing, and maintenance of software applications");
-        OATPP_ASSERT(message->optionB == "When you combine different software programs together to engineer a new program");
-        OATPP_ASSERT(message->optionC == "Branch of computer science that deals with creating and maintaing the hardware of PCs");
-        OATPP_ASSERT(message->optionD == "Branch of computer science that deals with the creation, deletion, and maintance of Serialized Exponents (SE)");
-
+        OATPP_ASSERT(message->questionText == "What does OOD stand for?");
       },
       std::chrono::minutes(10) /* test timeout */);
 

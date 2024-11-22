@@ -1,5 +1,5 @@
-#ifndef OOD_Controller_hpp
-#define OOD_Controller_hpp
+#ifndef MC_Controller_hpp
+#define MC_Controller_hpp
 
 #include <memory>
 
@@ -12,14 +12,14 @@
 
 #include OATPP_CODEGEN_BEGIN(ApiController)  ///< Begin Codegen
 
-class OOD_Controller : public oatpp::web::server::api::ApiController {
+class MC_Controller : public oatpp::web::server::api::ApiController {
  public:
   /**
    * Constructor with object mapper.
    * @param objectMapper - default object mapper used to serialize/deserialize
    * DTOs.
    */
-  OOD_Controller(OATPP_COMPONENT(std::shared_ptr<ObjectMapper>, objectMapper))
+  MC_Controller(OATPP_COMPONENT(std::shared_ptr<ObjectMapper>, objectMapper))
       : oatpp::web::server::api::ApiController(objectMapper) {}
       
   ADD_CORS(getDP_MCQuestion)
@@ -122,4 +122,4 @@ class OOD_Controller : public oatpp::web::server::api::ApiController {
 
 #include OATPP_CODEGEN_END(ApiController)  ///< End Codegen
 
-#endif /* OOD_Controller_hpp */
+#endif /* MC_Controller_hpp */
