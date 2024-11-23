@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "src/service/MultipleChoice/TF_Question.hpp"
+#include "src/service/TrueOrFalse/TF_Question.hpp"
 #include "src/dto/SeleneDTOs.hpp"
 #include "src/dto/TF_DTOs.hpp"
 #include "oatpp/core/macro/codegen.hpp"
@@ -26,14 +26,15 @@ class TF_Controller : public oatpp::web::server::api::ApiController {
   ENDPOINT("GET", "/DP/TF", getDP_TFQuestion) {
     try {
       auto dto = Result_TF::createShared();
-      std::string path = "src/QuestionData/DesignPatterns/MultipleChoice.json";
-      MultipleChoice question = MultipleChoice(path);
+
+      std::string path = "src/QuestionData/DesignPatterns/TrueFalse.json";
+      TrueOrFalse question = TrueOrFalse(path);
 
       dto->questionText = question.getQuestionText();
       
       std::vector<std::string> Answers = question.getAnswers();
-      dto->trueText = question.Answers[0];
-      dto->falseText = question.Answers[1];
+      dto->trueText = Answers[0];
+      dto->falseText = Answers[1];
 
       return createDtoResponse(Status::CODE_200, dto);
     } catch (const std::exception& e) {
@@ -47,18 +48,17 @@ class TF_Controller : public oatpp::web::server::api::ApiController {
 
   ADD_CORS(getOOD_TFQuestion)
   ENDPOINT("GET", "/OOD/TF", getOOD_TFQuestion) {
+    auto dto = Result_TF::createShared();
 
-    auto obj_dto = Result_TF::createShared();
-    std::string path = "src/QuestionData/ObjectOrientedDesign/MultipleChoice.json";
-    
-    MultipleChoice question = MultipleChoice(path);
+    std::string path = "src/QuestionData/ObjectOrientedDesign/TrueFalse.json";
+    TrueOrFalse question = TrueOrFalse(path);
 
-    obj_dto->questionText = question.getQuestionText();
+    dto->questionText = question.getQuestionText();
     std::vector<std::string> Answers = question.getAnswers();
-    dto->trueText = question.Answers[0];
-    dto->falseText = question.Answers[1];
+    dto->trueText = Answers[0];
+    dto->falseText = Answers[1];
 
-    return createDtoResponse(Status::CODE_200, obj_dto);
+    return createDtoResponse(Status::CODE_200, dto);
   }  // GET Object-Oriented_Design TF
 
 
@@ -66,14 +66,13 @@ class TF_Controller : public oatpp::web::server::api::ApiController {
   ENDPOINT("GET", "/SE/TF", getSE_TFQuestion) {
     auto dto = Result_TF::createShared();
 
-    std::string path = "src/QuestionData/SoftwareEngineering/MultipleChoice.json";
-
-    MultipleChoice question = MultipleChoice(path);
+    std::string path = "src/QuestionData/SoftwareEngineering/TrueFalse.json";
+    TrueOrFalse question = TrueOrFalse(path);
 
     dto->questionText = question.getQuestionText();
     std::vector<std::string> Answers = question.getAnswers();
-    dto->trueText = question.Answers[0];
-    dto->falseText = question.Answers[1];
+    dto->trueText = Answers[0];
+    dto->falseText = Answers[1];
 
     return createDtoResponse(Status::CODE_200, dto);
   }  // GET Software Engineering TF
@@ -82,15 +81,15 @@ class TF_Controller : public oatpp::web::server::api::ApiController {
   ENDPOINT("GET", "/VC/TF", getVC_TFQuestion) {
     try {
       auto dto = Result_TF::createShared();  // Create DTO instance
-      std::string path = "src/QuestionData/VersionControl/MultipleChoice.json";
-        
-      MultipleChoice question = MultipleChoice(path);
+
+      std::string path = "src/QuestionData/VersionControl/TrueFalse.json";
+      TrueOrFalse question = TrueOrFalse(path);
 
       // Populate the DTO with question data
       dto->questionText = question.getQuestionText();
       std::vector<std::string> Answers = question.getAnswers();
-      dto->trueText = question.Answers[0];
-      dto->falseText = question.Answers[1];
+      dto->trueText = Answers[0];
+      dto->falseText = Answers[1];
 
       return createDtoResponse(Status::CODE_200, dto);
     } catch (const std::exception& e) {
