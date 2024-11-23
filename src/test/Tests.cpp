@@ -9,6 +9,14 @@
 #include "src/test/MultipleChoiceTests/SE_Test.hpp"
 #include "src/test/MultipleChoiceTests/VC_Test.cpp"
 #include "src/test/MultipleChoiceTests/VC_Test.hpp"
+#include "src/test/FillInBlankTests/DP_FIB_Test.cpp"
+#include "src/test/FillInBlankTests/DP_FIB_Test.hpp"
+#include "src/test/FillInBlankTests/OOD_FIB_Test.cpp"
+#include "src/test/FillInBlankTests/OOD_FIB_Test.hpp"
+#include "src/test/FillInBlankTests/SE_FIB_Test.cpp"
+#include "src/test/FillInBlankTests/SE_FIB_Test.hpp"
+#include "src/test/FillInBlankTests/VC_FIB_Test.cpp"
+#include "src/test/FillInBlankTests/VC_FIB_Test.hpp"
 
 void runTests() { 
   OATPP_RUN_TEST(SeleneTest); 
@@ -16,6 +24,10 @@ void runTests() {
   OATPP_RUN_TEST(OOD_MC_Test); 
   OATPP_RUN_TEST(SE_MC_Test);
   OATPP_RUN_TEST(VC_MC_Test);
+  OATPP_RUN_TEST(DP_FIB_TEST);
+  OATPP_RUN_TEST(OOD_FIB_TEST);
+  OATPP_RUN_TEST(SE_FIB_TEST);
+  OATPP_RUN_TEST(VC_FIB_TEST);
 }
 
 int main() {
