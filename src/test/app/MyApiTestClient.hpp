@@ -19,6 +19,12 @@ class MyApiTestClient : public oatpp::web::client::ApiClient {
   API_CALL("GET", "/OOD/MC", getOOD_MCQuestion)
   API_CALL("GET", "/DP/MC", getDP_MCQuestion)
   API_CALL("GET", "/VC/MC", getVC_MCQuestion)
+
+  // API calls for FIB endpoints
+  API_CALL("GET", "/SE/FIB", getFIB_SEQuestion)
+  API_CALL("GET", "/OOD/FIB", getFIB_OODQuestion)
+  API_CALL("GET", "/DP/FIB", getFIB_DPQuestion)
+  API_CALL("GET", "/VC/FIB", getFIB_VCQuestion)
 };
 
 /* End Api Client code generation */
