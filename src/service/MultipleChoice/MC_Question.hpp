@@ -1,5 +1,5 @@
-#ifndef QUESTION_HPP
-#define QUESTION_HPP
+#ifndef MC_QUESTION_HPP
+#define MC_QUESTION_HPP
 
 #include "src/service/Question.hpp"
 
@@ -18,4 +18,4 @@ class MultipleChoice : public Question {
      }
 };
 
-#endif // QUESTION_HPP
+#endif // MC_QUESTION_HPP
