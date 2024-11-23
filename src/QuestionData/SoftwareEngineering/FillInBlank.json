@@ -1,0 +1,10 @@
+{
+    "questions": [
+      {
+        "question": "The ________ model is a linear sequential software development process.",
+        "correct_answer": "waterfall",
+        "word_bank": ["waterfall", "agile", "spiral", "v-model", "incremental", "prototyping"]
+      }
+    ]
+  }
+  
