@@ -1,0 +1,4 @@
+- Create TF service
+- Update server.cpp with TF stuff
+- Cretae TF question data
+- Create TF tests
