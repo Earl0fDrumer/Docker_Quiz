@@ -1,0 +1,13 @@
+{
+    "questions": [
+      {
+        "question": "A Design Pattern can help a developer write code more efficiently.",
+        "answers": {
+          "a": "True",
+          "b": "Flase"
+        },
+        "correct_answer": "a"
+      }
+    ]
+  }
+  
