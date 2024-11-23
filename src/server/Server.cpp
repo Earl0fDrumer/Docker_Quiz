@@ -2,6 +2,7 @@
 
 #include "../controller/SeleneController.hpp"
 #include "../controller/MultipleChoice/MC_Controller.hpp"
+#include "../controller/TrueOrFalse/TF_Controller.hpp"
 #include "ServerComponents.hpp"
 #include "oatpp/core/macro/codegen.hpp"
 #include "oatpp/network/tcp/server/ConnectionProvider.hpp"
@@ -19,9 +20,13 @@ void run() {
   auto controller = std::make_shared<SeleneController>();
   router->addController(controller);
 
-  /* Create OODController and add all of its endpoints to router */
+  /* Create MCController and add all of its endpoints to router */
   auto obj_MC_Controller = std::make_shared<MC_Controller>();
   router->addController(obj_MC_Controller);
+
+  /* Create TFController and add all of its endpoints to router */
+  auto obj_TF_Controller = std::make_shared<TF_Controller>();
+  router->addController(obj_TF_Controller);
 
   /* Create HTTP connection handler with router */
   auto connectionHandler =
