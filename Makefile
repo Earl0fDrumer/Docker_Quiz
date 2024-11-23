@@ -40,7 +40,7 @@ clean:
 	doxygen/html \
 	obj bin \
 
-$(PROGRAM_SERVER): $(SRC_DIR_SERVER) $(SRC_DIR_SERVICE_MC_QUESTION) $(SRC_DIR_SERVICE_DP_QUESTION_MC_QUESTION) $(SRC_DIR_SERVICE_VC_QUESTION)
+$(PROGRAM_SERVER): $(SRC_DIR_SERVER)
 	$(CXX) $(CXXFLAGS) -o $(PROGRAM_SERVER) $(OATPP_INCLUDE) \
 	$(SRC_DIR_SERVER)/*.cpp \
 	$(SRC_DIR_DTO)/*.hpp \
@@ -57,7 +57,7 @@ start:
 stop:
 	docker compose -f "compose.yml" down
 
-$(TEST_SERVER): $(SRC_DIR_TESTS) $(SRC_DIR_TESTS_MC_TEST) $(SRC_DIR_TESTS_MC_Test) $(SRC_DIR_TESTS_Selene) $(SRC_DIR_TESTS_MC_TEST) $(SRC_DIR_TESTS_MC_Test)
+$(TEST_SERVER): $(SRC_DIR_TESTS)
 	$(CXX) $(CXXFLAGS) -o $(TEST_SERVER) $(OATPP_INCLUDE) \
 	$(SRC_DIR_TESTS_Selene)/*.cpp \
 	$(SRC_DIR_TESTS_MultipleChoice)/*.cpp \
