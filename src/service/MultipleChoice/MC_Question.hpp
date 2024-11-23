@@ -13,6 +13,7 @@ class MultipleChoice : public Question {
         readDataFile();
 
         QuestionText = jsonFileData["questions"][0]["question"];
+        CorrectAnswer = jsonFileData["questions"][0]["correct_answer"];
         Answers.push_back(jsonFileData["questions"][0]["answers"]["a"]);
         Answers.push_back(jsonFileData["questions"][0]["answers"]["b"]);
         Answers.push_back(jsonFileData["questions"][0]["answers"]["c"]);
