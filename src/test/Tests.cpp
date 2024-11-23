@@ -10,12 +10,21 @@
 #include "src/test/MultipleChoiceTests/VC_Test.cpp"
 #include "src/test/MultipleChoiceTests/VC_Test.hpp"
 
+#include "src/test/TrueOrFalseTests/DP_Test.cpp"
+#include "src/test/TrueOrFalseTests/DP_Test.hpp"
+
+
+
 void runTests() { 
-  OATPP_RUN_TEST(SeleneTest); 
+  OATPP_RUN_TEST(SeleneTest);
+  // Multiple Choice Tests 
   OATPP_RUN_TEST(DP_MC_Test); 
   OATPP_RUN_TEST(OOD_MC_Test); 
   OATPP_RUN_TEST(SE_MC_Test);
   OATPP_RUN_TEST(VC_MC_Test);
+  //TrueOrFalse Tests
+  OATPP_RUN_TEST(DP_TF_Test);
+
 }
 
 int main() {
