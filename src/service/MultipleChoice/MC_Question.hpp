@@ -1,10 +1,7 @@
-#include "src/service/json.hpp"
-#include "src/service/Question.hpp"
-#include <vector>
-#include <string>
-#include <fstream>
+#ifndef QUESTION_HPP
+#define QUESTION_HPP
 
-using json = nlohmann::json;
+#include "src/service/Question.hpp"
 
 class MultipleChoice : public Question {
     public:  
@@ -21,3 +18,4 @@ class MultipleChoice : public Question {
      }
 };
 
+#endif // QUESTION_HPP
