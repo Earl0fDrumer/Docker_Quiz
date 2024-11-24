@@ -25,7 +25,6 @@ class MyApiTestClient : public oatpp::web::client::ApiClient {
   API_CALL("GET", "/OOD/TF", getOOD_TFQuestion)
   API_CALL("GET", "/SE/TF", getSE_TFQuestion)
   API_CALL("GET", "/VC/TF", getVC_TFQuestion)
-
 };
 
 /* End Api Client code generation */

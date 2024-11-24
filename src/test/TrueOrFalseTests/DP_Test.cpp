@@ -23,28 +23,36 @@ void DP_TF_Test::onRun() {
   runner.run(
       [this, &runner] {  // Keep this format, capture `runner`
         // Get client connection provider for Api Client
-        OATPP_COMPONENT(std::shared_ptr<oatpp::network::ClientConnectionProvider>, clientConnectionProvider);
+        OATPP_COMPONENT(
+          std::shared_ptr<oatpp::network::ClientConnectionProvider>,
+           clientConnectionProvider);
 
         // Get object mapper component
-        OATPP_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>, objectMapper);
+        OATPP_COMPONENT(
+          std::shared_ptr<oatpp::data::mapping::ObjectMapper>, objectMapper);
 
         // Create http request executor for Api Client
         auto requestExecutor =
-            oatpp::web::client::HttpRequestExecutor::createShared(clientConnectionProvider);
+            oatpp::web::client::HttpRequestExecutor::createShared(
+              clientConnectionProvider);
 
         // Create Test API client
-        auto client = MyApiTestClient::createShared(requestExecutor, objectMapper);
+        auto client =
+          MyApiTestClient::createShared(requestExecutor, objectMapper);
 
         // Call server API
         auto response = client->getDP_TFQuestion();
         OATPP_ASSERT(response->getStatusCode() == 200);
 
         // Read response body as DPResult_MC DTO
-        auto message = response->readBodyToDto<oatpp::Object<Result_TF>>(objectMapper.get());
+        auto message =
+          response->readBodyToDto<oatpp::Object<Result_TF>>(
+            objectMapper.get());
 
         // Assert that received message is as expected
         OATPP_ASSERT(message);
-        OATPP_ASSERT(message->questionText == "A Design Pattern can help a developer write code more efficiently.");
+        OATPP_ASSERT(message->questionText ==
+         "A Design Pattern can help a developer write code more efficiently.");
       },
       std::chrono::minutes(10) /* test timeout */);
 

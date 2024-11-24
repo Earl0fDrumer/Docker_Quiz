@@ -4,9 +4,9 @@
 #include "oatpp-test/UnitTest.hpp"
 
 class DP_TF_Test : public oatpp::test::UnitTest {
-public:
+ public:
   DP_TF_Test() : UnitTest("TEST[DP_TF_Test]") {}
-  inline void onRun() override;
+  void onRun() override;
 };
 
 #endif // DP_TF_TEST_HPP

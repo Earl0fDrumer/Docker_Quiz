@@ -18,21 +18,31 @@ void VC_TF_Test::onRun() {
 
   runner.run(
       [this, &runner] {
-        OATPP_COMPONENT(std::shared_ptr<oatpp::network::ClientConnectionProvider>, clientConnectionProvider);
-        OATPP_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>, objectMapper);
+        OATPP_COMPONENT(
+          std::shared_ptr<oatpp::network::ClientConnectionProvider>,
+            clientConnectionProvider);
+
+        OATPP_COMPONENT(
+          std::shared_ptr<oatpp::data::mapping::ObjectMapper>, objectMapper);
 
         auto requestExecutor =
-            oatpp::web::client::HttpRequestExecutor::createShared(clientConnectionProvider);
+          oatpp::web::client::HttpRequestExecutor::createShared(
+            clientConnectionProvider);
 
-        auto client = MyApiTestClient::createShared(requestExecutor, objectMapper);
+        auto client =
+          MyApiTestClient::createShared(requestExecutor, objectMapper);
 
         auto response = client->getVC_TFQuestion();
         OATPP_ASSERT(response->getStatusCode() == 200);
 
-        auto message = response->readBodyToDto<oatpp::Object<Result_TF>>(objectMapper.get());
+        auto message =
+          response->readBodyToDto<oatpp::Object<Result_TF>>(
+            objectMapper.get());
 
         OATPP_ASSERT(message);
-        OATPP_ASSERT(message->questionText == "Version Control is essential when multiple people are working on a project");
+        OATPP_ASSERT(message->questionText ==
+          "Version Control is essential when multiple"
+          " people are working on a project");
       },
       std::chrono::minutes(1) /* test timeout */);
 

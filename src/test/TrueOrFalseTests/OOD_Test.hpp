@@ -6,7 +6,7 @@
 class OOD_TF_Test : public oatpp::test::UnitTest {
  public:
   OOD_TF_Test() : UnitTest("TEST[OOD_TF_Test]") {}
-  inline void onRun() override;
+  void onRun() override;
 };
 
 #endif  // OOD_TF_TEST_HPP

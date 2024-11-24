@@ -6,7 +6,7 @@
 class VC_TF_Test : public oatpp::test::UnitTest {
  public:
   VC_TF_Test() : UnitTest("TEST[VC_TF_Test]") {}
-  inline void onRun() override;
+  void onRun() override;
 };
 
 #endif  // VC_TF_TEST_HPP

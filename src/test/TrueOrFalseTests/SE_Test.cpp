@@ -32,8 +32,8 @@ void SE_TF_Test::onRun() {
             clientConnectionProvider);
 
         /* Get object mapper component */
-        OATPP_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>,
-                        objectMapper);
+        OATPP_COMPONENT(
+            std::shared_ptr<oatpp::data::mapping::ObjectMapper>, objectMapper);
 
         /* Create http request executor for Api Client */
         auto requestExecutor =
@@ -52,11 +52,13 @@ void SE_TF_Test::onRun() {
 
         /* Read response body as MessageDto */
         auto message =
-            response->readBodyToDto<oatpp::Object<Result_TF>>(objectMapper.get());
+            response->readBodyToDto<oatpp::Object<Result_TF>>(
+                objectMapper.get());
 
         /* Assert that received message is as expected */
         OATPP_ASSERT(message);
-        OATPP_ASSERT(message->questionText == "Testing and Maintenance are considered to be parts of SE.");
+        OATPP_ASSERT(message->questionText ==
+            "Testing and Maintenance are considered to be parts of SE.");
       },
       std::chrono::minutes(10) /* test timeout */);
 

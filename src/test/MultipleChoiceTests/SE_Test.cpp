@@ -32,8 +32,8 @@ void SE_MC_Test::onRun() {
             clientConnectionProvider);
 
         /* Get object mapper component */
-        OATPP_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>,
-                        objectMapper);
+        OATPP_COMPONENT(
+            std::shared_ptr<oatpp::data::mapping::ObjectMapper>, objectMapper);
 
         /* Create http request executor for Api Client */
         auto requestExecutor =
@@ -52,16 +52,24 @@ void SE_MC_Test::onRun() {
 
         /* Read response body as MessageDto */
         auto message =
-            response->readBodyToDto<oatpp::Object<Result_MC>>(objectMapper.get());
+            response->readBodyToDto<oatpp::Object<Result_MC>>(
+                objectMapper.get());
 
         /* Assert that received message is as expected */
         OATPP_ASSERT(message);
         OATPP_ASSERT(message->questionText == "What is SE?");
-        OATPP_ASSERT(message->optionA == "Branch of computer science that deals with the design, development, testing, and maintenance of software applications");
-        OATPP_ASSERT(message->optionB == "When you combine different software programs together to engineer a new program");
-        OATPP_ASSERT(message->optionC == "Branch of computer science that deals with creating and maintaing the hardware of PCs");
-        OATPP_ASSERT(message->optionD == "Branch of computer science that deals with the creation, deletion, and maintance of Serialized Exponents (SE)");
-
+        OATPP_ASSERT(message->optionA ==
+         "Branch of computer science that deals with the design,"
+         " development, testing, and maintenance of software applications");
+        OATPP_ASSERT(message->optionB ==
+         "When you combine different software programs together to"
+         " engineer a new program");
+        OATPP_ASSERT(message->optionC ==
+         "Branch of computer science that deals with creating and"
+         " maintaing the hardware of PCs");
+        OATPP_ASSERT(message->optionD ==
+         "Branch of computer science that deals with the creation,"
+         " deletion, and maintance of Serialized Exponents (SE)");
       },
       std::chrono::minutes(10) /* test timeout */);
 

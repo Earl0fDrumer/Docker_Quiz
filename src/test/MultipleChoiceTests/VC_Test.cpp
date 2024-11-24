@@ -18,21 +18,30 @@ void VC_MC_Test::onRun() {
 
   runner.run(
       [this, &runner] {
-        OATPP_COMPONENT(std::shared_ptr<oatpp::network::ClientConnectionProvider>, clientConnectionProvider);
-        OATPP_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>, objectMapper);
+        OATPP_COMPONENT(
+          std::shared_ptr<oatpp::network::ClientConnectionProvider>,
+           clientConnectionProvider);
+
+        OATPP_COMPONENT(
+          std::shared_ptr<oatpp::data::mapping::ObjectMapper>, objectMapper);
 
         auto requestExecutor =
-            oatpp::web::client::HttpRequestExecutor::createShared(clientConnectionProvider);
+            oatpp::web::client::HttpRequestExecutor::createShared(
+              clientConnectionProvider);
 
-        auto client = MyApiTestClient::createShared(requestExecutor, objectMapper);
+        auto client =
+          MyApiTestClient::createShared(requestExecutor, objectMapper);
 
         auto response = client->getVC_MCQuestion();
         OATPP_ASSERT(response->getStatusCode() == 200);
 
-        auto message = response->readBodyToDto<oatpp::Object<Result_MC>>(objectMapper.get());
+        auto message =
+          response->readBodyToDto<oatpp::Object<Result_MC>>(
+           objectMapper.get());
 
         OATPP_ASSERT(message);
-        OATPP_ASSERT(message->questionText == "Which command is used to initialize a Git repository?");
+        OATPP_ASSERT(message->questionText ==
+          "Which command is used to initialize a Git repository?");
 
         // Ensure options are correct
         OATPP_ASSERT(message->optionA == "git init");
