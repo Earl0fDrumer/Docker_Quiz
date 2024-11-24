@@ -9,4 +9,7 @@ To Do:
     - Endpoints
         - Random Topic random type
         - Specific topic random type
-- DELETE SELENE WHEN DONE
+
+    - Ask Anvik about make static not working
+
+    - DELETE SELENE WHEN DONE
