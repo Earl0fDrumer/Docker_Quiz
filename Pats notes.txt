@@ -4,4 +4,9 @@
     - update tests.cpp and directories
     - update MyApiTestClient.hpp
 
+To Do:
+    - Pull a different question from Data each time
+    - Endpoints
+        - Random Topic random type
+        - Specific topic random type
 - DELETE SELENE WHEN DONE
