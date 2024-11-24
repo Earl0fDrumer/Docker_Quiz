@@ -16,12 +16,15 @@ class MyApiTestClient : public oatpp::web::client::ApiClient {
 
   //Multiple Choice
   API_CALL("GET", "/selene", getSelene)
-  API_CALL("GET", "/SE/MC", getSE_MCQuestion)
-  API_CALL("GET", "/OOD/MC", getOOD_MCQuestion)
   API_CALL("GET", "/DP/MC", getDP_MCQuestion)
+  API_CALL("GET", "/OOD/MC", getOOD_MCQuestion)
+  API_CALL("GET", "/SE/MC", getSE_MCQuestion)
   API_CALL("GET", "/VC/MC", getVC_MCQuestion)
   //True or Flase
   API_CALL("GET", "/DP/TF", getDP_TFQuestion)
+  API_CALL("GET", "/OOD/TF", getOOD_TFQuestion)
+  API_CALL("GET", "/SE/TF", getSE_TFQuestion)
+  API_CALL("GET", "/VC/TF", getVC_TFQuestion)
 
 };
 

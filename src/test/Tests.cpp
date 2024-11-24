@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "selene/SeleneTest.hpp"
+//Multiple Choice Tests
 #include "src/test/MultipleChoiceTests/DP_Test.cpp"
 #include "src/test/MultipleChoiceTests/DP_Test.hpp"
 #include "src/test/MultipleChoiceTests/OOD_Test.cpp"
@@ -10,8 +11,15 @@
 #include "src/test/MultipleChoiceTests/VC_Test.cpp"
 #include "src/test/MultipleChoiceTests/VC_Test.hpp"
 
+//True or False Tests
 #include "src/test/TrueOrFalseTests/DP_Test.cpp"
 #include "src/test/TrueOrFalseTests/DP_Test.hpp"
+#include "src/test/TrueOrFalseTests/OOD_Test.cpp"
+#include "src/test/TrueOrFalseTests/OOD_Test.hpp"
+#include "src/test/TrueOrFalseTests/SE_Test.cpp"
+#include "src/test/TrueOrFalseTests/SE_Test.hpp"
+#include "src/test/TrueOrFalseTests/VC_Test.cpp"
+#include "src/test/TrueOrFalseTests/VC_Test.hpp"
 
 
 
@@ -24,6 +32,9 @@ void runTests() {
   OATPP_RUN_TEST(VC_MC_Test);
   //TrueOrFalse Tests
   OATPP_RUN_TEST(DP_TF_Test);
+  OATPP_RUN_TEST(OOD_TF_Test);
+  OATPP_RUN_TEST(SE_TF_Test);
+  OATPP_RUN_TEST(VC_TF_Test);
 
 }
 
