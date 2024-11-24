@@ -9,6 +9,16 @@
               "d": "git create"
           },
           "correct_answer": "a"
-      }
+      },
+      {
+        "question": "What does the command 'git branch' do?",
+        "answers": {
+            "a": "deletes all branches",
+            "b": "creates a new branch",
+            "c": "Lists all branches in the repository",
+            "d": "Tells you your current branch within the repository"
+        },
+        "correct_answer": "c"
+    }
   ]
 }

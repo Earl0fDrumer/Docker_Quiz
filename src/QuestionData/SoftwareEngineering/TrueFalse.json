@@ -7,6 +7,14 @@
           "b": "False"
         },
         "correct_answer": "a"
+      }, 
+      {
+        "question": "Computer Science provides the theories while SE teaches the tools and techniques",
+        "answers": {
+          "a": "True",
+          "b": "False"
+        },
+        "correct_answer": "a"
       }
     ]
   }

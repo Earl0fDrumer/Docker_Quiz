@@ -7,6 +7,14 @@
           "b": "False"
         },
         "correct_answer": "a"
+      },
+      {
+        "question": "Synchronizing work is just one of the uses of Version Control",
+        "answers": {
+          "a": "True",
+          "b": "False"
+        },
+        "correct_answer": "a"
       }
     ]
   }

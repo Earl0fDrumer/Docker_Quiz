@@ -11,14 +11,14 @@
         "correct_answer": "a"
       },
       {
-        "question": "What is the largest planet in our Solar System?",
+        "question": "Which one of these is false regarding the importance of SE?",
         "answers": {
-          "a": "Earth",
-          "b": "Jupiter",
-          "c": "Saturn",
-          "d": "Mars"
+          "a": "Governments and Large companies are dependent on software",
+          "b": "Efficient and high quality code is cost efficient in the long run",
+          "c": "A very small portion of the world is reliant on software",
+          "d": "Apply principles of SE allows for more effecient and higher quality code"
         },
-        "correct_answer": "b"
+        "correct_answer": "c"
       }
     ]
   }

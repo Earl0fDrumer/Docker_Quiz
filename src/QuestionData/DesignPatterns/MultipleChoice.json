@@ -9,6 +9,16 @@
         "d": "Strategy Pattern"
       },
       "correct_answer": "b"
+    }, 
+    {
+      "question": "Which one of these are NOT a Creational Pattern?",
+      "answers": {
+        "a": "Factory Method",
+        "b": "Builder",
+        "c": "Abstract Factory",
+        "d": "Adapter"
+      },
+      "correct_answer": "d"
     }
   ]
 }
