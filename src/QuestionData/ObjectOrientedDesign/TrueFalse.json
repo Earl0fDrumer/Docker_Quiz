@@ -1,0 +1,13 @@
+{
+    "questions": [
+      {
+        "question": "SOLID stands for Simple Owesome luxurious instantaneous development",
+        "answers": {
+          "a": "True",
+          "b": "False"
+        },
+        "correct_answer": "b"
+      }
+    ]
+  }
+  
