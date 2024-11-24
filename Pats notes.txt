@@ -1,4 +1,7 @@
-- Create TF service
-- Update server.cpp with TF stuff
-- Cretae TF question data
-- Create TF tests
+
+- Create tests
+    - change a couple things in .cpp
+    - update tests.cpp and directories
+    - update MyApiTestClient.hpp
+
+- DELETE SELENE WHEN DONE
