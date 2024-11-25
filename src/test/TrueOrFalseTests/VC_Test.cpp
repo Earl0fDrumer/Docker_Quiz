@@ -3,51 +3,46 @@
 #include <iostream>
 #include <memory>
 
-#include "src/controller/MultipleChoice/MC_Controller.hpp"
+#include "src/controller/TrueOrFalse/TF_Controller.hpp"
 #include "../app/MyApiTestClient.hpp"
 #include "../app/TestComponent.hpp"
 #include "oatpp-test/web/ClientServerTestRunner.hpp"
 #include "oatpp/web/client/HttpRequestExecutor.hpp"
 
-void VC_MC_Test::onRun() {
+void VC_TF_Test::onRun() {
   TestComponent component;
 
   oatpp::test::web::ClientServerTestRunner runner;
 
-  runner.addController(std::make_shared<MC_Controller>());
+  runner.addController(std::make_shared<TF_Controller>());
 
   runner.run(
       [this, &runner] {
         OATPP_COMPONENT(
           std::shared_ptr<oatpp::network::ClientConnectionProvider>,
-           clientConnectionProvider);
+            clientConnectionProvider);
 
         OATPP_COMPONENT(
           std::shared_ptr<oatpp::data::mapping::ObjectMapper>, objectMapper);
 
         auto requestExecutor =
-            oatpp::web::client::HttpRequestExecutor::createShared(
-              clientConnectionProvider);
+          oatpp::web::client::HttpRequestExecutor::createShared(
+            clientConnectionProvider);
 
         auto client =
           MyApiTestClient::createShared(requestExecutor, objectMapper);
 
-        auto response = client->getVC_MCQuestion();
+        auto response = client->getVC_TFQuestion();
         OATPP_ASSERT(response->getStatusCode() == 200);
 
         auto message =
-          response->readBodyToDto<oatpp::Object<Result_MC>>(
-           objectMapper.get());
+          response->readBodyToDto<oatpp::Object<Result_TF>>(
+            objectMapper.get());
 
         OATPP_ASSERT(message);
         OATPP_ASSERT(message->questionText ==
-          "Which command is used to initialize a Git repository?");
-
-        // Ensure options are correct
-        OATPP_ASSERT(message->optionA == "git init");
-        OATPP_ASSERT(message->optionB == "git start");
-        OATPP_ASSERT(message->optionC == "git begin");
-        OATPP_ASSERT(message->optionD == "git create");
+          "Version Control is essential when multiple"
+          " people are working on a project");
       },
       std::chrono::minutes(1) /* test timeout */);
 

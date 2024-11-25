@@ -1,0 +1,21 @@
+{
+    "questions": [
+      {
+        "question": "SOLID stands for Simple Occular Luxurious Instantaneous Development",
+        "answers": {
+          "a": "True",
+          "b": "False"
+        },
+        "correct_answer": "b"
+      },
+      {
+        "question": "The Interface Segregation Principle refers to the idea that a client should never be forced to implement an interface it doesn't use",
+        "answers": {
+          "a": "True",
+          "b": "False"
+        },
+        "correct_answer": "a"
+      }
+    ]
+  }
+  

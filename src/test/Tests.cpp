@@ -2,24 +2,37 @@
 
 #include "selene/SeleneTest.hpp"
 
+//Multiple Choice Tests
 #include "src/test/MultipleChoiceTests/DP_Test.hpp"
 #include "src/test/MultipleChoiceTests/OOD_Test.hpp"
 #include "src/test/MultipleChoiceTests/SE_Test.hpp"
 #include "src/test/MultipleChoiceTests/VC_Test.hpp"
 
+//True or False Tests
+#include "src/test/TrueOrFalseTests/DP_Test.hpp"
+#include "src/test/TrueOrFalseTests/OOD_Test.hpp"
+#include "src/test/TrueOrFalseTests/SE_Test.hpp"
+#include "src/test/TrueOrFalseTests/VC_Test.hpp"
+
+//Matching Tests
 #include "src/test/MatchingTests/DP_Test.hpp"
 #include "src/test/MatchingTests/OOD_Test.hpp"
 #include "src/test/MatchingTests/SE_Test.hpp"
 #include "src/test/MatchingTests/VC_Test.hpp"
 
-void runTests() { 
+void runTests() {
   OATPP_RUN_TEST(SeleneTest);
-
-  OATPP_RUN_TEST(DP_MC_Test); 
-  OATPP_RUN_TEST(OOD_MC_Test); 
+  // Multiple Choice Tests
+  OATPP_RUN_TEST(DP_MC_Test);
+  OATPP_RUN_TEST(OOD_MC_Test);
   OATPP_RUN_TEST(SE_MC_Test);
   OATPP_RUN_TEST(VC_MC_Test);
-
+  //TrueOrFalse Tests
+  OATPP_RUN_TEST(DP_TF_Test);
+  OATPP_RUN_TEST(OOD_TF_Test);
+  OATPP_RUN_TEST(SE_TF_Test);
+  OATPP_RUN_TEST(VC_TF_Test);
+  //Matching Tests
   OATPP_RUN_TEST(DP_MAT_Test);
   OATPP_RUN_TEST(OOD_MAT_Test); 
   OATPP_RUN_TEST(SE_MAT_Test); 

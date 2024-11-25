@@ -32,8 +32,8 @@ void OOD_MC_Test::onRun() {
             clientConnectionProvider);
 
         /* Get object mapper component */
-        OATPP_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>,
-                        objectMapper);
+        OATPP_COMPONENT(
+            std::shared_ptr<oatpp::data::mapping::ObjectMapper>, objectMapper);
 
         /* Create http request executor for Api Client */
         auto requestExecutor =
@@ -52,7 +52,8 @@ void OOD_MC_Test::onRun() {
 
         /* Read response body as MessageDto */
         auto message =
-            response->readBodyToDto<oatpp::Object<Result_MC>>(objectMapper.get());
+            response->readBodyToDto<oatpp::Object<Result_MC>>(
+                objectMapper.get());
 
         /* Assert that received message is as expected */
         OATPP_ASSERT(message);

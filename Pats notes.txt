@@ -1,0 +1,16 @@
+
+- Create tests
+    - change a couple things in .cpp
+    - update tests.cpp and directories
+    - update MyApiTestClient.hpp
+
+To Do:
+    - Pull a different question from Data each time
+    - Endpoints
+        - Random Topic random type
+        - Specific topic random type
+
+    - Figure how to have make style check all files (static prob does the same thing)
+    - Ask Anvik about make static not working
+
+    - DELETE SELENE WHEN DONE
