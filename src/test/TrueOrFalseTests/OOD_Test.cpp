@@ -58,8 +58,8 @@ void OOD_TF_Test::onRun() {
         /* Assert that received message is as expected */
         OATPP_ASSERT(message);
         OATPP_ASSERT(message->questionText ==
-         "SOLID stands for Simple Occular luxurious"
-         " instantaneous development");
+         "SOLID stands for Simple Occular Luxurious"
+         " Instantaneous Development");
       },
       std::chrono::minutes(10) /* test timeout */);
 
