@@ -52,7 +52,7 @@ $(PROGRAM_SERVER): $(SRC_DIR_SERVER)
 	$(SRC_DIR_SERVICE_TF_QUESTION)/*.hpp \
 	$(SRC_DIR_SERVICE_MAT_QUESTION)/*.hpp \
 	$(SRC_DIR_CONTROLLER)/*.hpp \
- $(LINKFLAGS_APP)
+ 	$(LINKFLAGS_APP)
 
 docker:
 	docker build --pull --rm -f "Dockerfile" -t selene:latest "."
@@ -70,6 +70,7 @@ $(TEST_SERVER): $(SRC_DIR_TESTS)
 	$(SRC_DIR_TESTS_TrueOrFalse)/*.cpp \
 	$(SRC_DIR_TESTS_Matching)/*.cpp \
 	$(SRC_DIR_TESTS)/*.cpp $(LINKFLAGS_TEST)
+
 static: ${SRC_DIR_SERVER} ${SRC_DIR_CLIENT} ${SRC_DIR_SERVICE_MC_QUESTION} ${SRC_DIR_SERVICE_DP_QUESTION} ${TEST_DIR}
 	${STATIC_ANALYSIS} --verbose --enable=all ${SRC_DIR_SERVER} ${SRC_DIR_CLIENT} ${SRC_DIR_SERVICE_MC_QUESTION} ${SRC_DIR_SERVICE_DP_QUESTION} ${TEST_DIR} ${SRC_INCLUDE} --suppress=missingInclude
 
