@@ -22,7 +22,7 @@ void DP_FIB_Test::onRun() {
 
   /* Run the test */
   runner.run(
-      [this, &runner] {
+      [this, &runner]() {
         /* Get client connection provider for API client */
         OATPP_COMPONENT(std::shared_ptr<oatpp::network::ClientConnectionProvider>, clientConnectionProvider);
 
@@ -39,7 +39,9 @@ void DP_FIB_Test::onRun() {
 
         /* Test the Design Patterns Fill-In-The-Blank question */
         OATPP_LOGI("DP_FIB_Test", "Testing Design Patterns FIB...");
-        auto response = client->getFIB("/DP/FIB");
+
+        /* Send request to the endpoint */
+        auto response = client->getDP_FIBQuestion();
 
         /* Assert that the server responds with a 200 status code */
         OATPP_ASSERT(response->getStatusCode() == 200);
@@ -56,15 +58,25 @@ void DP_FIB_Test::onRun() {
         /* Assert the size of the word bank */
         OATPP_ASSERT(question->wordBank->size() == 6);
 
-        /* Assert that the word bank contains the expected options */
-        OATPP_ASSERT(question->wordBank->contains("Singleton"));
-        OATPP_ASSERT(question->wordBank->contains("Factory"));
-        OATPP_ASSERT(question->wordBank->contains("Adapter"));
-        OATPP_ASSERT(question->wordBank->contains("Observer"));
-        OATPP_ASSERT(question->wordBank->contains("Builder"));
-        OATPP_ASSERT(question->wordBank->contains("Decorator"));
+        /* List of expected words */
+        std::vector<std::string> expectedWords = {
+            "Singleton", "Factory", "Adapter", "Observer", "Builder", "Decorator"};
+
+        /* Check that each expected word is in the word bank */
+        for (const auto& expectedWord : expectedWords) {
+          bool found = false;
+          if (question->wordBank && question->wordBank.get()) {
+            for (const auto& word : *(question->wordBank.get())) {
+              if (word == expectedWord.c_str()) {
+                found = true;
+                break;
+              }
+            }
+          }
+          OATPP_ASSERT(found);  // Assert that the word was found
+        }
       },
-      std::chrono::minutes(10) /* test timeout */);
+      std::chrono::minutes(1) /* test timeout */);
 
   /* Wait for server threads to finish */
   std::this_thread::sleep_for(std::chrono::seconds(1));

@@ -22,7 +22,7 @@ void SE_FIB_Test::onRun() {
 
   /* Run the test */
   runner.run(
-      [this, &runner] {
+      [this, &runner]() {
         /* Get client connection provider for API client */
         OATPP_COMPONENT(std::shared_ptr<oatpp::network::ClientConnectionProvider>, clientConnectionProvider);
 
@@ -39,7 +39,9 @@ void SE_FIB_Test::onRun() {
 
         /* Test the Software Engineering Fill-In-The-Blank question */
         OATPP_LOGI("SE_FIB_Test", "Testing Software Engineering FIB...");
-        auto response = client->getFIB("/SE/FIB");
+
+        /* Send request to the endpoint */
+        auto response = client->getSE_FIBQuestion();  // Adjusted method call
 
         /* Assert that the server responds with a 200 status code */
         OATPP_ASSERT(response->getStatusCode() == 200);
@@ -54,17 +56,27 @@ void SE_FIB_Test::onRun() {
         OATPP_ASSERT(question->questionText == "The ________ model is a linear sequential software development process.");
 
         /* Assert the size of the word bank */
-        OATPP_ASSERT(question->wordBank->size() == 6);
+        OATPP_ASSERT(question->wordBank && question->wordBank->size() == 6);
 
-        /* Assert that the word bank contains the expected options */
-        OATPP_ASSERT(question->wordBank->contains("waterfall"));
-        OATPP_ASSERT(question->wordBank->contains("agile"));
-        OATPP_ASSERT(question->wordBank->contains("spiral"));
-        OATPP_ASSERT(question->wordBank->contains("v-model"));
-        OATPP_ASSERT(question->wordBank->contains("incremental"));
-        OATPP_ASSERT(question->wordBank->contains("prototyping"));
+        /* List of expected words */
+        std::vector<std::string> expectedWords = {
+            "waterfall", "agile", "spiral", "v-model", "incremental", "prototyping"};
+
+        /* Check that each expected word is in the word bank */
+        for (const auto& expectedWord : expectedWords) {
+          bool found = false;
+          if (question->wordBank && question->wordBank.get()) {
+            for (const auto& word : *(question->wordBank.get())) {
+              if (word == expectedWord.c_str()) {
+                found = true;
+                break;
+              }
+            }
+          }
+          OATPP_ASSERT(found);  // Assert that the word was found
+        }
       },
-      std::chrono::minutes(10) /* test timeout */);
+      std::chrono::minutes(1) /* test timeout */);
 
   /* Wait for server threads to finish */
   std::this_thread::sleep_for(std::chrono::seconds(1));

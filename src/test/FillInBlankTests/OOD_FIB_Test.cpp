@@ -1,6 +1,6 @@
 #include "OOD_FIB_Test.hpp"
 
-#include "../../controller/FillInBlank/FillInBlank_Controller.hpp"
+#include "../../controller//FillInBlank/FillInBlank_Controller.hpp"
 #include "../app/MyApiTestClient.hpp"
 #include "../app/TestComponent.hpp"
 #include "oatpp-test/web/ClientServerTestRunner.hpp"
@@ -22,7 +22,7 @@ void OOD_FIB_Test::onRun() {
 
   /* Run the test */
   runner.run(
-      [this, &runner] {
+      [this, &runner]() {
         /* Get client connection provider for API client */
         OATPP_COMPONENT(std::shared_ptr<oatpp::network::ClientConnectionProvider>, clientConnectionProvider);
 
@@ -39,7 +39,9 @@ void OOD_FIB_Test::onRun() {
 
         /* Test the OOD Fill-In-The-Blank question */
         OATPP_LOGI("OOD_FIB_Test", "Testing Object-Oriented Design FIB...");
-        auto response = client->getFIB("/OOD/FIB");
+
+        /* Send request to the endpoint */
+        auto response = client->getOOD_FIBQuestion();
 
         /* Assert that the server responds with a 200 status code */
         OATPP_ASSERT(response->getStatusCode() == 200);
@@ -56,15 +58,25 @@ void OOD_FIB_Test::onRun() {
         /* Assert the size of the word bank */
         OATPP_ASSERT(question->wordBank->size() == 6);
 
-        /* Assert that the word bank contains the expected options */
-        OATPP_ASSERT(question->wordBank->contains("encapsulation"));
-        OATPP_ASSERT(question->wordBank->contains("inheritance"));
-        OATPP_ASSERT(question->wordBank->contains("polymorphism"));
-        OATPP_ASSERT(question->wordBank->contains("abstraction"));
-        OATPP_ASSERT(question->wordBank->contains("composition"));
-        OATPP_ASSERT(question->wordBank->contains("delegation"));
+        /* List of expected words */
+        std::vector<std::string> expectedWords = {
+            "encapsulation", "inheritance", "polymorphism", "abstraction", "composition", "delegation"};
+
+        /* Check that each expected word is in the word bank */
+        for (const auto& expectedWord : expectedWords) {
+          bool found = false;
+          if (question->wordBank && question->wordBank.get()) {
+            for (const auto& word : *(question->wordBank.get())) {
+              if (word == expectedWord.c_str()) {
+                found = true;
+                break;
+              }
+            }
+          }
+          OATPP_ASSERT(found);  // Assert that the word was found
+        }
       },
-      std::chrono::minutes(10) /* test timeout */);
+      std::chrono::minutes(1) /* test timeout */);
 
   /* Wait for server threads to finish */
   std::this_thread::sleep_for(std::chrono::seconds(1));

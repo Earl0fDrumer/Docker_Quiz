@@ -39,7 +39,9 @@ void VC_FIB_Test::onRun() {
 
         /* Test the Version Control Fill-In-The-Blank question */
         OATPP_LOGI("VC_FIB_Test", "Testing Version Control FIB...");
-        auto response = client->getFIB("/VC/FIB");
+
+        /* Send request to the endpoint */
+        auto response = client->getVC_FIBQuestion();
 
         /* Assert that the server responds with a 200 status code */
         OATPP_ASSERT(response->getStatusCode() == 200);
@@ -54,17 +56,27 @@ void VC_FIB_Test::onRun() {
         OATPP_ASSERT(question->questionText == "In Git, 'git ________' is used to upload local repository content to a remote repository.");
 
         /* Assert the size of the word bank */
-        OATPP_ASSERT(question->wordBank->size() == 6);
+        OATPP_ASSERT(question->wordBank && question->wordBank->size() == 6);
 
-        /* Assert that the word bank contains the expected options */
-        OATPP_ASSERT(question->wordBank->contains("push"));
-        OATPP_ASSERT(question->wordBank->contains("pull"));
-        OATPP_ASSERT(question->wordBank->contains("commit"));
-        OATPP_ASSERT(question->wordBank->contains("clone"));
-        OATPP_ASSERT(question->wordBank->contains("merge"));
-        OATPP_ASSERT(question->wordBank->contains("branch"));
+        /* List of expected words */
+        std::vector<std::string> expectedWords = {
+            "push", "pull", "commit", "clone", "merge", "branch"};
+
+        /* Check that each expected word is in the word bank */
+        for (const auto& expectedWord : expectedWords) {
+          bool found = false;
+          if (question->wordBank && question->wordBank.get()) {
+            for (const auto& word : *(question->wordBank.get())) {
+              if (word == expectedWord.c_str()) {
+                found = true;
+                break;
+              }
+            }
+          }
+          OATPP_ASSERT(found);  // Assert that the word was found
+        }
       },
-      std::chrono::minutes(10) /* test timeout */);
+      std::chrono::minutes(1) /* test timeout */);
 
   /* Wait for server threads to finish */
   std::this_thread::sleep_for(std::chrono::seconds(1));
