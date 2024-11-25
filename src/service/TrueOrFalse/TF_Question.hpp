@@ -1,3 +1,6 @@
+#ifndef TF_QUESTION_HPP
+#define TF_QUESTION_HPP
+
 #include <string>
 
 #include "src/service/Question.hpp"
@@ -14,3 +17,5 @@ class TrueOrFalse : public Question {
   Answers.push_back(jsonFileData["questions"][0]["answers"]["b"]);
   }
 };
+
+#endif // TF_QUESTION_HPP
