@@ -2,6 +2,7 @@
 
 #include "../controller/SeleneController.hpp"
 #include "../controller/MultipleChoice/MC_Controller.hpp"
+#include "../controller/Matching/MAT_Controller.hpp"
 #include "ServerComponents.hpp"
 #include "oatpp/core/macro/codegen.hpp"
 #include "oatpp/network/tcp/server/ConnectionProvider.hpp"
@@ -22,6 +23,11 @@ void run() {
   /* Create OODController and add all of its endpoints to router */
   auto obj_MC_Controller = std::make_shared<MC_Controller>();
   router->addController(obj_MC_Controller);
+
+
+  /* Create OODController and add all of its endpoints to router */
+  auto obj_MAT_Controller = std::make_shared<MAT_Controller>();
+  router->addController(obj_MAT_Controller);
 
   /* Create HTTP connection handler with router */
   auto connectionHandler =

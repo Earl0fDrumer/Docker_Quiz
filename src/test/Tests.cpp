@@ -1,21 +1,29 @@
 #include <iostream>
 
 #include "selene/SeleneTest.hpp"
-#include "src/test/MultipleChoiceTests/DP_Test.cpp"
+
 #include "src/test/MultipleChoiceTests/DP_Test.hpp"
-#include "src/test/MultipleChoiceTests/OOD_Test.cpp"
 #include "src/test/MultipleChoiceTests/OOD_Test.hpp"
-#include "src/test/MultipleChoiceTests/SE_Test.cpp"
 #include "src/test/MultipleChoiceTests/SE_Test.hpp"
-#include "src/test/MultipleChoiceTests/VC_Test.cpp"
 #include "src/test/MultipleChoiceTests/VC_Test.hpp"
 
+#include "src/test/MatchingTests/DP_Test.hpp"
+#include "src/test/MatchingTests/OOD_Test.hpp"
+#include "src/test/MatchingTests/SE_Test.hpp"
+#include "src/test/MatchingTests/VC_Test.hpp"
+
 void runTests() { 
-  OATPP_RUN_TEST(SeleneTest); 
+  OATPP_RUN_TEST(SeleneTest);
+
   OATPP_RUN_TEST(DP_MC_Test); 
   OATPP_RUN_TEST(OOD_MC_Test); 
   OATPP_RUN_TEST(SE_MC_Test);
   OATPP_RUN_TEST(VC_MC_Test);
+
+  OATPP_RUN_TEST(DP_MAT_Test);
+  OATPP_RUN_TEST(OOD_MAT_Test); 
+  OATPP_RUN_TEST(SE_MAT_Test); 
+  OATPP_RUN_TEST(VC_MAT_Test); 
 }
 
 int main() {
@@ -26,12 +34,15 @@ int main() {
   try {
     runTests();
   } catch (const std::exception& e) {
-    std::cerr << "[ERROR] Exception while running tests: " << e.what() << std::endl;
+    std::cerr << "[ERROR] Exception while running tests: " 
+      << e.what() << std::endl;
   }
 
   std::cout << "\nEnvironment:\n";
-  std::cout << "objectsCount = " << oatpp::base::Environment::getObjectsCount() << "\n";
-  std::cout << "objectsCreated = " << oatpp::base::Environment::getObjectsCreated() << "\n\n";
+  std::cout << "objectsCount = " << oatpp::
+    base::Environment::getObjectsCount() << "\n";
+  std::cout << "objectsCreated = " << oatpp::base::
+    Environment::getObjectsCreated() << "\n\n";
 
   OATPP_ASSERT(oatpp::base::Environment::getObjectsCount() == 0);
 

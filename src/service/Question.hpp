@@ -1,3 +1,6 @@
+#ifndef QUESTION_hpp
+#define QUESTION_hpp
+
 #include "src/service/json.hpp"
 #include <vector>
 #include <string>
@@ -40,3 +43,4 @@ class Question {
   std::vector<std::string> Answers;
 };
 
+#endif /* QUESTION_hpp */
