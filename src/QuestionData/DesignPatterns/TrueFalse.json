@@ -1,0 +1,21 @@
+{
+    "questions": [
+      {
+        "question": "A Design Pattern can help a developer write code more efficiently.",
+        "answers": {
+          "a": "True",
+          "b": "Flase"
+        },
+        "correct_answer": "a"
+      },
+      {
+        "question": "Factory method creates objects using inheritance while an Abstract Factory creates objects using composition",
+        "answers": {
+          "a": "True",
+          "b": "Flase"
+        },
+        "correct_answer": "a"
+      }
+    ]
+  }
+  

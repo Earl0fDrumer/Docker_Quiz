@@ -1,0 +1,21 @@
+{
+    "questions": [
+      {
+        "question": "Version Control is essential when multiple people are working on a project",
+        "answers": {
+          "a": "True",
+          "b": "False"
+        },
+        "correct_answer": "a"
+      },
+      {
+        "question": "Synchronizing work is just one of the uses of Version Control",
+        "answers": {
+          "a": "True",
+          "b": "False"
+        },
+        "correct_answer": "a"
+      }
+    ]
+  }
+  

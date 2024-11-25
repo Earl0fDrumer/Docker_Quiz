@@ -1,10 +1,8 @@
 #include "oatpp/network/Server.hpp"
 
 #include "../controller/SeleneController.hpp"
-#include "../controller/SoftwareEngineering/SEController.hpp"
-#include "../controller/OOD/OOD_Controller.hpp"
-#include "../controller/DesignPatterns/DPController.hpp"
-#include "../controller/VersionControl/VCController.hpp"
+#include "../controller/MultipleChoice/MC_Controller.hpp"
+#include "../controller/TrueOrFalse/TF_Controller.hpp"
 #include "ServerComponents.hpp"
 #include "oatpp/core/macro/codegen.hpp"
 #include "oatpp/network/tcp/server/ConnectionProvider.hpp"
@@ -22,21 +20,13 @@ void run() {
   auto controller = std::make_shared<SeleneController>();
   router->addController(controller);
 
-  /* Create SEController and add all of its endpoints to router */
-  auto SE_Controller = std::make_shared<SEController>();
-  router->addController(SE_Controller);
+  /* Create MCController and add all of its endpoints to router */
+  auto obj_MC_Controller = std::make_shared<MC_Controller>();
+  router->addController(obj_MC_Controller);
 
-  /* Create OODController and add all of its endpoints to router */
-  auto obj_OOD_Controller = std::make_shared<OOD_Controller>();
-  router->addController(obj_OOD_Controller);
-  
-  /* Create DPController and add all of its endpoints to router */
-  auto DP_Controller = std::make_shared<DPController>();
-  router->addController(DP_Controller);
-
-  /* Create VCController and add all of its endpoints to router */
-  auto VC_Controller = std::make_shared<VCController>();  // Instantiate VCController
-  router->addController(VC_Controller);  // Register VCController in the router
+  /* Create TFController and add all of its endpoints to router */
+  auto obj_TF_Controller = std::make_shared<TF_Controller>();
+  router->addController(obj_TF_Controller);
 
   /* Create HTTP connection handler with router */
   auto connectionHandler =

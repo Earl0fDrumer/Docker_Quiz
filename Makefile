@@ -7,17 +7,12 @@ LINKFLAGS_TEST = $(LINKFLAGS_APP) -loatpp-test
 SRC_DIR_SERVER = src/server
 SRC_DIR_DTO = src/dto
 SRC_DIR_CONTROLLER = src/controller
-SRC_DIR_SERVICE_MC_QUESTION = src/service/SoftwareEngineering
-SRC_DIR_SERVICE_DP_QUESTION = src/service/DesignPatterns
-SRC_DIR_SERVICE_VC_QUESTION = src/service/VersionControl
-SRC_DIR_CONTROLLER_DP = src/controller/DesignPatterns
-SRC_DIR_DTO_DP = src/dto/DesignPatterns
+SRC_DIR_SERVICE_MC_QUESTION = src/service/MultipleChoice
+SRC_DIR_SERVICE_TF_QUESTION = src/service/TrueOrFalse
 SRC_DIR_TESTS = src/test
 SRC_DIR_TESTS_Selene = src/test/selene
-SRC_DIR_TESTS_MC_TEST = src/test/SoftwareEngineering
-SRC_DIR_TESTS_DP_TEST = src/test/DesignPatterns
-SRC_DIR_TESTS_VC_TEST = src/test/VersionControl
-SRC_DIR_TESTS_OOD_MC_TEST = src/test/OOD
+SRC_DIR_TESTS_MultipleChoice = src/test/MultipleChoiceTests
+SRC_DIR_TESTS_TrueOrFalse = src/test/TrueOrFalseTests
 
 GCOV = gcov
 LCOV = lcov
@@ -47,16 +42,13 @@ clean:
 	doxygen/html \
 	obj bin \
 
-$(PROGRAM_SERVER): $(SRC_DIR_SERVER) $(SRC_DIR_SERVICE_MC_QUESTION) $(SRC_DIR_SERVICE_DP_QUESTION_MC_QUESTION) $(SRC_DIR_SERVICE_VC_QUESTION)
+$(PROGRAM_SERVER): $(SRC_DIR_SERVER)
 	$(CXX) $(CXXFLAGS) -o $(PROGRAM_SERVER) $(OATPP_INCLUDE) \
 	$(SRC_DIR_SERVER)/*.cpp \
 	$(SRC_DIR_DTO)/*.hpp \
-	$(SRC_DIR_DTO_DP)/*.hpp \
 	$(SRC_DIR_SERVICE_MC_QUESTION)/*.hpp \
-	$(SRC_DIR_SERVICE_DP_QUESTION)/*.hpp \
-	$(SRC_DIR_SERVICE_VC_QUESTION)/*.hpp \
+	$(SRC_DIR_SERVICE_TF_QUESTION)/*.hpp \
 	$(SRC_DIR_CONTROLLER)/*.hpp \
-	$(SRC_DIR_CONTROLLER_DP)/*.hpp \
  $(LINKFLAGS_APP)
 
 docker:
@@ -68,13 +60,11 @@ start:
 stop:
 	docker compose -f "compose.yml" down
 
-$(TEST_SERVER): $(SRC_DIR_TESTS) $(SRC_DIR_TESTS_MC_TEST) $(SRC_DIR_TESTS_DP_TEST) $(SRC_DIR_TESTS_Selene) $(SRC_DIR_TESTS_MC_TEST) $(SRC_DIR_TESTS_VC_TEST)
+$(TEST_SERVER): $(SRC_DIR_TESTS)
 	$(CXX) $(CXXFLAGS) -o $(TEST_SERVER) $(OATPP_INCLUDE) \
 	$(SRC_DIR_TESTS_Selene)/*.cpp \
-	$(SRC_DIR_TESTS_MC_TEST)/*.cpp \
-	$(SRC_DIR_TESTS_OOD_MC_TEST)/*.cpp \
-	$(SRC_DIR_TESTS_DP_TEST)/*.cpp \
-	$(SRC_DIR_TESTS_VC_TEST)/*.cpp \
+	$(SRC_DIR_TESTS_MultipleChoice)/*.cpp \
+	$(SRC_DIR_TESTS_TrueOrFalse)/*.cpp \
 	$(SRC_DIR_TESTS)/*.cpp $(LINKFLAGS_TEST)
 
 static: ${SRC_DIR_SERVER} ${SRC_DIR_CLIENT} ${SRC_DIR_SERVICE_MC_QUESTION} ${SRC_DIR_SERVICE_DP_QUESTION} ${TEST_DIR}
