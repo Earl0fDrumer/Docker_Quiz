@@ -1,0 +1,34 @@
+{
+    "questions": [
+      {
+        "question": "What is:",
+        "terms": {
+          "a": "a Class?",
+          "b": "an Object?",
+          "c": "a Constructor?",
+          "d": "a Method?"
+        },
+        "definitions": {
+          "a": "A blueprint for creating objects that defines the properties (attributes) and behaviors (methods) of those objects.",
+          "b": "A unit of data and behavior created from a class, representing an instance of that class.",
+          "c": "A special type of function called to create an object.",
+          "d": "A procedure that defines the behavior of objects created from a class."
+        }
+      }, {
+        "question": "What is:",
+        "terms": {
+          "a": "function Overloading?",
+          "b": "function Overriding?",
+          "c": "Data Abstraction?",
+          "d": "Encapsulation?"
+        },
+        "definitions": {
+          "a": "The act of defining a method in a child class that has the same signature as the method in the parent class, replacing the parent's version.",
+          "b": "Function overriding is a type of polymorphism in which we redefine the member function of a class which it inherited from its base class.",
+          "c": "Data abstraction refers to providing only essential information about the data to the outside world, ignoring unnecessary details or implementation.",
+          "d": "Encapsulation in C++ is defined as the wrapping up of data and information in a single unit."
+        }
+      }
+    ]
+  }
+  

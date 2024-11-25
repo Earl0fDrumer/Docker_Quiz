@@ -1,0 +1,35 @@
+{
+    "questions": [
+      {
+        "question": "What is:",
+        "terms": {
+          "a": "a Commit?",
+          "b": "a Branch?",
+          "c": "a Merge Request?",
+          "d": "a Pull Request ?"
+        },
+        "definitions": {
+          "a": "A record of changes made to the files in the repository. It includes a snapshot of the changes, a message describing the update, and metadata like the author and timestamp.",
+          "b": "A separate line of development in a version control system. It allows developers to work on features, fixes, or experiments independently from the main codebase.",
+          "c": "The process of integrating changes from one branch into another, usually from a feature branch back into the main or master branch.",
+          "d": "Ask permission to merge changes from one branch into another, typically from a feature branch into the main branch, often requiring review before merging."
+        }
+      }, {
+        "question": "What is:",
+        "terms": {
+          "a": "a Fork?",
+          "b": "a Clone?",
+          "c": "Merge Conflict?",
+          "d": "Checkout?"
+        },
+        "definitions": {
+          "a": "A copy of a repository that allows users to freely experiment with changes without affecting the original project.",
+          "b": "A local copy of a remote repository.",
+          "c": "A situation that occurs when two developers make conflicting changes to the same part of a file.",
+          "d": "The action of switching between different branches or commits in a repository."
+        }
+      }
+    ]
+  }
+  
+  
