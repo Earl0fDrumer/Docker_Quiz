@@ -11,7 +11,7 @@
       "correct_answer": "b"
     }, 
     {
-      "question": "Which one of these are NOT a Creational Pattern?",
+      "question": "Which one of these is NOT a Creational Pattern?",
       "answers": {
         "a": "Factory Method",
         "b": "Builder",

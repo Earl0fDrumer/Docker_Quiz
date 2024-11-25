@@ -5,10 +5,10 @@
         "answers": {
           "a": "Officer of the Day",
           "b": "Object Oriented Design",
-          "c": "Office of Oncologic Diseases",
-          "d": "All of the above"
+          "c": "Office of Oncological Diseases",
+          "d": "Ominous Oracle Dreams"
         },
-        "correct_answer": "d"
+        "correct_answer": "b"
       },
       {
         "question": "Which one of these is true about the Single-responsibility principle?",
