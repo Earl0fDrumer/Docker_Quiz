@@ -1,0 +1,34 @@
+{
+  "questions": [
+    {
+      "question": "What is:",
+      "terms": {
+        "a": "an Abstract Factory?",
+        "b": "a Builder?",
+        "c": "a Factory Method?",
+        "d": "a Singleton?"
+      },
+      "definitions": {
+        "a": "a creational design pattern that lets you produce families of related objects without specifying their concrete classes.",
+        "b": "a creational design pattern that lets you construct complex objects step by step. ",
+        "c": "a creational design pattern that provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that will be created.",
+        "d": "a creational design pattern that lets you ensure that a class has only one instance, while providing a global access point to this instance."
+      }
+    }, {
+      "question": "What is:",
+      "terms": {
+        "a": "an Adapter?",
+        "b": "a Bridge?",
+        "c": "a Decorator?",
+        "d": "a Facade?"
+      },
+      "definitions": {
+        "a": "a structural design pattern that allows objects with incompatible interfaces to collaborate.",
+        "b": "a structural design pattern that lets you split a large class or a set of closely related classes into two separate hierarchies.",
+        "c": "a structural design pattern that lets you attach new behaviors to objects by placing these objects inside special wrapper objects that contain the behaviors.",
+        "d": "a structural design pattern that provides a simplified interface to a library, a framework, or any other complex set of classes."
+      }
+    }
+  ]
+}
+

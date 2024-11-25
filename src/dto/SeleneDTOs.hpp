@@ -15,3 +15,4 @@ class Result : public oatpp::DTO {
 #include OATPP_CODEGEN_END(DTO)
 
 #endif /* SHAPE_DTO_hpp */
+
