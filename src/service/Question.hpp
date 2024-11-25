@@ -9,7 +9,7 @@
 using json = nlohmann::json;
 
 class Question {
- public:  
+ public:
   Question(std::string path) : filePath(path) {};
 
   void readDataFile() {

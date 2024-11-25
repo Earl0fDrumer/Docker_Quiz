@@ -1,0 +1,10 @@
+{
+    "questions": [
+      {
+        "question": "In OOD, ________ refers to the bundling of data with the methods that operate on that data.",
+        "correct_answer": "encapsulation",
+        "word_bank": ["encapsulation", "inheritance", "polymorphism", "abstraction", "composition", "delegation"]
+      }
+    ]
+  }
+  

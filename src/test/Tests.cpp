@@ -20,6 +20,12 @@
 #include "src/test/MatchingTests/SE_Test.hpp"
 #include "src/test/MatchingTests/VC_Test.hpp"
 
+//FIB Tests
+#include "src/test/FillInBlankTests/DP_FIB_Test.hpp"
+#include "src/test/FillInBlankTests/OOD_FIB_Test.hpp"
+#include "src/test/FillInBlankTests/SE_FIB_Test.hpp"
+#include "src/test/FillInBlankTests/VC_FIB_Test.hpp"
+
 void runTests() {
   OATPP_RUN_TEST(SeleneTest);
   // Multiple Choice Tests
@@ -37,6 +43,11 @@ void runTests() {
   OATPP_RUN_TEST(OOD_MAT_Test); 
   OATPP_RUN_TEST(SE_MAT_Test); 
   OATPP_RUN_TEST(VC_MAT_Test); 
+  //FIB Tests
+  OATPP_RUN_TEST(DP_FIB_Test);
+  OATPP_RUN_TEST(OOD_FIB_Test);
+  OATPP_RUN_TEST(SE_FIB_Test);
+  OATPP_RUN_TEST(VC_FIB_Test);
 }
 
 int main() {

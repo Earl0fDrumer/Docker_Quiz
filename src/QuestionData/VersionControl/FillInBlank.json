@@ -1,0 +1,10 @@
+{
+    "questions": [
+      {
+        "question": "In Git, 'git ________' is used to upload local repository content to a remote repository.",
+        "correct_answer": "push",
+        "word_bank": ["push", "pull", "commit", "clone", "merge", "branch"]
+      }
+    ]
+  }
+  
