@@ -1,10 +1,14 @@
 {
-    "questions": [
-      {
-        "question": "In OOD, ________ refers to the bundling of data with the methods that operate on that data.",
-        "correct_answer": "encapsulation",
-        "word_bank": ["encapsulation", "inheritance", "polymorphism", "abstraction", "composition", "delegation"]
-      }
-    ]
-  }
-  
+  "questions": [
+    {
+      "question": "In OOD, ________ refers to the bundling of data with the methods that operate on that data.",
+      "correct_answer": "encapsulation",
+      "word_bank": ["encapsulation", "inheritance", "polymorphism", "abstraction", "composition", "delegation"]
+    },
+    {
+      "question": "The ________ principle suggests that a class should have only one reason to change.",
+      "correct_answer": "Single Responsibility",
+      "word_bank": ["Single Responsibility", "Open-Closed", "Liskov Substitution", "Dependency Inversion", "Interface Segregation"]
+    }
+  ]
+}

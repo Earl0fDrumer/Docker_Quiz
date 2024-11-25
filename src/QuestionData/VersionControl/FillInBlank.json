@@ -1,10 +1,14 @@
 {
-    "questions": [
-      {
-        "question": "In Git, 'git ________' is used to upload local repository content to a remote repository.",
-        "correct_answer": "push",
-        "word_bank": ["push", "pull", "commit", "clone", "merge", "branch"]
-      }
-    ]
-  }
-  
+  "questions": [
+    {
+      "question": "In Git, 'git ________' is used to upload local repository content to a remote repository.",
+      "correct_answer": "push",
+      "word_bank": ["push", "pull", "commit", "clone", "merge", "branch"]
+    },
+    {
+      "question": "In Git, 'git ________' is used to fetch and integrate changes from a remote repository to the local repository.",
+      "correct_answer": "pull",
+      "word_bank": ["pull", "push", "commit", "clone", "merge", "branch"]
+    }
+  ]
+}

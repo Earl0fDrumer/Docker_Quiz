@@ -1,10 +1,14 @@
 {
-    "questions": [
-      {
-        "question": "The ________ model is a linear sequential software development process.",
-        "correct_answer": "waterfall",
-        "word_bank": ["waterfall", "agile", "spiral", "v-model", "incremental", "prototyping"]
-      }
-    ]
-  }
-  
+  "questions": [
+    {
+      "question": "The ________ model is a linear sequential software development process.",
+      "correct_answer": "waterfall",
+      "word_bank": ["waterfall", "agile", "spiral", "v-model", "incremental", "prototyping"]
+    },
+    {
+      "question": "The ________ methodology emphasizes iterative development and collaboration between cross-functional teams.",
+      "correct_answer": "agile",
+      "word_bank": ["agile", "waterfall", "spiral", "v-model", "incremental", "prototyping"]
+    }
+  ]
+}

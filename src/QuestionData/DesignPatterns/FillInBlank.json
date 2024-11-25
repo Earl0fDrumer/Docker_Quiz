@@ -1,10 +1,14 @@
 {
-    "questions": [
-      {
-        "question": "The ________ pattern ensures a class has only one instance and provides a global point of access to it.",
-        "correct_answer": "Singleton",
-        "word_bank": ["Singleton", "Factory", "Adapter", "Observer", "Builder", "Decorator"]
-      }
-    ]
-  }
-  
+  "questions": [
+    {
+      "question": "The ________ pattern ensures a class has only one instance and provides a global point of access to it.",
+      "correct_answer": "Singleton",
+      "word_bank": ["Singleton", "Factory", "Adapter", "Observer", "Builder", "Decorator"]
+    },
+    {
+      "question": "The ________ pattern allows an object to alter its behavior when its internal state changes.",
+      "correct_answer": "State",
+      "word_bank": ["State", "Strategy", "Command", "Template", "Mediator", "Chain of Responsibility"]
+    }
+  ]
+}
