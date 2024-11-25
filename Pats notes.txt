@@ -1,14 +1,15 @@
 
-- Create tests
+- When creating tests
     - change a couple things in .cpp
     - update tests.cpp and directories
     - update MyApiTestClient.hpp
 
-To Do:
+TO DO:
     - Pull a different question from Data each time
     - Endpoints
-        - Random Topic random type
+        - List all topics that are provided
         - Specific topic random type
+        - Random Topic random type
 
     - Figure how to have make style check all files (static prob does the same thing)
     - Ask Anvik about make static not working
