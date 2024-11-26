@@ -3,76 +3,96 @@
 
 #include <string>
 #include <vector>
-#include <random>
-#include <stdexcept>
 #include "src/service/json.hpp"
 #include "src/service/Question.hpp"
+#include <fstream>
+#include <stdexcept>
 
 class RandomByType {
- public:
-  /**
-   * Constructor
-   */
-  RandomByType(const std::string& teamFolder)
-      : teamFolder(teamFolder) {}
+private:
+    std::string filePath;
 
-  /**
-   * Select a random question file and load questions.
-   */
-  std::vector<Question> getRandomQuestions() {
-    // List of question file types
-    std::vector<std::string> questionFiles = {"MultipleChoice.json", "TrueFalse.json", "FillInBlank.json", "Matching.json"};
+public:
+    /**
+     * Constructor
+     * @param filePath - Path to the JSON file containing questions
+     */
+    RandomByType(const std::string& filePath) : filePath(filePath) {}
 
-    // Randomly select a question file
-    static std::mt19937 gen(static_cast<unsigned long>(std::time(nullptr)));
-    std::uniform_int_distribution<> dist(0, questionFiles.size() - 1);
-    std::string selectedFile = questionFiles[dist(gen)];
+    /**
+     * Load questions from the JSON file.
+     * @return A vector of Question objects
+     */
+    std::vector<Question> loadQuestions() {
+        std::vector<Question> questions;
+        std::ifstream file(filePath);
 
-    // Construct the file path
-    std::string filePath = "src/QuestionData/" + teamFolder + "/" + selectedFile;
-
-    // Load questions using existing logic
-    std::ifstream file(filePath);
-    if (!file.is_open()) {
-      throw std::runtime_error("Failed to open file: " + filePath);
-    }
-
-    nlohmann::json jsonData;
-    file >> jsonData;
-
-    if (!jsonData.contains("questions")) {
-      throw std::runtime_error("Invalid JSON format: Missing 'questions' field");
-    }
-
-    // Create questions
-    std::vector<Question> questions;
-    for (const auto& item : jsonData["questions"]) {
-      Question question(filePath);
-
-      if (item.contains("question")) {
-        question.setQuestionText(item["question"].get<std::string>());
-      }
-      if (item.contains("correct_answer")) {
-        question.setCorrectAnswer(item["correct_answer"].get<std::string>());
-      }
-      if (item.contains("options")) {
-        for (const auto& option : item["options"]) {
-          question.addAnswer(option.get<std::string>());
+        // Validate file opening
+        if (!file.is_open()) {
+            throw std::runtime_error("Failed to open file: " + filePath);
         }
-      }
-      if (item.contains("word_bank")) {
-        for (const auto& word : item["word_bank"]) {
-          question.addAnswer(word.get<std::string>());
+
+        nlohmann::json jsonData;
+        try {
+            file >> jsonData;
+        } catch (const nlohmann::json::parse_error& e) {
+            throw std::runtime_error("JSON parse error: " + std::string(e.what()));
         }
-      }
-      questions.push_back(question);
+
+        // Validate JSON structure
+        if (!jsonData.contains("questions")) {
+            throw std::runtime_error("Invalid JSON format: Missing 'questions' field");
+        }
+
+        for (const auto& item : jsonData["questions"]) {
+            Question question(filePath);
+
+            // Common parsing for question text
+            if (item.contains("question")) {
+                question.setQuestionText(item["question"].get<std::string>());
+            }
+
+            // Dynamically handle different question types
+            if (item.contains("word_bank")) {
+                // Fill in the Blank
+                for (const auto& word : item["word_bank"]) {
+                    question.addAnswer(word.get<std::string>());
+                }
+                if (item.contains("correct_answer")) {
+                    question.setCorrectAnswer(item["correct_answer"].get<std::string>());
+                }
+            }
+            else if (item.contains("answers")) {
+                // Multiple Choice or True/False
+                auto answersObj = item["answers"];
+                if (answersObj.is_object()) {
+                    // Multiple Choice or True/False
+                    for (auto& [key, value] : answersObj.items()) {
+                        question.addAnswer(value.get<std::string>());
+                    }
+                    if (item.contains("correct_answer")) {
+                        question.setCorrectAnswer(item["correct_answer"].get<std::string>());
+                    }
+                }
+            }
+            else if (item.contains("terms") && item.contains("definitions")) {
+                // Matching
+                auto terms = item["terms"];
+                auto definitions = item["definitions"];
+                
+                for (auto& [key, term] : terms.items()) {
+                    question.addAnswer(term.get<std::string>());
+                }
+                for (auto& [key, definition] : definitions.items()) {
+                    question.addAnswer(definition.get<std::string>());
+                }
+            }
+
+            questions.push_back(question);
+        }
+
+        return questions;
     }
-
-    return questions;
-  }
-
- private:
-  std::string teamFolder;
 };
 
 #endif /* RandomByType_hpp */

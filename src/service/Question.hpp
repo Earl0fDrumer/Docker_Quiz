@@ -1,5 +1,5 @@
-#ifndef QUESTION_hpp
-#define QUESTION_hpp
+#ifndef QUESTION_HPP
+#define QUESTION_HPP
 
 #include "src/service/json.hpp"
 #include <vector>
@@ -7,60 +7,71 @@
 #include <fstream>
 #include <stdexcept>
 
-using json = nlohmann::json;
-
 class Question {
 public:
-  /**
-   * Constructor to initialize the question with the file path
-   * @param path - Path to the JSON file containing the question data
-   */
-  Question(const std::string& path) : filePath(path) {}
-
-  /**
-   * Reads and parses the data from the JSON file
-   */
-  void readDataFile() {
-    std::ifstream inputFile(filePath);
-
-    if (!inputFile.is_open()) {
-      throw std::ios_base::failure("Error: Failed to open file: " + filePath);
+    /**
+     * Constructor to initialize the question with the file path
+     * @param path - Path to the JSON file containing the question data
+     */
+    Question(const std::string& path) : filePath(path) {
+        // Initialize pointers to nullptr to prevent undefined behavior
+        QuestionText = "";
+        CorrectAnswer = "";
     }
 
-    inputFile >> jsonFileData;
-    inputFile.close();
-  }
+    /**
+     * Reads and parses the data from the JSON file
+     */
+    void readDataFile() {
+        std::ifstream inputFile(filePath);
+        if (!inputFile.is_open()) {
+            throw std::runtime_error("Error: Failed to open file: " + filePath);
+        }
 
-  std::string getQuestionText() const {
-    return QuestionText;
-  }
+        try {
+            inputFile >> jsonFileData;
+        } catch (const nlohmann::json::parse_error& e) {
+            throw std::runtime_error("JSON parse error: " + std::string(e.what()));
+        }
+        
+        inputFile.close();
+    }
 
-  void setQuestionText(const std::string& text) {
-    QuestionText = text;
-  }
+    // Getters
+    std::string getQuestionText() const {
+        return QuestionText;
+    }
 
-  std::string getCorrectAnswer() const {
-    return CorrectAnswer;
-  }
+    std::string getCorrectAnswer() const {
+        return CorrectAnswer;
+    }
 
-  void setCorrectAnswer(const std::string& answer) {
-    CorrectAnswer = answer;
-  }
+    std::vector<std::string> getAnswers() const {
+        return Answers;
+    }
 
-  std::vector<std::string> getAnswers() const {
-    return Answers;
-  }
+    // Setters
+    void setQuestionText(const std::string& text) {
+        QuestionText = text;
+    }
 
-  void addAnswer(const std::string& answer) {
-    Answers.push_back(answer);
-  }
+    void setCorrectAnswer(const std::string& answer) {
+        CorrectAnswer = answer;
+    }
+
+    void addAnswer(const std::string& answer) {
+        Answers.push_back(answer);
+    }
+
+    // Virtual destructor to ensure proper cleanup of derived classes
+    virtual ~Question() = default;
 
 protected:
-  std::string filePath;        ///< File path to the JSON data
-  json jsonFileData;           ///< Parsed JSON data
-  std::string QuestionText;    ///< The text of the question
-  std::string CorrectAnswer;   ///< The correct answer
-  std::vector<std::string> Answers;  ///< List of possible answers
+    std::string filePath;          ///< File path to the JSON data
+    nlohmann::json jsonFileData;   ///< Parsed JSON data
+    std::string QuestionText;      ///< The text of the question
+    std::string CorrectAnswer;     ///< The correct answer
+    std::vector<std::string> Answers; ///< List of possible answers
 };
 
-#endif /* QUESTION_hpp */
+#endif /* QUESTION_HPP */
