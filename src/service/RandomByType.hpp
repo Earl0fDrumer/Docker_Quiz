@@ -3,31 +3,36 @@
 
 #include <string>
 #include <vector>
+#include <random>
+#include <stdexcept>
 #include "src/service/json.hpp"
 #include "src/service/Question.hpp"
-#include <fstream>  
-#include <stdexcept>
 
 class RandomByType {
-private:
-  std::string filePath;
-
-public:
+ public:
   /**
    * Constructor
-   * @param filePath - Path to the JSON file containing questions
    */
-  RandomByType(const std::string& filePath) : filePath(filePath) {}
+  RandomByType(const std::string& teamFolder)
+      : teamFolder(teamFolder) {}
 
   /**
-   * Load questions from the JSON file.
-   * @return A vector of Question objects
+   * Select a random question file and load questions.
    */
-  std::vector<Question> loadQuestions() {
-    std::vector<Question> questions;
-    std::ifstream file(filePath);
+  std::vector<Question> getRandomQuestions() {
+    // List of question file types
+    std::vector<std::string> questionFiles = {"MultipleChoice.json", "TrueFalse.json", "FillInBlank.json", "Matching.json"};
 
-    // Validate file opening
+    // Randomly select a question file
+    static std::mt19937 gen(static_cast<unsigned long>(std::time(nullptr)));
+    std::uniform_int_distribution<> dist(0, questionFiles.size() - 1);
+    std::string selectedFile = questionFiles[dist(gen)];
+
+    // Construct the file path
+    std::string filePath = "src/QuestionData/" + teamFolder + "/" + selectedFile;
+
+    // Load questions using existing logic
+    std::ifstream file(filePath);
     if (!file.is_open()) {
       throw std::runtime_error("Failed to open file: " + filePath);
     }
@@ -35,48 +40,39 @@ public:
     nlohmann::json jsonData;
     file >> jsonData;
 
-    // Validate JSON structure
     if (!jsonData.contains("questions")) {
       throw std::runtime_error("Invalid JSON format: Missing 'questions' field");
     }
 
+    // Create questions
+    std::vector<Question> questions;
     for (const auto& item : jsonData["questions"]) {
-      Question question(filePath);  // Create a Question object for the current question
-      question.readDataFile();      // Parse the question data from the file
+      Question question(filePath);
 
-      // Populate fields dynamically
       if (item.contains("question")) {
         question.setQuestionText(item["question"].get<std::string>());
       }
       if (item.contains("correct_answer")) {
         question.setCorrectAnswer(item["correct_answer"].get<std::string>());
       }
-      if (item.contains("word_bank")) {
-        for (const auto& word : item["word_bank"]) {
-          question.addAnswer(word.get<std::string>());
-        }
-      }
       if (item.contains("options")) {
         for (const auto& option : item["options"]) {
           question.addAnswer(option.get<std::string>());
         }
       }
-      if (item.contains("terms")) {
-        for (const auto& term : item["terms"]) {
-          question.addAnswer(term.get<std::string>());
+      if (item.contains("word_bank")) {
+        for (const auto& word : item["word_bank"]) {
+          question.addAnswer(word.get<std::string>());
         }
       }
-      if (item.contains("definitions")) {
-        for (const auto& definition : item["definitions"]) {
-          question.addAnswer(definition.get<std::string>());
-        }
-      }
-
       questions.push_back(question);
     }
 
     return questions;
   }
+
+ private:
+  std::string teamFolder;
 };
 
 #endif /* RandomByType_hpp */
