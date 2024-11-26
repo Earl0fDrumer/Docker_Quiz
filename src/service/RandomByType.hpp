@@ -23,7 +23,7 @@ public:
             {"SE", "SoftwareEngineering"},
             {"DP", "DesignPatterns"},
             {"VC", "VersionControl"},
-            {"OOP", "ObjectOrientedDesign"}
+            {"OOD", "ObjectOrientedDesign"}
         };
 
         auto it = topicFolderMap.find(topicCode);
@@ -31,6 +31,20 @@ public:
             return it->second;
         }
         throw std::invalid_argument("Invalid topic code");
+    }
+
+    // Select a random topic folder
+    static std::string selectRandomTopic() {
+        static const std::vector<std::string> topics = {
+            "SoftwareEngineering",
+            "DesignPatterns",
+            "VersionControl",
+            "ObjectOrientedDesign"
+        };
+
+        thread_local std::mt19937 gen(static_cast<unsigned long>(std::time(nullptr)));
+        std::uniform_int_distribution<> dist(0, topics.size() - 1);
+        return topics[dist(gen)];
     }
 
     // Select a random question file

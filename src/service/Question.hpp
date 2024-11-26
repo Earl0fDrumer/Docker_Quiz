@@ -14,7 +14,6 @@ public:
      * @param path - Path to the JSON file containing the question data
      */
     Question(const std::string& path) : filePath(path) {
-        // Initialize pointers to nullptr to prevent undefined behavior
         QuestionText = "";
         CorrectAnswer = "";
     }
@@ -63,15 +62,14 @@ public:
         Answers.push_back(answer);
     }
 
-    // Virtual destructor to ensure proper cleanup of derived classes
     virtual ~Question() = default;
 
 protected:
-    std::string filePath;          ///< File path to the JSON data
-    nlohmann::json jsonFileData;   ///< Parsed JSON data
-    std::string QuestionText;      ///< The text of the question
-    std::string CorrectAnswer;     ///< The correct answer
-    std::vector<std::string> Answers; ///< List of possible answers
+    std::string filePath;
+    nlohmann::json jsonFileData;
+    std::string QuestionText;
+    std::string CorrectAnswer;
+    std::vector<std::string> Answers;
 };
 
 #endif /* QUESTION_HPP */
