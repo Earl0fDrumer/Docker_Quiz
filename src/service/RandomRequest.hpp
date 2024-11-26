@@ -1,5 +1,5 @@
-#ifndef RandomByType_hpp
-#define RandomByType_hpp
+#ifndef RandomRequest_hpp
+#define RandomRequest_hpp
 
 #include <string>
 #include <vector>
@@ -10,12 +10,12 @@
 #include <fstream>
 #include <stdexcept>
 
-class RandomByType {
+class RandomRequest {
 private:
     std::string topicFolder;
 
 public:
-    RandomByType(const std::string& topicFolder) : topicFolder(topicFolder) {}
+    RandomRequest(const std::string& topicFolder) : topicFolder(topicFolder) {}
 
     // Map topic codes to folder names
     static std::string mapTopicToFolder(const std::string& topicCode) {
@@ -123,4 +123,4 @@ public:
     }
 };
 
-#endif /* RandomByType_hpp */
+#endif /* RandomRequest_hpp */

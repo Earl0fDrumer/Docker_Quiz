@@ -6,7 +6,7 @@
 #include "../controller/TrueOrFalse/TF_Controller.hpp"
 #include "../controller/Matching/MAT_Controller.hpp"
 #include "../controller/TopicsController.hpp"
-#include "../controller/RandomByTypeController.hpp"
+#include "../controller/RandomController.hpp"
 #include "ServerComponents.hpp"
 #include "oatpp/core/macro/codegen.hpp"
 #include "oatpp/network/tcp/server/ConnectionProvider.hpp"
@@ -44,9 +44,9 @@ void run() {
   auto obj_TOPIC_Controller = std::make_shared<TopicsController>();
   router->addController(obj_TOPIC_Controller);
 
-  /* Create RandomByType_Controller and add all of its endpoints to router */
-  auto randomByTypeController = std::make_shared<RandomByType_Controller>();
-  router->addController(randomByTypeController);  // Add RandomByType_Controller
+  /* Create Random_Controller and add all of its endpoints to router */
+  auto randomController = std::make_shared<Random_Controller>();
+  router->addController(randomController);  // Add Random_Controller
 
   /* Create HTTP connection handler with router */
   auto connectionHandler =

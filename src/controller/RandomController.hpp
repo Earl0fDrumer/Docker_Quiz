@@ -1,8 +1,8 @@
-#ifndef RandomByTypeController_hpp
-#define RandomByTypeController_hpp
+#ifndef Random_Controller_hpp
+#define Random_Controller_hpp
 
 #include <memory>
-#include "src/service/RandomByType.hpp"
+#include "src/service/RandomRequest.hpp"
 #include "src/dto/FIB_DTOs.hpp"
 #include "src/dto/MAT_DTOs.hpp"
 #include "src/dto/MC_DTOs.hpp"
@@ -13,9 +13,9 @@
 
 #include OATPP_CODEGEN_BEGIN(ApiController)  ///< Begin Codegen
 
-class RandomByType_Controller : public oatpp::web::server::api::ApiController {
+class Random_Controller : public oatpp::web::server::api::ApiController {
  public:
-  RandomByType_Controller(OATPP_COMPONENT(std::shared_ptr<ObjectMapper>, objectMapper))
+  Random_Controller(OATPP_COMPONENT(std::shared_ptr<ObjectMapper>, objectMapper))
       : oatpp::web::server::api::ApiController(objectMapper) {}
 
   ADD_CORS(getRandomByTopic)
@@ -23,14 +23,14 @@ class RandomByType_Controller : public oatpp::web::server::api::ApiController {
            PATH(oatpp::String, topic)) {
     try {
       // Map topic to folder
-      std::string topicFolder = RandomByType::mapTopicToFolder(topic->c_str());
+      std::string topicFolder = RandomRequest::mapTopicToFolder(topic->c_str());
 
       // Select random file
-      std::string selectedFile = RandomByType::selectRandomQuestionFile();
+      std::string selectedFile = RandomRequest::selectRandomQuestionFile();
 
       // Load questions
       std::string filePath = "src/QuestionData/" + topicFolder + "/" + selectedFile;
-      RandomByType loader(topicFolder);
+      RandomRequest loader(topicFolder);
       auto questions = loader.loadQuestions(filePath);
 
       if (questions.empty()) {
@@ -82,10 +82,10 @@ class RandomByType_Controller : public oatpp::web::server::api::ApiController {
       return createResponse(Status::CODE_400, "Unknown question type");
 
     } catch (const std::exception& e) {
-      OATPP_LOGE("RandomByType_Controller", "Exception: %s", e.what());
+      OATPP_LOGE("Random_Controller", "Exception: %s", e.what());
       return createResponse(Status::CODE_500, "Internal Server Error.");
     } catch (...) {
-      OATPP_LOGE("RandomByType_Controller", "Unknown error occurred.");
+      OATPP_LOGE("Random_Controller", "Unknown error occurred.");
       return createResponse(Status::CODE_500, "Internal Server Error.");
     }
   }
@@ -94,14 +94,14 @@ class RandomByType_Controller : public oatpp::web::server::api::ApiController {
   ENDPOINT("GET", "/random", getRandomTopicAndType) {
     try {
       // Randomize topic
-      std::string randomTopicFolder = RandomByType::selectRandomTopic();
+      std::string randomTopicFolder = RandomRequest::selectRandomTopic();
 
       // Randomize question type (file) within the topic
-      std::string selectedFile = RandomByType::selectRandomQuestionFile();
+      std::string selectedFile = RandomRequest::selectRandomQuestionFile();
 
       // Load questions from the randomized topic and file
       std::string filePath = "src/QuestionData/" + randomTopicFolder + "/" + selectedFile;
-      RandomByType loader(randomTopicFolder);
+      RandomRequest loader(randomTopicFolder);
       auto questions = loader.loadQuestions(filePath);
 
       if (questions.empty()) {
@@ -153,10 +153,10 @@ class RandomByType_Controller : public oatpp::web::server::api::ApiController {
       return createResponse(Status::CODE_400, "Unknown question type");
 
     } catch (const std::exception& e) {
-      OATPP_LOGE("RandomByType_Controller", "Exception: %s", e.what());
+      OATPP_LOGE("Random_Controller", "Exception: %s", e.what());
       return createResponse(Status::CODE_500, "Internal Server Error.");
     } catch (...) {
-      OATPP_LOGE("RandomByType_Controller", "Unknown error occurred.");
+      OATPP_LOGE("Random_Controller", "Unknown error occurred.");
       return createResponse(Status::CODE_500, "Internal Server Error.");
     }
   }
@@ -164,4 +164,4 @@ class RandomByType_Controller : public oatpp::web::server::api::ApiController {
 
 #include OATPP_CODEGEN_END(ApiController)  ///< End Codegen
 
-#endif /* RandomByTypeController_hpp */
+#endif /* Random_Controller_hpp */
