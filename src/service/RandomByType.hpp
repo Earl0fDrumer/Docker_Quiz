@@ -68,20 +68,38 @@ public:
             }
 
             if (item.contains("word_bank")) {
+                // Fill-in-the-Blank Question
                 for (const auto& word : item["word_bank"]) {
                     question.addAnswer(word.get<std::string>());
                 }
             } else if (item.contains("answers")) {
-                for (const auto& answer : item["answers"]) {
-                    question.addAnswer(answer.get<std::string>());
+                auto answersObj = item["answers"];
+
+                if (answersObj.size() == 2) {
+                    // True/False Question
+                    for (auto& [key, value] : answersObj.items()) {
+                        question.addAnswer(value.get<std::string>());
+                    }
+                } else if (answersObj.size() > 2) {
+                    // Multiple Choice Question
+                    for (auto& [key, value] : answersObj.items()) {
+                        question.addAnswer(value.get<std::string>());
+                    }
+                } else {
+                    throw std::runtime_error("Invalid question format: 'answers' must have at least 2 entries.");
                 }
             } else if (item.contains("terms") && item.contains("definitions")) {
+                // Matching Question
                 for (const auto& term : item["terms"]) {
                     question.addAnswer(term.get<std::string>());
                 }
                 for (const auto& definition : item["definitions"]) {
                     question.addAnswer(definition.get<std::string>());
                 }
+            }
+
+            if (item.contains("correct_answer")) {
+                question.setCorrectAnswer(item["correct_answer"].get<std::string>());
             }
 
             questions.push_back(question);
