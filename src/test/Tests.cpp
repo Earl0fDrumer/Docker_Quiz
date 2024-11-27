@@ -31,6 +31,7 @@
 
 //Random Type and Random Type/Topic Tests
 #include "src/test/RandomTests/RandomType_Test.hpp"
+#include "src/test/RandomTests/RandomTypeTopic_Test.hpp"
 
 void runTests() {
   OATPP_RUN_TEST(SeleneTest);
@@ -58,6 +59,7 @@ void runTests() {
   OATPP_RUN_TEST(ListTopics_Test);
   //Random Type and Random Type/Topic Tests
   OATPP_RUN_TEST(RandomType_Test);
+  OATPP_RUN_TEST(RandomTypeTopic_Test);
 }
 
 int main() {
