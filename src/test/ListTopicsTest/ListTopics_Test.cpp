@@ -44,7 +44,7 @@ void ListTopics_Test::onRun() {
         auto response = client->getTopics();
         OATPP_ASSERT(response->getStatusCode() == 200);
 
-        // Read response body as DPResult_MC DTO
+        // Read response body as Result_TOPIC DTO
         auto message =
           response->readBodyToDto<oatpp::Object<Result_TOPIC>>(
             objectMapper.get());
