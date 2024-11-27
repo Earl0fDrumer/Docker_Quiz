@@ -31,7 +31,7 @@ void run() {
   /* Create MCController and add all of its endpoints to router */
   auto obj_MC_Controller = std::make_shared<MC_Controller>();
   router->addController(obj_MC_Controller);
-  
+
   /* Create TFController and add all of its endpoints to router */
   auto obj_TF_Controller = std::make_shared<TF_Controller>();
   router->addController(obj_TF_Controller);
@@ -46,23 +46,25 @@ void run() {
 
   /* Create Random_Controller and add all of its endpoints to router */
   auto randomController = std::make_shared<Random_Controller>();
-  router->addController(randomController);  // Add Random_Controller
+  router->addController(randomController);
 
   /* Create HTTP connection handler with router */
-  auto connectionHandler =
-      oatpp::web::server::HttpConnectionHandler::createShared(router);
+  auto connectionHandler = oatpp::web::server::HttpConnectionHandler::createShared(router);
+
+  /* Set Custom Error Handler */
+  OATPP_COMPONENT(std::shared_ptr<oatpp::web::server::handler::ErrorHandler>, errorHandler);
+  connectionHandler->setErrorHandler(errorHandler); // Set the error handler manually
 
   /* Create TCP connection provider */
-  OATPP_COMPONENT(std::shared_ptr<oatpp::network::ServerConnectionProvider>,
-                  connectionProvider);
+  OATPP_COMPONENT(std::shared_ptr<oatpp::network::ServerConnectionProvider>, connectionProvider);
 
   /* Create server which takes provided TCP connections and passes them to HTTP
    * connection handler */
   oatpp::network::Server server(connectionProvider, connectionHandler);
 
   /* Print info about server port */
-  OATPP_LOGI("Selene Service", "Server running on port %d",
-             connectionProvider->getProperty("port").getData());
+  OATPP_LOGI("Selene Service", "Server running on port %s",
+             connectionProvider->getProperty("port").toString()->c_str());
 
   /* Run server */
   server.run();
