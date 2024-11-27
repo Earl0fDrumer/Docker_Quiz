@@ -1,13 +1,12 @@
 #ifndef FillInBlank_Controller_hpp
 #define FillInBlank_Controller_hpp
 
-#include <memory>
-
 #include "src/service/FillInBlank/FillInBlank_Question.hpp"
 #include "src/dto/FIB_DTOs.hpp"
 #include "oatpp/core/macro/codegen.hpp"
 #include "oatpp/core/macro/component.hpp"
 #include "oatpp/web/server/api/ApiController.hpp"
+#include <memory>
 
 #include OATPP_CODEGEN_BEGIN(ApiController)  ///< Begin Codegen
 

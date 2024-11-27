@@ -1,3 +1,8 @@
+#include <iostream>
+#include <memory>
+#include <string>
+#include <vector>
+
 #include "VC_FIB_Test.hpp"
 
 #include "../../controller/FillInBlank/FillInBlank_Controller.hpp"
@@ -5,7 +10,6 @@
 #include "../app/TestComponent.hpp"
 #include "oatpp-test/web/ClientServerTestRunner.hpp"
 #include "oatpp/web/client/HttpRequestExecutor.hpp"
-#include <iostream>
 
 void VC_FIB_Test::onRun() {
   /* Register test components */
@@ -15,7 +19,8 @@ void VC_FIB_Test::onRun() {
   oatpp::test::web::ClientServerTestRunner runner;
 
   /* Get object mapper component */
-  OATPP_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>, objectMapper);
+  OATPP_COMPONENT(std::shared_ptr<oatpp::data::mapping::
+  ObjectMapper>, objectMapper);
 
   /* Add FillInBlank_Controller endpoints to the router of the test server */
   runner.addController(std::make_shared<FillInBlank_Controller>());
@@ -24,14 +29,17 @@ void VC_FIB_Test::onRun() {
   runner.run(
       [this, &runner] {
         /* Get client connection provider for API client */
-        OATPP_COMPONENT(std::shared_ptr<oatpp::network::ClientConnectionProvider>, clientConnectionProvider);
+        OATPP_COMPONENT(std::shared_ptr<oatpp::network::
+        ClientConnectionProvider>, clientConnectionProvider);
 
         /* Get object mapper component */
-        OATPP_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>, objectMapper);
+        OATPP_COMPONENT(std::shared_ptr<oatpp::data::mapping::
+        ObjectMapper>, objectMapper);
 
         /* Create HTTP request executor for API client */
         auto requestExecutor =
-            oatpp::web::client::HttpRequestExecutor::createShared(clientConnectionProvider);
+            oatpp::web::client::HttpRequestExecutor::
+            createShared(clientConnectionProvider);
 
         /* Create Test API client */
         auto client =
@@ -47,13 +55,15 @@ void VC_FIB_Test::onRun() {
         OATPP_ASSERT(response->getStatusCode() == 200);
 
         /* Read response body as Result_FIB DTO */
-        auto question = response->readBodyToDto<oatpp::Object<Result_FIB>>(objectMapper.get());
+        auto question = response->readBodyToDto<oatpp::
+        Object<Result_FIB>>(objectMapper.get());
 
         /* Assert that the question DTO is not null */
         OATPP_ASSERT(question);
 
         /* Assert the question text */
-        OATPP_ASSERT(question->questionText == "In Git, 'git ________' is used to upload local repository content to a remote repository.");
+        OATPP_ASSERT(question->questionText == "In Git, 'git ________' is"
+        " used to upload local repository content to a remote repository.");
 
         /* Assert the size of the word bank */
         OATPP_ASSERT(question->wordBank && question->wordBank->size() == 6);

@@ -10,7 +10,7 @@ class Result_FIB : public oatpp::DTO {
   DTO_INIT(Result_FIB, DTO /* Extends */)
 
   DTO_FIELD(String, questionText);  ///< The question text with blanks
-  DTO_FIELD(Vector<String>::ObjectWrapper, wordBank); ///< The word bank (list of possible answers)
+  DTO_FIELD(Vector<String>::ObjectWrapper, wordBank); ///< The word bank
 };
 
 #include OATPP_CODEGEN_END(DTO)

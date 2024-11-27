@@ -57,7 +57,8 @@ class ServerComponent {
   /**
    *  Create Custom Error Handler component.
    */
-  OATPP_CREATE_COMPONENT(std::shared_ptr<oatpp::web::server::handler::ErrorHandler>, errorHandler)
+  OATPP_CREATE_COMPONENT(std::shared_ptr<oatpp::web::server::
+  handler::ErrorHandler>, errorHandler)
   ([] {
     return std::make_shared<CustomErrorHandler>();
   }());

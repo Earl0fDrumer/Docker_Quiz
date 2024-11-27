@@ -49,14 +49,17 @@ void run() {
   router->addController(randomController);
 
   /* Create HTTP connection handler with router */
-  auto connectionHandler = oatpp::web::server::HttpConnectionHandler::createShared(router);
+  auto connectionHandler = oatpp::web::server::
+  HttpConnectionHandler::createShared(router);
 
   /* Set Custom Error Handler */
-  OATPP_COMPONENT(std::shared_ptr<oatpp::web::server::handler::ErrorHandler>, errorHandler);
-  connectionHandler->setErrorHandler(errorHandler); // Set the error handler manually
+  OATPP_COMPONENT(std::shared_ptr<oatpp::web::
+  server::handler::ErrorHandler>, errorHandler);
+  connectionHandler->setErrorHandler(errorHandler);
 
   /* Create TCP connection provider */
-  OATPP_COMPONENT(std::shared_ptr<oatpp::network::ServerConnectionProvider>, connectionProvider);
+  OATPP_COMPONENT(std::shared_ptr<oatpp::
+  network::ServerConnectionProvider>, connectionProvider);
 
   /* Create server which takes provided TCP connections and passes them to HTTP
    * connection handler */

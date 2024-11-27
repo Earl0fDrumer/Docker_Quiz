@@ -2,6 +2,8 @@
 #define Topics_Controller_hpp
 
 #include <memory>
+#include <string>
+#include <vector>
 
 #include "src/service/Topics.hpp"
 #include "src/dto/TopicsDTOs.hpp"

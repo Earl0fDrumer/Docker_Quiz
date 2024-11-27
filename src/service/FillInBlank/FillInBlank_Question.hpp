@@ -1,14 +1,15 @@
 #ifndef FILLINBLANK_QUESTION_HPP
 #define FILLINBLANK_QUESTION_HPP
 
-#include "src/service/json.hpp"
-#include "src/service/Question.hpp"
 #include <vector>
 #include <string>
 #include <fstream>
 #include <stdexcept>
 #include <iostream>
 #include <algorithm>
+#include "src/service/json.hpp"
+#include "src/service/Question.hpp"
+
 
 using json = nlohmann::json;
 
@@ -38,7 +39,8 @@ class FillInBlank : public Question {
 
   // Validate user input and provide feedback
   std::string validateAnswer(const std::string& userAnswer) {
-    if (std::find(WordBank.begin(), WordBank.end(), userAnswer) == WordBank.end()) {
+    if (std::find(WordBank.begin(), WordBank.end(),
+    userAnswer) == WordBank.end()) {
       return "Error: Your answer must be one of the words in the word bank.";
     }
 

@@ -2,6 +2,7 @@
 #define Random_Controller_hpp
 
 #include <memory>
+#include <string>
 #include "src/service/RandomRequest.hpp"
 #include "src/dto/FIB_DTOs.hpp"
 #include "src/dto/MAT_DTOs.hpp"
@@ -11,11 +12,13 @@
 #include "oatpp/core/macro/component.hpp"
 #include "oatpp/web/server/api/ApiController.hpp"
 
+
 #include OATPP_CODEGEN_BEGIN(ApiController)  ///< Begin Codegen
 
 class Random_Controller : public oatpp::web::server::api::ApiController {
  public:
-  Random_Controller(OATPP_COMPONENT(std::shared_ptr<ObjectMapper>, objectMapper))
+  Random_Controller(OATPP_COMPONENT(std::shared_ptr<ObjectMapper>,
+  objectMapper))
       : oatpp::web::server::api::ApiController(objectMapper) {}
 
   ADD_CORS(getRandomByTopic)
@@ -29,7 +32,8 @@ class Random_Controller : public oatpp::web::server::api::ApiController {
       std::string selectedFile = RandomRequest::selectRandomQuestionFile();
 
       // Load questions
-      std::string filePath = "src/QuestionData/" + topicFolder + "/" + selectedFile;
+      std::string filePath = "src/QuestionData/" +
+      topicFolder + "/" + selectedFile;
       RandomRequest loader(topicFolder);
       auto questions = loader.loadQuestions(filePath);
 
@@ -78,9 +82,7 @@ class Random_Controller : public oatpp::web::server::api::ApiController {
         dto->definitionD = selectedQuestion.getAnswers()[7].c_str();
         return createDtoResponse(Status::CODE_200, dto);
       }
-
       return createResponse(Status::CODE_400, "Unknown question type");
-
     } catch (const std::exception& e) {
       OATPP_LOGE("Random_Controller", "Exception: %s", e.what());
       return createResponse(Status::CODE_500, "Internal Server Error.");
@@ -100,7 +102,8 @@ class Random_Controller : public oatpp::web::server::api::ApiController {
       std::string selectedFile = RandomRequest::selectRandomQuestionFile();
 
       // Load questions from the randomized topic and file
-      std::string filePath = "src/QuestionData/" + randomTopicFolder + "/" + selectedFile;
+      std::string filePath = "src/QuestionData/" + randomTopicFolder +
+      "/" + selectedFile;
       RandomRequest loader(randomTopicFolder);
       auto questions = loader.loadQuestions(filePath);
 
@@ -149,9 +152,7 @@ class Random_Controller : public oatpp::web::server::api::ApiController {
         dto->definitionD = selectedQuestion.getAnswers()[7].c_str();
         return createDtoResponse(Status::CODE_200, dto);
       }
-
       return createResponse(Status::CODE_400, "Unknown question type");
-
     } catch (const std::exception& e) {
       OATPP_LOGE("Random_Controller", "Exception: %s", e.what());
       return createResponse(Status::CODE_500, "Internal Server Error.");
