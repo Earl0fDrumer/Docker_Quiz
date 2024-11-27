@@ -29,6 +29,9 @@
 //List Topics Test
 #include "src/test/ListTopicsTest/ListTopics_Test.hpp"
 
+//Random Type and Random Type/Topic Tests
+#include "src/test/RandomTests/RandomType_Test.hpp"
+
 void runTests() {
   OATPP_RUN_TEST(SeleneTest);
   // Multiple Choice Tests
@@ -53,6 +56,8 @@ void runTests() {
   OATPP_RUN_TEST(VC_FIB_Test);
   //List Topics Test
   OATPP_RUN_TEST(ListTopics_Test);
+  //Random Type and Random Type/Topic Tests
+  OATPP_RUN_TEST(RandomType_Test);
 }
 
 int main() {

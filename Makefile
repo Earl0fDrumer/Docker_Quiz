@@ -20,6 +20,7 @@ SRC_DIR_TESTS_TrueOrFalse = src/test/TrueOrFalseTests
 SRC_DIR_TESTS_Matching = src/test/MatchingTests
 SRC_DIR_TESTS_FIB = src/test/FillInBlankTests
 SRC_DIR_TESTS_TOPICS = src/test/ListTopicsTest
+SRC_DIR_TESTS_RAND = src/test/RandomTests
 
 GCOV = gcov
 LCOV = lcov
@@ -78,6 +79,7 @@ $(TEST_SERVER): $(SRC_DIR_TESTS)
 	$(SRC_DIR_TESTS_Matching)/*.cpp \
 	$(SRC_DIR_TESTS_FIB)/*.cpp \
 	$(SRC_DIR_TESTS_TOPICS)/*.cpp \
+	$(SRC_DIR_TESTS_RAND)/*.cpp \
 	$(SRC_DIR_TESTS)/*.cpp $(LINKFLAGS_TEST)
 
 static: ${SRC_DIR_SERVER} ${SRC_DIR_CLIENT} ${SRC_DIR_SERVICE_MC_QUESTION} ${SRC_DIR_SERVICE_DP_QUESTION} ${TEST_DIR}

@@ -37,6 +37,9 @@ class MyApiTestClient : public oatpp::web::client::ApiClient {
   API_CALL("GET", "/VC/FIB", getVC_FIBQuestion)
   //List Topics
   API_CALL("GET", "/topics", getTopics)
+  //Random Type and Random Topic/Type
+  API_CALL("GET", "/SE/random", getRandomByTopic)
+  API_CALL("GET", "/random", getRandomTopicAndType)
 };
 
 /* End Api Client code generation */
