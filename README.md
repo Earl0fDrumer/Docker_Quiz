@@ -2,11 +2,11 @@
 This is the base code for the course project. Adapt as needed.
 
  * **List all topics:** [http://localhost:8200/selene](http://localhost:8200/selene)
- * **Random Topic - Random Question Type** [http://localhost:8200/selene](http://localhost:8200/selene/random) [Not Implemented]
- * **Topic 1 - Random Question Type** [http://localhost:8200/selene](http://localhost:8200/selene/t1/random) [Not Implemented]
- * **Topic 2 - Random Question Type** [http://localhost:8200/selene](http://localhost:8200/selene/t2/random) [Not Implemented]
- * **Topic 3 - Random Question Type** [http://localhost:8200/selene](http://localhost:8200/selene/t3/random) [Not Implemented]
- * **Topic 4 - Random Question Type** [http://localhost:8200/selene](http://localhost:8200/selene/t4/random) [Not Implemented]
+ * **Random Topic - Random Question Type** [http://localhost:8200/random](http://localhost:8200/random)
+ * **Software Engineering - Random Question Type** [http://localhost:8200/SE/random](http://localhost:8200/SE/random)
+ * **Object Oriented Design - Random Question Type** [http://localhost:8200/OOD/random](http://localhost:8200/OOD/random)
+ * **Version Control - Random Question Type** [http://localhost:8200/VC/random](http://localhost:8200/VC/random)
+ * **Design Pattern- Random Question Type** [http://localhost:8200/DP/random](http://localhost:8200/DP/random)
 
 
 ## <Topic 1: Software Engineering (SE) - Patryk Blach>

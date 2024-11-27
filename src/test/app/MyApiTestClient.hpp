@@ -25,16 +25,21 @@ class MyApiTestClient : public oatpp::web::client::ApiClient {
   API_CALL("GET", "/OOD/MAT", getOOD_MATQuestion)
   API_CALL("GET", "/SE/MAT", getSE_MATQuestion)
   API_CALL("GET", "/VC/MAT", getVC_MATQuestion)
-  //True or Flase
+  //True or False
   API_CALL("GET", "/DP/TF", getDP_TFQuestion)
   API_CALL("GET", "/OOD/TF", getOOD_TFQuestion)
   API_CALL("GET", "/SE/TF", getSE_TFQuestion)
   API_CALL("GET", "/VC/TF", getVC_TFQuestion)
-
+  //Fill in the Blank
   API_CALL("GET", "/SE/FIB", getSE_FIBQuestion)
   API_CALL("GET", "/OOD/FIB", getOOD_FIBQuestion)
   API_CALL("GET", "/DP/FIB", getDP_FIBQuestion)
   API_CALL("GET", "/VC/FIB", getVC_FIBQuestion)
+  //List Topics
+  API_CALL("GET", "/topics", getTopics)
+  //Random Type and Random Topic/Type
+  API_CALL("GET", "/SE/random", getRandomByTopic)
+  API_CALL("GET", "/random", getRandomTopicAndType)
 };
 
 /* End Api Client code generation */

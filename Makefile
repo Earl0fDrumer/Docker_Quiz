@@ -11,12 +11,16 @@ SRC_DIR_SERVICE_MC_QUESTION = src/service/MultipleChoice
 SRC_DIR_SERVICE_TF_QUESTION = src/service/TrueOrFalse
 SRC_DIR_SERVICE_MAT_QUESTION = src/service/Matching
 SRC_DIR_SERVICE_FIB_QUESTION = src/service/FillInBlank
+SRC_DIR_SERVICE_RANDOM_BY_TYPE = src/service
+
 SRC_DIR_TESTS = src/test
 SRC_DIR_TESTS_Selene = src/test/selene
 SRC_DIR_TESTS_MultipleChoice = src/test/MultipleChoiceTests
 SRC_DIR_TESTS_TrueOrFalse = src/test/TrueOrFalseTests
 SRC_DIR_TESTS_Matching = src/test/MatchingTests
 SRC_DIR_TESTS_FIB = src/test/FillInBlankTests
+SRC_DIR_TESTS_TOPICS = src/test/ListTopicsTest
+SRC_DIR_TESTS_RAND = src/test/RandomTests
 
 GCOV = gcov
 LCOV = lcov
@@ -54,8 +58,9 @@ $(PROGRAM_SERVER): $(SRC_DIR_SERVER)
 	$(SRC_DIR_SERVICE_TF_QUESTION)/*.hpp \
 	$(SRC_DIR_SERVICE_MAT_QUESTION)/*.hpp \
 	$(SRC_DIR_SERVICE_FIB_QUESTION)/*.hpp \
+	$(SRC_DIR_SERVICE_RANDOM_BY_TYPE)/*.hpp \
 	$(SRC_DIR_CONTROLLER)/*.hpp \
- 	$(LINKFLAGS_APP)
+	$(LINKFLAGS_APP)
 
 docker:
 	docker build --pull --rm -f "Dockerfile" -t selene:latest "."
@@ -73,6 +78,8 @@ $(TEST_SERVER): $(SRC_DIR_TESTS)
 	$(SRC_DIR_TESTS_TrueOrFalse)/*.cpp \
 	$(SRC_DIR_TESTS_Matching)/*.cpp \
 	$(SRC_DIR_TESTS_FIB)/*.cpp \
+	$(SRC_DIR_TESTS_TOPICS)/*.cpp \
+	$(SRC_DIR_TESTS_RAND)/*.cpp \
 	$(SRC_DIR_TESTS)/*.cpp $(LINKFLAGS_TEST)
 
 static: ${SRC_DIR_SERVER} ${SRC_DIR_CLIENT} ${SRC_DIR_SERVICE_MC_QUESTION} ${SRC_DIR_SERVICE_DP_QUESTION} ${TEST_DIR}
