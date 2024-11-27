@@ -26,6 +26,9 @@
 #include "src/test/FillInBlankTests/SE_FIB_Test.hpp"
 #include "src/test/FillInBlankTests/VC_FIB_Test.hpp"
 
+//List Topics Test
+#include "src/test/ListTopicsTest/ListTopics_Test.hpp"
+
 void runTests() {
   OATPP_RUN_TEST(SeleneTest);
   // Multiple Choice Tests
@@ -48,6 +51,8 @@ void runTests() {
   OATPP_RUN_TEST(OOD_FIB_Test);
   OATPP_RUN_TEST(SE_FIB_Test);
   OATPP_RUN_TEST(VC_FIB_Test);
+  //List Topics Test
+  OATPP_RUN_TEST(ListTopics_Test);
 }
 
 int main() {
