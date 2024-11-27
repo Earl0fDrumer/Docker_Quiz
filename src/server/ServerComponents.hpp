@@ -7,11 +7,12 @@
 #include "oatpp/network/tcp/server/ConnectionProvider.hpp"
 #include "oatpp/parser/json/mapping/ObjectMapper.hpp"
 #include "oatpp/web/server/HttpConnectionHandler.hpp"
+#include "CustomErrorHandler.hpp"
 
 /**
  *  Class which creates and holds Application components and registers
- * components in oatpp::base::Environment Order of components initialization is
- * from top to bottom
+ *  components in oatpp::base::Environment Order of components initialization is
+ *  from top to bottom
  */
 class ServerComponent {
  public:
@@ -35,7 +36,7 @@ class ServerComponent {
 
   /**
    *  Create ConnectionHandler component which uses Router component to route
-   * requests
+   *  requests
    */
   OATPP_CREATE_COMPONENT(std::shared_ptr<oatpp::network::ConnectionHandler>,
                          serverConnectionHandler)
@@ -47,11 +48,19 @@ class ServerComponent {
 
   /**
    *  Create ObjectMapper component to serialize/deserialize DTOs in Contoller's
-   * API
+   *  API
    */
   OATPP_CREATE_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>,
                          apiObjectMapper)
   ([] { return oatpp::parser::json::mapping::ObjectMapper::createShared(); }());
+
+  /**
+   *  Create Custom Error Handler component.
+   */
+  OATPP_CREATE_COMPONENT(std::shared_ptr<oatpp::web::server::handler::ErrorHandler>, errorHandler)
+  ([] {
+    return std::make_shared<CustomErrorHandler>();
+  }());
 };
 
 #endif /* ServerComponent_hpp */
