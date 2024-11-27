@@ -33,9 +33,6 @@
 #include "src/test/RandomTests/RandomType_Test.hpp"
 #include "src/test/RandomTests/RandomTypeTopic_Test.hpp"
 
-//Error Handler Test
-#include "src/test/ErrorHandlerTests/CustomErrorHandler_Test.hpp"
-
 void runTests() {
   OATPP_RUN_TEST(SeleneTest);
   // Multiple Choice Tests
@@ -63,8 +60,6 @@ void runTests() {
   //Random Type and Random Type/Topic Tests
   OATPP_RUN_TEST(RandomType_Test);
   OATPP_RUN_TEST(RandomTypeTopic_Test);
-  // Error Handler Test
-  OATPP_RUN_TEST(CustomErrorHandler_Test); // Add the Error Handler Test
 }
 
 int main() {

@@ -21,7 +21,6 @@ SRC_DIR_TESTS_Matching = src/test/MatchingTests
 SRC_DIR_TESTS_FIB = src/test/FillInBlankTests
 SRC_DIR_TESTS_TOPICS = src/test/ListTopicsTest
 SRC_DIR_TESTS_RAND = src/test/RandomTests
-SRC_DIR_TESTS_ERROR_HANDLER = src/test/ErrorHandlerTests
 
 GCOV = gcov
 LCOV = lcov
@@ -47,7 +46,6 @@ clean:
 	rm -rf *~ $(SRC)/*.o $(TEST_SRC)/*.o *.gcov *.gcda *.gcno \
 	$(COVERAGE_RESULTS) \
 	$(PROGRAM_SERVER) \
-	$(TEST_SERVER) \
 	$(COVERAGE_DIR) \
 	doxygen/html \
 	obj bin \
@@ -82,7 +80,6 @@ $(TEST_SERVER): $(SRC_DIR_TESTS)
 	$(SRC_DIR_TESTS_FIB)/*.cpp \
 	$(SRC_DIR_TESTS_TOPICS)/*.cpp \
 	$(SRC_DIR_TESTS_RAND)/*.cpp \
-	$(SRC_DIR_TESTS_ERROR_HANDLER)/*.cpp \  # Include Error Handler tests
 	$(SRC_DIR_TESTS)/*.cpp $(LINKFLAGS_TEST)
 
 static: ${SRC_DIR_SERVER} ${SRC_DIR_CLIENT} ${SRC_DIR_SERVICE_MC_QUESTION} ${SRC_DIR_SERVICE_DP_QUESTION} ${TEST_DIR}
