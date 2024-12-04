@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AJAX Example</title>
+    <script>
+        async function fetchData() {
+            const response = await fetch('http://localhost:8200/topics')
+            .then((resp) => resp.json())
+            .then(function(data){
+                document.getElementById('topic1').innerText = data.topic1;
+                document.getElementById('topic2').innerText = data.topic2;
+                document.getElementById('topic3').innerText = data.topic3;
+                document.getElementById('topic4').innerText = data.topic4;
+            })
+            .catch(function(error){
+                console.log(error)
+            });
+        }
+
+        
+    </script>
+</head>
+<body onload="fetchData()">
+    <h1 id="topic1">Loading...</h1>
+    <h2 id="topic2">Loading...</h2>
+    <h2 id="topic3">Loading...</h2>
+    <p id="topic4"></p>
+</body>
+</html>
