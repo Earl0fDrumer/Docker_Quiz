@@ -16,6 +16,15 @@ class TrueOrFalse : public Question {
   Answers.push_back(jsonFileData["questions"][0]["answers"]["a"]);
   Answers.push_back(jsonFileData["questions"][0]["answers"]["b"]);
   }
+
+   // Validate user input and provide feedback
+  std::string validateAnswer(const std::string& userAnswer) {
+    if (userAnswer == CorrectAnswer) {
+      return "Correct!";
+    } else {
+      return "Incorrect. The correct answer is: " + CorrectAnswer;
+    }
+  }
 };
 
 #endif // TF_QUESTION_HPP
