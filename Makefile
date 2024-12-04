@@ -1,6 +1,10 @@
 CXX=g++
 CXXFLAGS= -std=c++17 -g -fprofile-arcs -ftest-coverage
 
+OATPP_INCLUDE_LIB = /usr/local/include/oatpp-1.3.0/oatpp
+OATPP_INCLUDE = -I src -I $(OATPP_INCLUDE_LIB)
+
+LINKFLAGS_LOCAL = -L /usr/local/lib/oatpp-1.3.0
 LINKFLAGS_APP = -loatpp
 LINKFLAGS_TEST = $(LINKFLAGS_APP) -loatpp-test
 
