@@ -2,7 +2,7 @@ CXX=g++
 CXXFLAGS= -std=c++17 -g -fprofile-arcs -ftest-coverage
 
 OATPP_INCLUDE_LIB = /usr/local/include/oatpp-1.3.0/oatpp
-OATPP_INCLUDE = -I src -I $(OATPP_INCLUDE_LIB)
+OATPP_INCLUDE = -I src -I $(OATPP_INCLUDE_LIB) -I .
 
 LINKFLAGS_LOCAL = -L /usr/local/lib/oatpp-1.3.0
 LINKFLAGS_APP = -loatpp
@@ -64,7 +64,7 @@ $(PROGRAM_SERVER): $(SRC_DIR_SERVER)
 	$(SRC_DIR_SERVICE_FIB_QUESTION)/*.hpp \
 	$(SRC_DIR_SERVICE_RANDOM_BY_TYPE)/*.hpp \
 	$(SRC_DIR_CONTROLLER)/*.hpp \
-	$(LINKFLAGS_APP)
+	$(LINKFLAGS_APP) $(LINKFLAGS_LOCAL)
 
 docker:
 	docker build --pull --rm -f "Dockerfile" -t selene:latest "."
@@ -84,7 +84,7 @@ $(TEST_SERVER): $(SRC_DIR_TESTS)
 	$(SRC_DIR_TESTS_FIB)/*.cpp \
 	$(SRC_DIR_TESTS_TOPICS)/*.cpp \
 	$(SRC_DIR_TESTS_RAND)/*.cpp \
-	$(SRC_DIR_TESTS)/*.cpp $(LINKFLAGS_TEST)
+	$(SRC_DIR_TESTS)/*.cpp $(LINKFLAGS_TEST) $(LINKFLAGS_LOCAL)
 
 static: ${SRC_DIR_SERVER} ${SRC_DIR_CLIENT} ${SRC_DIR_SERVICE_MC_QUESTION} ${SRC_DIR_SERVICE_DP_QUESTION} ${TEST_DIR}
 	${STATIC_ANALYSIS} --verbose --enable=all ${SRC_DIR_SERVER} ${SRC_DIR_CLIENT} ${SRC_DIR_SERVICE_MC_QUESTION} ${SRC_DIR_SERVICE_DP_QUESTION} ${TEST_DIR} ${SRC_INCLUDE} --suppress=missingInclude
