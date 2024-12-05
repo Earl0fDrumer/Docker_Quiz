@@ -2,12 +2,13 @@ CXX=g++
 CXXFLAGS= -std=c++17 -g -fprofile-arcs -ftest-coverage
 
 OATPP_INCLUDE_LIB = /usr/local/include/oatpp-1.3.0/oatpp
-OATPP_INCLUDE = -I src -I $(OATPP_INCLUDE_LIB)
+OATPP_INCLUDE = -I src -I $(OATPP_INCLUDE_LIB) -I .
 
 LINKFLAGS_LOCAL = -L /usr/local/lib/oatpp-1.3.0
 LINKFLAGS_APP = -loatpp
 LINKFLAGS_TEST = $(LINKFLAGS_APP) -loatpp-test
 
+SRC_DIR = src
 SRC_DIR_SERVER = src/server
 SRC_DIR_DTO = src/dto
 SRC_DIR_CONTROLLER = src/controller
@@ -50,6 +51,7 @@ clean:
 	rm -rf *~ $(SRC)/*.o $(TEST_SRC)/*.o *.gcov *.gcda *.gcno \
 	$(COVERAGE_RESULTS) \
 	$(PROGRAM_SERVER) \
+	$(TEST_SERVER) \
 	$(COVERAGE_DIR) \
 	doxygen/html \
 	obj bin \
@@ -64,7 +66,7 @@ $(PROGRAM_SERVER): $(SRC_DIR_SERVER)
 	$(SRC_DIR_SERVICE_FIB_QUESTION)/*.hpp \
 	$(SRC_DIR_SERVICE_RANDOM_BY_TYPE)/*.hpp \
 	$(SRC_DIR_CONTROLLER)/*.hpp \
-	$(LINKFLAGS_APP)
+	$(LINKFLAGS_APP) $(LINKFLAGS_LOCAL)
 
 docker:
 	docker build --pull --rm -f "Dockerfile" -t selene:latest "."
@@ -84,10 +86,23 @@ $(TEST_SERVER): $(SRC_DIR_TESTS)
 	$(SRC_DIR_TESTS_FIB)/*.cpp \
 	$(SRC_DIR_TESTS_TOPICS)/*.cpp \
 	$(SRC_DIR_TESTS_RAND)/*.cpp \
-	$(SRC_DIR_TESTS)/*.cpp $(LINKFLAGS_TEST)
+	$(SRC_DIR_TESTS)/*.cpp $(LINKFLAGS_TEST) $(LINKFLAGS_LOCAL)
 
 static: ${SRC_DIR_SERVER} ${SRC_DIR_CLIENT} ${SRC_DIR_SERVICE_MC_QUESTION} ${SRC_DIR_SERVICE_DP_QUESTION} ${TEST_DIR}
 	${STATIC_ANALYSIS} --verbose --enable=all ${SRC_DIR_SERVER} ${SRC_DIR_CLIENT} ${SRC_DIR_SERVICE_MC_QUESTION} ${SRC_DIR_SERVICE_DP_QUESTION} ${TEST_DIR} ${SRC_INCLUDE} --suppress=missingInclude
 
 style: ${SRC_DIR_SERVICE_MC_QUESTION} ${SRC_DIR_SERVICE_DP_QUESTION} ${SRC_INCLUDE}
 	${STYLE_CHECK} src/controller/* src/dto/* src/server/* src/service/*/* src/test/*/* src/test/*.cpp
+
+	.PHONY: coverage
+coverage: ${TEST_SERVER}
+	./${TEST_SERVER}
+	# Determine code coverage
+	${LCOV} --capture --gcov-tool ${GCOV} --directory . --output-file \
+	${COVERAGE_RESULTS} --rc lcov_branch_coverage=1
+	# Only show code coverage for the source code files (not library files)
+	${LCOV} --extract ${COVERAGE_RESULTS} */*/*/${SRC_DIR}/* -o ${COVERAGE_RESULTS}
+	#Generate the HTML reports
+	genhtml ${COVERAGE_RESULTS} --output-directory ${COVERAGE_DIR}
+	#Remove all of the generated files from gcov
+	make clean-temp
