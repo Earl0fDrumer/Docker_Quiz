@@ -1,24 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>AJAX Example</title>
     <script>
-        async function fetchData() {
-            const response = await fetch('http://localhost:8200/topics')
-            .then((resp) => resp.json())
-            .then(function(data){
-                document.getElementById('topic1').innerText = data.topic1;
-                document.getElementById('topic2').innerText = data.topic2;
-                document.getElementById('topic3').innerText = data.topic3;
-                document.getElementById('topic4').innerText = data.topic4;
+        function fetchData() {
+            fetch('http://localhost:8200/topics')
+            .then((resp) => {
+                if (!resp.ok) {
+                    throw new Error('HTTP error: ${resp.status}');
+                }
+                return resp.text();
             })
-            .catch(function(error){
-                console.log(error)
+            .then((text) => {
+                document.getElementById('topic1').innerText = text.topic1;
+                document.getElementById('topic2').innerText = text.topic2;
+                document.getElementById('topic3').innerText = text.topic3;
+                document.getElementById('topic4').innerText = text.topic4;
+            })
+            .catch((error) => {
+            document.getElementById('topic1').innerText = "A booboo happened :(";
+            document.getElementById('topic2').innerText = "A booboo happened :(";
+            document.getElementById('topic3').innerText = "A booboo happened :(";
+            document.getElementById('topic4').innerText = "A booboo happened :(";
             });
         }
-
-        
     </script>
 </head>
 <body onload="fetchData()">
