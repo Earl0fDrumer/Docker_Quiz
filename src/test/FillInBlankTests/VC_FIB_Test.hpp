@@ -5,7 +5,7 @@
 
 class VC_FIB_Test : public oatpp::test::UnitTest {
  public:
-  VC_FIB_Test() : UnitTest("TEST[Version Control FIB]") {}
+  VC_FIB_Test() : UnitTest("TEST[VC_FIB_Test]") {}
   void onRun() override;
 };
 
