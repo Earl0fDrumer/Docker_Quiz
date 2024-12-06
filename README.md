@@ -12,7 +12,7 @@ This is the base code for the course project. Adapt as needed.
 ## <Topic 1: Software Engineering (SE) - Patryk Blach>
  * **Multiple Choice:** [http://localhost:8200/SE/MC](http://localhost:8200/SE/MC)
  * **True/False:** [http://localhost:8200/SE/TF](http://localhost:8200/SE/TF)    
- * **Matching:** [http://localhost:8200/SE/MAT](http://localhost:8200/OOD/MAT)
+ * **Matching:** [http://localhost:8200/SE/MAT](http://localhost:8200/SE/MAT)
  * **Fill In Blank:** [http://localhost:8200/SE/FIB](http://localhost:8200/SE/FIB)
 
 ## <Topic 2: Object Oriented Design(OOD) - Nicholas Easter>
@@ -24,12 +24,12 @@ This is the base code for the course project. Adapt as needed.
 ## <Topic 3: Version Control (VC) Jason Tran>
  * **Multiple Choice:** [http://localhost:8200/VC/MC](http://localhost:8200/VC/MC)
  * **True/False:** [http://localhost:8200/VC/TF](http://localhost:8200/VC/TF)   
- * **Matching:** [http://localhost:8200/VC/MAT](http://localhost:8200/OOD/MAT)
+ * **Matching:** [http://localhost:8200/VC/MAT](http://localhost:8200/VC/MAT)
  * **Fill In Blank:** [http://localhost:8200/VC/FIB](http://localhost:8200/VC/FIB)
  
 ## <Topic 4: Design Patterns (DP) Nicolas Cedeno>
  * **Multiple Choice:** [http://localhost:8200/DP/MC](http://localhost:8200/DP/MC)
  * **True/False:** [http://localhost:8200/DP/TF](http://localhost:8200/DP/TF)     
- * **Matching:** [http://localhost:8200/DP/MAT](http://localhost:8200/OOD/MAT)
+ * **Matching:** [http://localhost:8200/DP/MAT](http://localhost:8200/DP/MAT)
  * **Fill In Blank:** [http://localhost:8200/DP/FIB](http://localhost:8200/DP/FIB)
  

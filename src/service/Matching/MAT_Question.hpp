@@ -26,22 +26,33 @@ class Matching : public Question {
     Answers.push_back(jsonFileData["questions"][0]["terms"]["c"]);
     Answers.push_back(jsonFileData["questions"][0]["terms"]["d"]);
 
-    std::shuffle(Answers.begin(), Answers.end(), g);
-
-    Definitions.push_back(jsonFileData["questions"][0]["definitions"]["a"]);
-    Definitions.push_back(jsonFileData["questions"][0]["definitions"]["b"]);
     Definitions.push_back(jsonFileData["questions"][0]["definitions"]["c"]);
+    Definitions.push_back(jsonFileData["questions"][0]["definitions"]["a"]);
     Definitions.push_back(jsonFileData["questions"][0]["definitions"]["d"]);
+    Definitions.push_back(jsonFileData["questions"][0]["definitions"]["b"]);
 
-    std::shuffle(Definitions.begin(), Definitions.end(), g);
   }
 
   std::vector<std::string> getDefinitions() {
     return Definitions;
   }
 
+  // Validate user input and provide feedback
+  // Expects a userAnswer vector with a series of letters.
+  // Expects an index (this means there is a for loop running 4 times)
+  // Returns Correct if the answer matches the correct answer.
+  // Returns the correct answer otherwise.
+  std::string validateAnswer(const std::string userAnswer[], int index) {
+    if (userAnswer[index] != correctAnswerVector[index]) {
+      return "Incorrect. The correct answer is: " + correctAnswerVector[index];
+    } else {
+      return "Correct!";
+    }
+  }
+
  private:
   std::vector<std::string> Definitions;
+  std::vector<std::string> correctAnswerVector = {"c", "a", "d", "b"};
 };
 
 #endif /* MAT_QUESTION_hpp */
