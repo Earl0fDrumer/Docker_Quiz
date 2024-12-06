@@ -1,37 +1,39 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <h3>Hello there!</h3>
 </head>
-<body>
+
+<body onload="fetchData()">
     <script>
         function fetchData() {
             fetch("http://localhost:8200/topics")
-            .then((resp) => {
-                if (!resp.ok) {
-                    throw new Error("HTTP error: ${resp.status}");
-                }
-                return resp.text();
-            })
-            .then((text) => {
-                document.getElementById("topic1").innerText = text.topic1;
-                document.getElementById("topic2").innerText = text.topic2;
-                document.getElementById("topic3").innerText = text.topic3;
-                document.getElementById("topic4").innerText = text.topic4;
-            })
-            .catch((error) => {
-            document.getElementById("topic1").innerText = "A booboo happened :(";
-            document.getElementById("topic2").innerText = "A booboo happened :(";
-            document.getElementById("topic3").innerText = "A booboo happened :(";
-            document.getElementById("topic4").innerText = "A booboo happened :(";
-            });
+                .then((resp) => {
+                    if (!resp.ok) {
+                        throw new Error("HTTP error: ${resp.status}");
+                    }
+                    return resp.json();
+                })
+                .then((text) => {
+                    document.getElementById("topic1").innerText = text.topic1;
+                    document.getElementById("topic2").innerText = text.topic2;
+                    document.getElementById("topic3").innerText = text.topic3;
+                    document.getElementById("topic4").innerText = text.topic4;
+                })
+                .catch((error) => {
+                    document.getElementById("topic1").innerText = "A booboo happened :(";
+                    document.getElementById("topic2").innerText = "A booboo happened :(";
+                    document.getElementById("topic3").innerText = "A booboo happened :(";
+                    document.getElementById("topic4").innerText = "A booboo happened :(";
+                });
         }
     </script>
 
-    <h3 onload="fetchData()">I hate this shit</h3>
     <h1 id="topic1">Loading...</h1>
     <h2 id="topic2">Loading...</h2>
     <h2 id="topic3">Loading...</h2>
     <p id="topic4"></p>
 </body>
+
 </html>
