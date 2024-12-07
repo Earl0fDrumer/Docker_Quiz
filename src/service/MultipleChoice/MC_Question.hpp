@@ -18,6 +18,16 @@ class MultipleChoice : public Question {
   Answers.push_back(jsonFileData["questions"][0]["answers"]["c"]);
   Answers.push_back(jsonFileData["questions"][0]["answers"]["d"]);
   }
+
+  // Validate user input and provide feedback
+  std::string validateAnswer(const std::string& userAnswer) {
+    if (userAnswer == CorrectAnswer) {
+      return "Correct!";
+    } else {
+      return "Incorrect. The correct answer is: " + CorrectAnswer;
+    }
+  }
+
 };
 
 #endif // MC_QUESTION_HPP
