@@ -1,4 +1,4 @@
-#include "DP_Test.hpp"
+#include "OOD_MAT_Test.hpp"
 
 #include <iostream>
 #include <memory>
@@ -9,7 +9,7 @@
 #include "oatpp-test/web/ClientServerTestRunner.hpp"
 #include "oatpp/web/client/HttpRequestExecutor.hpp"
 
-void DP_MAT_Test::onRun() {
+void OOD_MAT_Test::onRun() {
   // Register test components
   TestComponent component;
 

@@ -46,7 +46,7 @@ class Random_Controller : public oatpp::web::server::api::ApiController {
       // Generate DTO
       if (selectedFile == "FillInBlank.json") {
         auto dto = Result_FIB::createShared();
-        dto->questionText = selectedQuestion.getQuestionText();
+        dto->questionTextFIB = selectedQuestion.getQuestionText();
         dto->wordBank = oatpp::Vector<oatpp::String>::createShared();
         for (const auto& word : selectedQuestion.getAnswers()) {
           dto->wordBank->push_back(word.c_str());
@@ -55,7 +55,7 @@ class Random_Controller : public oatpp::web::server::api::ApiController {
 
       } else if (selectedFile == "MultipleChoice.json") {
         auto dto = Result_MC::createShared();
-        dto->questionText = selectedQuestion.getQuestionText();
+        dto->questionTextMC = selectedQuestion.getQuestionText();
         dto->optionA = selectedQuestion.getAnswers()[0].c_str();
         dto->optionB = selectedQuestion.getAnswers()[1].c_str();
         dto->optionC = selectedQuestion.getAnswers()[2].c_str();
@@ -64,14 +64,14 @@ class Random_Controller : public oatpp::web::server::api::ApiController {
 
       } else if (selectedFile == "TrueFalse.json") {
         auto dto = Result_TF::createShared();
-        dto->questionText = selectedQuestion.getQuestionText();
+        dto->questionTextTF = selectedQuestion.getQuestionText();
         dto->trueText = selectedQuestion.getAnswers()[0].c_str();
         dto->falseText = selectedQuestion.getAnswers()[1].c_str();
         return createDtoResponse(Status::CODE_200, dto);
 
       } else if (selectedFile == "Matching.json") {
         auto dto = Result_MAT::createShared();
-        dto->questionText = selectedQuestion.getQuestionText();
+        dto->questionTextMAT = selectedQuestion.getQuestionText();
         dto->termA = selectedQuestion.getAnswers()[0].c_str();
         dto->termB = selectedQuestion.getAnswers()[1].c_str();
         dto->termC = selectedQuestion.getAnswers()[2].c_str();
@@ -116,7 +116,7 @@ class Random_Controller : public oatpp::web::server::api::ApiController {
       // Generate DTO based on the question type
       if (selectedFile == "FillInBlank.json") {
         auto dto = Result_FIB::createShared();
-        dto->questionText = selectedQuestion.getQuestionText();
+        dto->questionTextFIB = selectedQuestion.getQuestionText();
         dto->wordBank = oatpp::Vector<oatpp::String>::createShared();
         for (const auto& word : selectedQuestion.getAnswers()) {
           dto->wordBank->push_back(word.c_str());
@@ -125,7 +125,7 @@ class Random_Controller : public oatpp::web::server::api::ApiController {
 
       } else if (selectedFile == "MultipleChoice.json") {
         auto dto = Result_MC::createShared();
-        dto->questionText = selectedQuestion.getQuestionText();
+        dto->questionTextMC = selectedQuestion.getQuestionText();
         dto->optionA = selectedQuestion.getAnswers()[0].c_str();
         dto->optionB = selectedQuestion.getAnswers()[1].c_str();
         dto->optionC = selectedQuestion.getAnswers()[2].c_str();
@@ -134,14 +134,14 @@ class Random_Controller : public oatpp::web::server::api::ApiController {
 
       } else if (selectedFile == "TrueFalse.json") {
         auto dto = Result_TF::createShared();
-        dto->questionText = selectedQuestion.getQuestionText();
+        dto->questionTextTF = selectedQuestion.getQuestionText();
         dto->trueText = selectedQuestion.getAnswers()[0].c_str();
         dto->falseText = selectedQuestion.getAnswers()[1].c_str();
         return createDtoResponse(Status::CODE_200, dto);
 
       } else if (selectedFile == "Matching.json") {
         auto dto = Result_MAT::createShared();
-        dto->questionText = selectedQuestion.getQuestionText();
+        dto->questionTextMAT = selectedQuestion.getQuestionText();
         dto->termA = selectedQuestion.getAnswers()[0].c_str();
         dto->termB = selectedQuestion.getAnswers()[1].c_str();
         dto->termC = selectedQuestion.getAnswers()[2].c_str();

@@ -9,7 +9,7 @@
 class Result_TF : public oatpp::DTO {
   DTO_INIT(Result_TF, DTO /* Extends */)
 
-  DTO_FIELD(String, questionText);
+  DTO_FIELD(String, questionTextTF);
   DTO_FIELD(String, trueText);
   DTO_FIELD(String, falseText);
 };

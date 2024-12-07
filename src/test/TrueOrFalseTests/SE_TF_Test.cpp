@@ -1,15 +1,15 @@
-#include "SE_Test.hpp"
+#include "SE_TF_Test.hpp"
 
 #include <iostream>
 #include <memory>
 
-#include "src/controller/MultipleChoice/MC_Controller.hpp"
+#include "src/controller/TrueOrFalse/TF_Controller.hpp"
 #include "../app/MyApiTestClient.hpp"
 #include "../app/TestComponent.hpp"
 #include "oatpp-test/web/ClientServerTestRunner.hpp"
 #include "oatpp/web/client/HttpRequestExecutor.hpp"
 
-void SE_MC_Test::onRun() {
+void SE_TF_Test::onRun() {
   /* Register test components */
   TestComponent component;
 
@@ -21,7 +21,7 @@ void SE_MC_Test::onRun() {
                   objectMapper);
 
   /* Add SeleneController endpoints to the router of the test server */
-  runner.addController(std::make_shared<MC_Controller>());
+  runner.addController(std::make_shared<TF_Controller>());
 
   /* Run test */
   runner.run(
@@ -45,31 +45,20 @@ void SE_MC_Test::onRun() {
             MyApiTestClient::createShared(requestExecutor, objectMapper);
 
         /* Call server API */
-        auto response = client->getSE_MCQuestion();
+        auto response = client->getSE_TFQuestion();
 
         /* Assert that server responds with 200 */
         OATPP_ASSERT(response->getStatusCode() == 200);
 
         /* Read response body as MessageDto */
         auto message =
-            response->readBodyToDto<oatpp::Object<Result_MC>>(
+            response->readBodyToDto<oatpp::Object<Result_TF>>(
                 objectMapper.get());
 
         /* Assert that received message is as expected */
         OATPP_ASSERT(message);
-        OATPP_ASSERT(message->questionText == "What is SE?");
-        OATPP_ASSERT(message->optionA ==
-         "Branch of computer science that deals with the design,"
-         " development, testing, and maintenance of software applications");
-        OATPP_ASSERT(message->optionB ==
-         "When you combine different software programs together to"
-         " engineer a new program");
-        OATPP_ASSERT(message->optionC ==
-         "Branch of computer science that deals with creating and"
-         " maintaing the hardware of PCs");
-        OATPP_ASSERT(message->optionD ==
-         "Branch of computer science that deals with the creation,"
-         " deletion, and maintance of Serialized Exponents (SE)");
+        OATPP_ASSERT(message->questionText ==
+            "Testing and Maintenance are considered to be parts of SE.");
       },
       std::chrono::minutes(10) /* test timeout */);
 

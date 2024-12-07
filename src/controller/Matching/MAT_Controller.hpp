@@ -30,7 +30,7 @@ class MAT_Controller : public oatpp::web::server::api::ApiController {
     
     Matching MAT_question = Matching(path);
 
-    obj_dto->questionText = MAT_question.getQuestionText();
+    obj_dto->questionTextMAT = MAT_question.getQuestionText();
     std::vector<std::string> Answers = MAT_question.getAnswers();
     std::vector<std::string> Definitions = MAT_question.getDefinitions();
     obj_dto->termA = Answers[0];
@@ -54,7 +54,7 @@ class MAT_Controller : public oatpp::web::server::api::ApiController {
     
     Matching MAT_question = Matching(path);
 
-    obj_dto->questionText = MAT_question.getQuestionText();
+    obj_dto->questionTextMAT = MAT_question.getQuestionText();
     std::vector<std::string> Answers = MAT_question.getAnswers();
     std::vector<std::string> Definitions = MAT_question.getDefinitions();
     obj_dto->termA = Answers[0];
@@ -78,7 +78,7 @@ class MAT_Controller : public oatpp::web::server::api::ApiController {
     
     Matching MAT_question = Matching(path);
 
-    obj_dto->questionText = MAT_question.getQuestionText();
+    obj_dto->questionTextMAT = MAT_question.getQuestionText();
     std::vector<std::string> Answers = MAT_question.getAnswers();
     std::vector<std::string> Definitions = MAT_question.getDefinitions();
     obj_dto->termA = Answers[0];
@@ -102,7 +102,7 @@ class MAT_Controller : public oatpp::web::server::api::ApiController {
     
     Matching MAT_question = Matching(path);
 
-    obj_dto->questionText = MAT_question.getQuestionText();
+    obj_dto->questionTextMAT = MAT_question.getQuestionText();
     std::vector<std::string> Answers = MAT_question.getAnswers();
     std::vector<std::string> Definitions = MAT_question.getDefinitions();
     obj_dto->termA = Answers[0];

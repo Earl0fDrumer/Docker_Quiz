@@ -1,15 +1,15 @@
-#include "DP_Test.hpp"
+#include "DP_TF_Test.hpp"
 
 #include <iostream>
 #include <memory>
 
-#include "src/controller/MultipleChoice/MC_Controller.hpp"
+#include "src/controller/TrueOrFalse/TF_Controller.hpp"
 #include "../app/MyApiTestClient.hpp"
 #include "../app/TestComponent.hpp"
 #include "oatpp-test/web/ClientServerTestRunner.hpp"
 #include "oatpp/web/client/HttpRequestExecutor.hpp"
 
-void DP_MC_Test::onRun() {
+void DP_TF_Test::onRun() {
   // Register test components
   TestComponent component;
 
@@ -17,7 +17,7 @@ void DP_MC_Test::onRun() {
   oatpp::test::web::ClientServerTestRunner runner;
 
   // Add MC_Controller endpoints to the router of the test server
-  runner.addController(std::make_shared<MC_Controller>());
+  runner.addController(std::make_shared<TF_Controller>());
 
   // Run test
   runner.run(
@@ -41,23 +41,18 @@ void DP_MC_Test::onRun() {
           MyApiTestClient::createShared(requestExecutor, objectMapper);
 
         // Call server API
-        auto response = client->getDP_MCQuestion();
+        auto response = client->getDP_TFQuestion();
         OATPP_ASSERT(response->getStatusCode() == 200);
 
         // Read response body as DPResult_MC DTO
         auto message =
-          response->readBodyToDto<oatpp::Object<Result_MC>>(
+          response->readBodyToDto<oatpp::Object<Result_TF>>(
             objectMapper.get());
 
         // Assert that received message is as expected
         OATPP_ASSERT(message);
         OATPP_ASSERT(message->questionText ==
-         "Which design pattern ensures a class has only one"
-         " instance and provides a global point of access to it?");
-        OATPP_ASSERT(message->optionA == "Factory Pattern");
-        OATPP_ASSERT(message->optionB == "Singleton Pattern");
-        OATPP_ASSERT(message->optionC == "Observer Pattern");
-        OATPP_ASSERT(message->optionD == "Strategy Pattern");
+         "A Design Pattern can help a developer write code more efficiently.");
       },
       std::chrono::minutes(10) /* test timeout */);
 

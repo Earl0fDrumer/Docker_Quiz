@@ -93,8 +93,9 @@ static: ${SRC_DIR_SERVER} ${SRC_DIR_CLIENT} ${SRC_DIR_SERVICE_MC_QUESTION} ${SRC
 
 style: ${SRC_DIR_SERVICE_MC_QUESTION} ${SRC_DIR_SERVICE_DP_QUESTION} ${SRC_INCLUDE}
 	${STYLE_CHECK} src/controller/* src/dto/* src/server/* src/service/*/* src/test/*/* src/test/*.cpp
-
-	.PHONY: coverage
+	
+# To perform the code coverage checks
+.PHONY: coverage
 coverage: ${TEST_SERVER}
 	./${TEST_SERVER}
 	# Determine code coverage

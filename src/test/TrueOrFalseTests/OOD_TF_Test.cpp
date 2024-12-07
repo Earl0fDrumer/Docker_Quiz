@@ -1,15 +1,15 @@
-#include "OOD_Test.hpp"
+#include "OOD_TF_Test.hpp"
 
 #include <iostream>
 #include <memory>
 
-#include "../../controller/MultipleChoice/MC_Controller.hpp"
+#include "../../controller/TrueOrFalse/TF_Controller.hpp"
 #include "../app/MyApiTestClient.hpp"
 #include "../app/TestComponent.hpp"
 #include "oatpp-test/web/ClientServerTestRunner.hpp"
 #include "oatpp/web/client/HttpRequestExecutor.hpp"
 
-void OOD_MC_Test::onRun() {
+void OOD_TF_Test::onRun() {
   /* Register test components */
   TestComponent component;
 
@@ -21,7 +21,7 @@ void OOD_MC_Test::onRun() {
                   objectMapper);
 
   /* Add SeleneController endpoints to the router of the test server */
-  runner.addController(std::make_shared<MC_Controller>());
+  runner.addController(std::make_shared<TF_Controller>());
 
   /* Run test */
   runner.run(
@@ -45,19 +45,21 @@ void OOD_MC_Test::onRun() {
             MyApiTestClient::createShared(requestExecutor, objectMapper);
 
         /* Call server API */
-        auto response = client->getOOD_MCQuestion();
+        auto response = client->getOOD_TFQuestion();
 
         /* Assert that server responds with 200 */
         OATPP_ASSERT(response->getStatusCode() == 200);
 
         /* Read response body as MessageDto */
         auto message =
-            response->readBodyToDto<oatpp::Object<Result_MC>>(
+            response->readBodyToDto<oatpp::Object<Result_TF>>(
                 objectMapper.get());
 
         /* Assert that received message is as expected */
         OATPP_ASSERT(message);
-        OATPP_ASSERT(message->questionText == "What does OOD stand for?");
+        OATPP_ASSERT(message->questionText ==
+         "SOLID stands for Simple Occular Luxurious"
+         " Instantaneous Development");
       },
       std::chrono::minutes(10) /* test timeout */);
 

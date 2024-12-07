@@ -30,7 +30,7 @@ class TF_Controller : public oatpp::web::server::api::ApiController {
       std::string path = "src/QuestionData/DesignPatterns/TrueFalse.json";
       TrueOrFalse question = TrueOrFalse(path);
 
-      dto->questionText = question.getQuestionText();
+      dto->questionTextTF = question.getQuestionText();
       
       std::vector<std::string> Answers = question.getAnswers();
       dto->trueText = Answers[0];
@@ -53,7 +53,7 @@ class TF_Controller : public oatpp::web::server::api::ApiController {
     std::string path = "src/QuestionData/ObjectOrientedDesign/TrueFalse.json";
     TrueOrFalse question = TrueOrFalse(path);
 
-    dto->questionText = question.getQuestionText();
+    dto->questionTextTF = question.getQuestionText();
     std::vector<std::string> Answers = question.getAnswers();
     dto->trueText = Answers[0];
     dto->falseText = Answers[1];
@@ -69,7 +69,7 @@ class TF_Controller : public oatpp::web::server::api::ApiController {
     std::string path = "src/QuestionData/SoftwareEngineering/TrueFalse.json";
     TrueOrFalse question = TrueOrFalse(path);
 
-    dto->questionText = question.getQuestionText();
+    dto->questionTextTF = question.getQuestionText();
     std::vector<std::string> Answers = question.getAnswers();
     dto->trueText = Answers[0];
     dto->falseText = Answers[1];
@@ -86,7 +86,7 @@ class TF_Controller : public oatpp::web::server::api::ApiController {
       TrueOrFalse question = TrueOrFalse(path);
 
       // Populate the DTO with question data
-      dto->questionText = question.getQuestionText();
+      dto->questionTextTF = question.getQuestionText();
       std::vector<std::string> Answers = question.getAnswers();
       dto->trueText = Answers[0];
       dto->falseText = Answers[1];

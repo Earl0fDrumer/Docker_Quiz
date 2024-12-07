@@ -5,7 +5,7 @@
 
 class OOD_FIB_Test : public oatpp::test::UnitTest {
  public:
-  OOD_FIB_Test() : UnitTest("TEST[Object-Oriented Design FIB]") {}
+  OOD_FIB_Test() : UnitTest("TEST[OOD_FIB_Test]") {}
   void onRun() override;
 };
 

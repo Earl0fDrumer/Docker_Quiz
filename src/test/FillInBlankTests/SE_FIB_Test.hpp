@@ -5,7 +5,7 @@
 
 class SE_FIB_Test : public oatpp::test::UnitTest {
  public:
-  SE_FIB_Test() : UnitTest("TEST[Software Engineering FIB]") {}
+  SE_FIB_Test() : UnitTest("TEST[SE_FIB_Test]") {}
   void onRun() override;
 };
 

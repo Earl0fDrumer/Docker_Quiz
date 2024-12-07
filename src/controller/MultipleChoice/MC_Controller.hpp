@@ -29,7 +29,7 @@ class MC_Controller : public oatpp::web::server::api::ApiController {
       std::string path = "src/QuestionData/DesignPatterns/MultipleChoice.json";
       MultipleChoice question = MultipleChoice(path);
 
-      dto->questionText = question.getQuestionText();
+      dto->questionTextMC = question.getQuestionText();
       std::vector<std::string> Answers = question.getAnswers();
 
       if (Answers.size() < 4) {
@@ -59,7 +59,7 @@ class MC_Controller : public oatpp::web::server::api::ApiController {
     
     MultipleChoice question = MultipleChoice(path);
 
-    obj_dto->questionText = question.getQuestionText();
+    obj_dto->questionTextMC = question.getQuestionText();
     std::vector<std::string> Answers = question.getAnswers();
     obj_dto->optionA = Answers[0];
     obj_dto->optionB = Answers[1];
@@ -78,7 +78,7 @@ class MC_Controller : public oatpp::web::server::api::ApiController {
 
     MultipleChoice question = MultipleChoice(path);
 
-    dto->questionText = question.getQuestionText();
+    dto->questionTextMC = question.getQuestionText();
     std::vector<std::string> Answers = question.getAnswers();
     dto->optionA = Answers[0];
     dto->optionB = Answers[1];
@@ -97,7 +97,7 @@ class MC_Controller : public oatpp::web::server::api::ApiController {
       MultipleChoice question = MultipleChoice(path);
 
       // Populate the DTO with question data
-      dto->questionText = question.getQuestionText();
+      dto->questionTextMC = question.getQuestionText();
       std::vector<std::string> Answers = question.getAnswers();
 
       if (Answers.size() < 4) {

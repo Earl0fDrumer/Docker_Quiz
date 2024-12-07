@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="_MyStyle.css">
+    <h1>Welcome to Group B's Final Project for CPSC3720!</h1>
+    <h1 style="font-size: medium;"> Created By: Patryk Blach, Nicolas Cedeno, Nicholas Easter, and Jason Tran </h1>
+    <button onclick="window.location.reload()">Reset</button>
+
+    <div onload="AnswerTracker()">
+        <p id="CorrectAnswerTracker">Correct Answers: 0</p>
+        <p id="WrongAnswerTracker">Incorrect Answers: 0</p>
+    </div>
+</head>
+
+<body onload="fetchTopics()">
+    <script src="_WebPageLogic.js"></script>
+    <div id="ListOfTopics">
+        <h2>Select a Topic:</h2>
+        <ul>
+            <li><a id="topic1" onclick="loadTypeList('DP')"></a></li>
+            <li><a id="topic2" onclick="loadTypeList('OOD')"></a></li>
+            <li><a id="topic3" onclick="loadTypeList('SE')"></a></li>
+            <li><a id="topic4" onclick="loadTypeList('VC')"></a></li>
+            <li><a id="randTopic" onclick="QuestionSelector('FullyRand')">Random Topic</a></li>
+        </ul>
+    </div>
+
+    <div id="ListOfQuestionTypes" style="display:none;">
+        <h2>Select a Question Types:</h2>
+        <ul>
+            <li><a id="Q1" onclick="QuestionSelector('FIB')">Fill in the Blank</a></li>
+            <li><a id="Q2" onclick="QuestionSelector('MAT')">Matching</a></li>
+            <li><a id="Q3" onclick="QuestionSelector('MC')">Multiple Choice</a></li>
+            <li><a id="Q4" onclick="QuestionSelector('TF')">True Or False</a></li>
+            <li><a id="randQ" onclick="QuestionSelector('RandType')">Random Type</a></li>
+        </ul>
+    </div>
+
+    <div id="FIB" style="display: none;">
+        <h2 id="FIBQuestion"></h2>
+        <select>
+            <option id="word1"></option>
+            <option id="word2"></option>
+            <option id="word3"></option>
+            <option id="word4"></option>
+            <option id="word5"></option>
+        </select> <br> <br>
+        <button>Submit</button>
+    </div>
+
+    <div id="MAT" style="display: none;">
+        <h2 id="MATQuestion"></h2>
+        <h3 id="termA"></h3>
+        <select>
+            <option></option>
+            <option class="defA"></option>
+            <option class="defB"></option>
+            <option class="defC"></option>
+            <option class="defD"></option>
+        </select>
+
+        <h3 id="termB"></h3>
+        <select>
+            <option></option>
+            <option class="defA"></option>
+            <option class="defB"></option>
+            <option class="defC"></option>
+            <option class="defD"></option>
+        </select>
+
+        <h3 id="termC"></h3>
+        <select>
+            <option></option>
+            <option class="defA"></option>
+            <option class="defB"></option>
+            <option class="defC"></option>
+            <option class="defD"></option>
+        </select>
+
+        <h3 id="termD"></h3>
+        <select>
+            <option></option>
+            <option class="defA"></option>
+            <option class="defB"></option>
+            <option class="defC"></option>
+            <option class="defD"></option>
+        </select> <br> <br>
+
+        <button>Submit</button>
+    </div>
+
+    <div id="MC" style="display: none;">
+        <h2 id="MCQuestion"></h2>
+        <form>
+            <input type="radio" id="optionA" name="MC" value="A">
+            <label id="option1" for="optionA"></label><br><br>
+
+            <input type="radio" id="optionB" name="MC" value="B">
+            <label id="option2" for="optionB"></label><br><br>
+
+            <input type="radio" id="optionC" name="MC" value="C">
+            <label id="option3" for="optionC"></label><br><br>
+
+            <input type="radio" id="optionD" name="MC" value="D">
+            <label id="option4" for="optionD"></label><br><br>
+        </form> <br>
+        
+        <button>Submit</button>
+    </div>
+
+    <div id="TF" style="display: none;">
+        <h2 id="TFQuestion"></h2>
+        <form>
+            <input type="radio" id="optionTrue" name="TF" value="False">
+            <label id="trueText" for="optionTrue"></label><br><br>
+
+            <input type="radio" id="optionFalse" name="TF" value="True">
+            <label id="falseText" for="optionFalse"></label><br><br>
+        </form> <br>
+        
+        <button>Submit</button>
+    </div>
+</body>
+
+</html>

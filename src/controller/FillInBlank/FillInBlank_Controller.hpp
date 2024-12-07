@@ -28,7 +28,7 @@ class FillInBlank_Controller : public oatpp::web::server::api::ApiController {
 
       FillInBlank question(path);
 
-      dto->questionText = question.getQuestionText();
+      dto->questionTextFIB = question.getQuestionText();
       dto->wordBank = oatpp::Vector<oatpp::String>::createShared();
 
       for (const auto& word : question.getWordBank()) {
@@ -54,7 +54,7 @@ class FillInBlank_Controller : public oatpp::web::server::api::ApiController {
 
       FillInBlank question(path);
 
-      dto->questionText = question.getQuestionText();
+      dto->questionTextFIB = question.getQuestionText();
       dto->wordBank = oatpp::Vector<oatpp::String>::createShared();
 
       for (const auto& word : question.getWordBank()) {
@@ -80,7 +80,7 @@ class FillInBlank_Controller : public oatpp::web::server::api::ApiController {
 
       FillInBlank question(path);
 
-      dto->questionText = question.getQuestionText();
+      dto->questionTextFIB = question.getQuestionText();
       dto->wordBank = oatpp::Vector<oatpp::String>::createShared();
 
       for (const auto& word : question.getWordBank()) {
@@ -106,7 +106,7 @@ class FillInBlank_Controller : public oatpp::web::server::api::ApiController {
 
       FillInBlank question(path);
 
-      dto->questionText = question.getQuestionText();
+      dto->questionTextFIB = question.getQuestionText();
       dto->wordBank = oatpp::Vector<oatpp::String>::createShared();
 
       for (const auto& word : question.getWordBank()) {

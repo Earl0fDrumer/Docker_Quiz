@@ -3,22 +3,22 @@
 #include "selene/SeleneTest.hpp"
 
 //Multiple Choice Tests
-#include "src/test/MultipleChoiceTests/DP_Test.hpp"
-#include "src/test/MultipleChoiceTests/OOD_Test.hpp"
-#include "src/test/MultipleChoiceTests/SE_Test.hpp"
-#include "src/test/MultipleChoiceTests/VC_Test.hpp"
+#include "src/test/MultipleChoiceTests/DP_MC_Test.hpp"
+#include "src/test/MultipleChoiceTests/OOD_MC_Test.hpp"
+#include "src/test/MultipleChoiceTests/SE_MC_Test.hpp"
+#include "src/test/MultipleChoiceTests/VC_MC_Test.hpp"
 
 //True or False Tests
-#include "src/test/TrueOrFalseTests/DP_Test.hpp"
-#include "src/test/TrueOrFalseTests/OOD_Test.hpp"
-#include "src/test/TrueOrFalseTests/SE_Test.hpp"
-#include "src/test/TrueOrFalseTests/VC_Test.hpp"
+#include "src/test/TrueOrFalseTests/DP_TF_Test.hpp"
+#include "src/test/TrueOrFalseTests/OOD_TF_Test.hpp"
+#include "src/test/TrueOrFalseTests/SE_TF_Test.hpp"
+#include "src/test/TrueOrFalseTests/VC_TF_Test.hpp"
 
 //Matching Tests
-#include "src/test/MatchingTests/DP_Test.hpp"
-#include "src/test/MatchingTests/OOD_Test.hpp"
-#include "src/test/MatchingTests/SE_Test.hpp"
-#include "src/test/MatchingTests/VC_Test.hpp"
+#include "src/test/MatchingTests/DP_MAT_Test.hpp"
+#include "src/test/MatchingTests/OOD_MAT_Test.hpp"
+#include "src/test/MatchingTests/SE_MAT_Test.hpp"
+#include "src/test/MatchingTests/VC_MAT_Test.hpp"
 
 //FIB Tests
 #include "src/test/FillInBlankTests/DP_FIB_Test.hpp"
