@@ -9,7 +9,7 @@
 class Result_MAT : public oatpp::DTO {
   DTO_INIT(Result_MAT, DTO /* Extends */)
 
-  DTO_FIELD(String, questionText);
+  DTO_FIELD(String, questionTextMAT);
 
   DTO_FIELD(String, termA);
   DTO_FIELD(String, termB);

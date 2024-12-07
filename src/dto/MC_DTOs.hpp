@@ -9,7 +9,7 @@
 class Result_MC : public oatpp::DTO {
   DTO_INIT(Result_MC, DTO /* Extends */)
 
-  DTO_FIELD(String, questionText);
+  DTO_FIELD(String, questionTextMC);
   DTO_FIELD(String, optionA);
   DTO_FIELD(String, optionB);
   DTO_FIELD(String, optionC);
