@@ -46,7 +46,7 @@ class Random_Controller : public oatpp::web::server::api::ApiController {
       // Generate DTO
       if (selectedFile == "FillInBlank.json") {
         auto dto = Result_FIB::createShared();
-        dto->questionText = selectedQuestion.getQuestionText();
+        dto->questionTextFIB = selectedQuestion.getQuestionText();
         dto->wordBank = oatpp::Vector<oatpp::String>::createShared();
         for (const auto& word : selectedQuestion.getAnswers()) {
           dto->wordBank->push_back(word.c_str());
@@ -116,7 +116,7 @@ class Random_Controller : public oatpp::web::server::api::ApiController {
       // Generate DTO based on the question type
       if (selectedFile == "FillInBlank.json") {
         auto dto = Result_FIB::createShared();
-        dto->questionText = selectedQuestion.getQuestionText();
+        dto->questionTextFIB = selectedQuestion.getQuestionText();
         dto->wordBank = oatpp::Vector<oatpp::String>::createShared();
         for (const auto& word : selectedQuestion.getAnswers()) {
           dto->wordBank->push_back(word.c_str());
