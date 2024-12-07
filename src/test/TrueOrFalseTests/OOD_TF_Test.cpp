@@ -57,7 +57,7 @@ void OOD_TF_Test::onRun() {
 
         /* Assert that received message is as expected */
         OATPP_ASSERT(message);
-        OATPP_ASSERT(message->questionText ==
+        OATPP_ASSERT(message->questionTextTF ==
          "SOLID stands for Simple Occular Luxurious"
          " Instantaneous Development");
       },

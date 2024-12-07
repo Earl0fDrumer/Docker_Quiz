@@ -62,7 +62,7 @@ void VC_FIB_Test::onRun() {
         OATPP_ASSERT(question);
 
         /* Assert the question text */
-        OATPP_ASSERT(question->questionText == "In Git, 'git ________' is"
+        OATPP_ASSERT(question->questionTextFIB == "In Git, 'git ________' is"
         " used to upload local repository content to a remote repository.");
 
         /* Assert the size of the word bank */

@@ -57,7 +57,7 @@ void SE_MC_Test::onRun() {
 
         /* Assert that received message is as expected */
         OATPP_ASSERT(message);
-        OATPP_ASSERT(message->questionText == "What is SE?");
+        OATPP_ASSERT(message->questionTextMC == "What is SE?");
         OATPP_ASSERT(message->optionA ==
          "Branch of computer science that deals with the design,"
          " development, testing, and maintenance of software applications");

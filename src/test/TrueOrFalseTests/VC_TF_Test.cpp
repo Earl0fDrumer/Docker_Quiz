@@ -40,7 +40,7 @@ void VC_TF_Test::onRun() {
             objectMapper.get());
 
         OATPP_ASSERT(message);
-        OATPP_ASSERT(message->questionText ==
+        OATPP_ASSERT(message->questionTextTF ==
           "Version Control is essential when multiple"
           " people are working on a project");
       },

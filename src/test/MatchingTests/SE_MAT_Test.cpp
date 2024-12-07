@@ -49,7 +49,7 @@ void SE_MAT_Test::onRun() {
 
         // Assert that received message is as expected
         OATPP_ASSERT(message);
-        OATPP_ASSERT(message->questionText == "What is:");
+        OATPP_ASSERT(message->questionTextMAT == "What is:");
       },
       std::chrono::minutes(10) /* test timeout */);
 

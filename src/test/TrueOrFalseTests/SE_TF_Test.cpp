@@ -57,7 +57,7 @@ void SE_TF_Test::onRun() {
 
         /* Assert that received message is as expected */
         OATPP_ASSERT(message);
-        OATPP_ASSERT(message->questionText ==
+        OATPP_ASSERT(message->questionTextTF ==
             "Testing and Maintenance are considered to be parts of SE.");
       },
       std::chrono::minutes(10) /* test timeout */);

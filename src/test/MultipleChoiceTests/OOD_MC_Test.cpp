@@ -57,7 +57,7 @@ void OOD_MC_Test::onRun() {
 
         /* Assert that received message is as expected */
         OATPP_ASSERT(message);
-        OATPP_ASSERT(message->questionText == "What does OOD stand for?");
+        OATPP_ASSERT(message->questionTextMC == "What does OOD stand for?");
       },
       std::chrono::minutes(10) /* test timeout */);
 

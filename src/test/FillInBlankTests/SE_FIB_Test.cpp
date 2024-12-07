@@ -62,7 +62,7 @@ void SE_FIB_Test::onRun() {
         OATPP_ASSERT(question);
 
         /* Assert the question text */
-        OATPP_ASSERT(question->questionText == "The ________ model is a"
+        OATPP_ASSERT(question->questionTextFIB == "The ________ model is a"
         " linear sequential software development process.");
 
         /* Assert the size of the word bank */

@@ -40,7 +40,7 @@ void VC_MC_Test::onRun() {
            objectMapper.get());
 
         OATPP_ASSERT(message);
-        OATPP_ASSERT(message->questionText ==
+        OATPP_ASSERT(message->questionTextMC ==
           "Which command is used to initialize a Git repository?");
 
         // Ensure options are correct

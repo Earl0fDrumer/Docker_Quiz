@@ -63,7 +63,7 @@ void OOD_FIB_Test::onRun() {
         OATPP_ASSERT(question);
 
         /* Assert the question text */
-        OATPP_ASSERT(question->questionText == "In OOD, ________ refers to"
+        OATPP_ASSERT(question->questionTextFIB == "In OOD, ________ refers to"
         " the bundling of data with the methods that operate on that data.");
 
         /* Assert the size of the word bank */

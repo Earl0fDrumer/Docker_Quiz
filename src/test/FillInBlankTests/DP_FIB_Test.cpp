@@ -62,7 +62,7 @@ void DP_FIB_Test::onRun() {
         OATPP_ASSERT(question);
 
         /* Assert the question text */
-        OATPP_ASSERT(question->questionText == "The ________ pattern"
+        OATPP_ASSERT(question->questionTextFIB == "The ________ pattern"
         " ensures a class has only one instance and provides a"
         " global point of access to it.");
 

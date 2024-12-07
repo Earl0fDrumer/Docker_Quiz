@@ -51,7 +51,7 @@ void DP_TF_Test::onRun() {
 
         // Assert that received message is as expected
         OATPP_ASSERT(message);
-        OATPP_ASSERT(message->questionText ==
+        OATPP_ASSERT(message->questionTextTF ==
          "A Design Pattern can help a developer write code more efficiently.");
       },
       std::chrono::minutes(10) /* test timeout */);
