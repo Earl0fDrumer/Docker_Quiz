@@ -38,7 +38,7 @@ class MyApiTestClient : public oatpp::web::client::ApiClient {
   //List Topics
   API_CALL("GET", "/topics", getTopics)
   //Random Type and Random Topic/Type
-  API_CALL("GET", "/SE/random", getRandomByTopic)
+  API_CALL("GET", "/{topic}/random", getRandomByTopic, PATH(oatpp::String, topic))
   API_CALL("GET", "/random", getRandomTopicAndType)
 };
 

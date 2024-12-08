@@ -3,6 +3,7 @@
 #include <iostream>
 #include <memory>
 
+// Include necessary headers
 #include "src/controller/RandomController.hpp"
 #include "../app/MyApiTestClient.hpp"
 #include "../app/TestComponent.hpp"
@@ -16,42 +17,99 @@ void RandomType_Test::onRun() {
   // Create client-server test runner
   oatpp::test::web::ClientServerTestRunner runner;
 
-  // Add MC_Controller endpoints to the router of the test server
+  // Add Random_Controller endpoints to the router of the test server
   runner.addController(std::make_shared<Random_Controller>());
 
-  // Run test
+  // Run the test
   runner.run(
-      [this, &runner] {  // Keep this format, capture `runner`
-        // Get client connection provider for Api Client
+      [this, &runner] {
+        // Get client connection provider for API client
         OATPP_COMPONENT(
-          std::shared_ptr<oatpp::network::ClientConnectionProvider>,
-           clientConnectionProvider);
+            std::shared_ptr<oatpp::network::ClientConnectionProvider>, clientConnectionProvider);
 
         // Get object mapper component
         OATPP_COMPONENT(
-          std::shared_ptr<oatpp::data::mapping::ObjectMapper>, objectMapper);
+            std::shared_ptr<oatpp::data::mapping::ObjectMapper>, objectMapper);
 
-        // Create http request executor for Api Client
+        // Create HTTP request executor for API client
         auto requestExecutor =
-            oatpp::web::client::HttpRequestExecutor::createShared(
-              clientConnectionProvider);
+            oatpp::web::client::HttpRequestExecutor::createShared(clientConnectionProvider);
 
-        // Create Test API client
-        auto client =
-          MyApiTestClient::createShared(requestExecutor, objectMapper);
+        // Create test API client
+        auto client = MyApiTestClient::createShared(requestExecutor, objectMapper);
 
-        // Call server API
-        auto response = client->getRandomByTopic();
-        OATPP_ASSERT(response->getStatusCode() == 200);
+        // Test cases for getRandomByTopic with each question type for specific topics
+        const std::vector<std::pair<std::string, std::string>> byTopicTestCases = {
+            {"FillInBlank.json", "SE"},
+            {"MultipleChoice.json", "DP"},
+            {"TrueFalse.json", "VC"},
+            {"Matching.json", "OOD"}
+        };
 
-        // Read response body as string
-        auto message = response->readBodyToString();
+        // Test getRandomByTopic for specific question types
+        for (const auto& [file, topic] : byTopicTestCases) {
+          // Log the test case being executed
+          OATPP_LOGD("RandomType_Test", "Testing getRandomByTopic - Topic: %s, File: %s", topic.c_str(), file.c_str());
 
-        // Assert that received message is not NULL
-        OATPP_ASSERT(message);
+          // Override randomness for specific file
+          RandomRequest::testSelectedFile = file;
+
+          // Call the server API for the specific topic
+          auto response = client->getRandomByTopic(topic);
+          OATPP_ASSERT(response->getStatusCode() == 200);
+
+          // Read and validate the response body
+          auto message = response->readBodyToString();
+          OATPP_ASSERT(!message->empty());
+        }
+
+        // Reset overrides after getRandomByTopic tests
+        RandomRequest::testSelectedFile = "";
+
+        // Test cases for getRandomTopicAndType for all combinations of topic and file
+        const std::vector<std::pair<std::string, std::string>> randomTestCases = {
+            {"SE", "FillInBlank.json"},
+            {"SE", "MultipleChoice.json"},
+            {"SE", "TrueFalse.json"},
+            {"SE", "Matching.json"},
+            {"DP", "FillInBlank.json"},
+            {"DP", "MultipleChoice.json"},
+            {"DP", "TrueFalse.json"},
+            {"DP", "Matching.json"},
+            {"VC", "FillInBlank.json"},
+            {"VC", "MultipleChoice.json"},
+            {"VC", "TrueFalse.json"},
+            {"VC", "Matching.json"},
+            {"OOD", "FillInBlank.json"},
+            {"OOD", "MultipleChoice.json"},
+            {"OOD", "TrueFalse.json"},
+            {"OOD", "Matching.json"}
+        };
+
+        // Test getRandomTopicAndType for all combinations
+        for (const auto& [topic, file] : randomTestCases) {
+          // Log the test case being executed
+          OATPP_LOGD("RandomType_Test", "Testing getRandomTopicAndType - Topic: %s, File: %s", topic.c_str(), file.c_str());
+
+          // Override randomness for specific topic and file
+          RandomRequest::testSelectedTopic = topic;
+          RandomRequest::testSelectedFile = file;
+
+          // Call the server API
+          auto response = client->getRandomTopicAndType();
+          OATPP_ASSERT(response->getStatusCode() == 200);
+
+          // Read and validate the response body
+          auto message = response->readBodyToString();
+          OATPP_ASSERT(!message->empty());
+        }
+
+        // Reset overrides after getRandomTopicAndType tests
+        RandomRequest::testSelectedTopic = "";
+        RandomRequest::testSelectedFile = "";
       },
       std::chrono::minutes(10) /* test timeout */);
 
-  // Wait for all server threads to finish
+  // Allow time for all server threads to finish
   std::this_thread::sleep_for(std::chrono::seconds(1));
 }
