@@ -10,7 +10,7 @@
       },
       "definitions": {
         "a": "a creational design pattern that lets you produce families of related objects without specifying their concrete classes.",
-        "b": "a creational design pattern that lets you construct complex objects step by step. ",
+        "b": "a creational design pattern that lets you construct complex objects step by step.",
         "c": "a creational design pattern that provides an interface for creating objects in a superclass, but allows subclasses to alter the type of objects that will be created.",
         "d": "a creational design pattern that lets you ensure that a class has only one instance, while providing a global access point to this instance."
       }

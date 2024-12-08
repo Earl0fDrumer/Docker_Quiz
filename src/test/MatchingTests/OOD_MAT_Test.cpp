@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <memory>
-
+#include <string>
 #include "src/controller/Matching/MAT_Controller.hpp"
 #include "../app/MyApiTestClient.hpp"
 #include "../app/TestComponent.hpp"
@@ -40,7 +40,7 @@ void OOD_MAT_Test::onRun() {
           (requestExecutor, objectMapper);
 
         // Call server API
-        auto response = client->getDP_MATQuestion();
+        auto response = client->getOOD_MATQuestion();
         OATPP_ASSERT(response->getStatusCode() == 200);
 
         // Read response body as DPResult_MAT DTO
@@ -50,6 +50,25 @@ void OOD_MAT_Test::onRun() {
         // Assert that received message is as expected
         OATPP_ASSERT(message);
         OATPP_ASSERT(message->questionTextMAT == "What is:");
+
+        OATPP_ASSERT(message->termA == "a Class?");
+        OATPP_ASSERT(message->termB == "an Object?");
+        OATPP_ASSERT(message->termC == "a Constructor?");
+        OATPP_ASSERT(message->termD == "a Method?");
+
+        std::string s = "A special type of function called to create "
+        "an object.";
+        OATPP_ASSERT(message->definitionA == s);
+        s = "A blueprint for creating objects that defines "
+        "the properties (attributes) and behaviors (methods) "
+        "of those objects.";
+        OATPP_ASSERT(message->definitionB == s);
+        s = "A procedure that defines the behavior of objects created "
+        "from a class.";
+        OATPP_ASSERT(message->definitionC == s);
+        s = "A unit of data and behavior created from a class, "
+        "representing an instance of that class.";
+        OATPP_ASSERT(message->definitionD == s);
       },
       std::chrono::minutes(10) /* test timeout */);
 

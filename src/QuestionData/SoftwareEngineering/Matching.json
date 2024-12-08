@@ -12,7 +12,7 @@
         "a": "A traditional software development model where each phase (requirements, design, implementation, testing, deployment, and maintenance) is completed sequentially.",
         "b": "A methodology focused on iterative and incremental development, where requirements and solutions evolve through collaboration between self-organizing cross-functional teams.",
         "c": "An ad hoc approach to maintaining software. It is a fire-fighting approach waiting for the problem to occur and then trying to fix it as quickly as possible.",
-        "d": "a simple working system implementing only a few basic features is built, thereafter many successive iterations/ versions are implemented and delivered to the customer."
+        "d": "A simple working system implementing only a few basic features is built, thereafter many successive iterations/ versions are implemented and delivered to the customer."
       }
     }, {
       "question": "What is:",
