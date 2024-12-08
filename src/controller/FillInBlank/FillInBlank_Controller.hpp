@@ -3,20 +3,16 @@
 
 #include "src/service/FillInBlank/FillInBlank_Question.hpp"
 #include "src/dto/FIB_DTOs.hpp"
+#include "dto/AnswerSubmission_DTO.hpp"
 #include "oatpp/core/macro/codegen.hpp"
 #include "oatpp/core/macro/component.hpp"
 #include "oatpp/web/server/api/ApiController.hpp"
-#include "dto/AnswerSubmission_DTO.hpp"
 #include <memory>
 
-#include OATPP_CODEGEN_BEGIN(ApiController)  ///< Begin Codegen
+#include OATPP_CODEGEN_BEGIN(ApiController)
 
 class FillInBlank_Controller : public oatpp::web::server::api::ApiController {
  public:
-  /**
-   * Constructor with object mapper.
-   * @param objectMapper - default object mapper used to serialize/deserialize DTOs.
-   */
   FillInBlank_Controller(OATPP_COMPONENT(std::shared_ptr<ObjectMapper>, objectMapper))
       : oatpp::web::server::api::ApiController(objectMapper) {}
 
@@ -27,7 +23,6 @@ class FillInBlank_Controller : public oatpp::web::server::api::ApiController {
     std::string path = "src/QuestionData/DesignPatterns/FillInBlank.json";
 
     FillInBlank question(path);
-
     dto->questionTextFIB = question.getQuestionText();
     dto->wordBank = oatpp::Vector<oatpp::String>::createShared();
 
@@ -45,7 +40,6 @@ class FillInBlank_Controller : public oatpp::web::server::api::ApiController {
     std::string path = "src/QuestionData/ObjectOrientedDesign/FillInBlank.json";
 
     FillInBlank question(path);
-
     dto->questionTextFIB = question.getQuestionText();
     dto->wordBank = oatpp::Vector<oatpp::String>::createShared();
 
@@ -63,7 +57,6 @@ class FillInBlank_Controller : public oatpp::web::server::api::ApiController {
     std::string path = "src/QuestionData/SoftwareEngineering/FillInBlank.json";
 
     FillInBlank question(path);
-
     dto->questionTextFIB = question.getQuestionText();
     dto->wordBank = oatpp::Vector<oatpp::String>::createShared();
 
@@ -81,7 +74,6 @@ class FillInBlank_Controller : public oatpp::web::server::api::ApiController {
     std::string path = "src/QuestionData/VersionControl/FillInBlank.json";
 
     FillInBlank question(path);
-
     dto->questionTextFIB = question.getQuestionText();
     dto->wordBank = oatpp::Vector<oatpp::String>::createShared();
 
@@ -99,31 +91,29 @@ class FillInBlank_Controller : public oatpp::web::server::api::ApiController {
   ADD_CORS(validateFIBAnswer)
   ENDPOINT("POST", "/{topic}/FIB/validate", validateFIBAnswer,
            PATH(String, topic),
-           BODY_DTO(AnswerSubmission::ObjectWrapper, answerDto)) {
+           BODY_DTO(Object<AnswerSubmission>, answerDto)) {
 
-    try {
-      std::string path = "src/QuestionData/" + topic->std_str() + "/FillInBlank.json";
-      FillInBlank question(path);
+    // Convert oatpp::String to std::string using c_str()
+    std::string topicStr = std::string(topic->c_str());
+    std::string path = "src/QuestionData/" + topicStr + "/FillInBlank.json";
 
-      auto resultDto = ValidationResult::createShared();
-      std::string validationMsg = question.validateAnswer(answerDto->answer->std_str());
+    FillInBlank question(path);
+    std::string userAnswer = std::string(answerDto->answer->c_str());
+    std::string validationMsg = question.validateAnswer(userAnswer);
 
-      if (validationMsg == "Correct!") {
-        resultDto->isCorrect = true;
-      } else {
-        resultDto->isCorrect = false;
-        // getCorrectAnswer() must exist in FillInBlank_Question.hpp
-        resultDto->correctAnswer = question.getCorrectAnswer().c_str();
-      }
-
-      return createDtoResponse(Status::CODE_200, resultDto);
-    } catch (...) {
-      return createResponse(Status::CODE_500, "Internal Server Error");
+    auto resultDto = ValidationResult::createShared();
+    if (validationMsg == "Correct!") {
+      resultDto->isCorrect = true;
+    } else {
+      resultDto->isCorrect = false;
+      resultDto->correctAnswer = question.getCorrectAnswer().c_str();
     }
+
+    return createDtoResponse(Status::CODE_200, resultDto);
   }
 
 };
 
-#include OATPP_CODEGEN_END(ApiController)  ///< End Codegen
+#include OATPP_CODEGEN_END(ApiController)
 
 #endif /* FillInBlank_Controller_hpp */
