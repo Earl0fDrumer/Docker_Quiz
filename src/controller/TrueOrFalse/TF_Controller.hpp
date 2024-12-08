@@ -2,7 +2,6 @@
 #define TF_Controller_hpp
 
 #include <memory>
-
 #include "src/service/TrueOrFalse/TF_Question.hpp"
 #include "src/dto/SeleneDTOs.hpp"
 #include "src/dto/TF_DTOs.hpp"
@@ -16,42 +15,32 @@ class TF_Controller : public oatpp::web::server::api::ApiController {
  public:
   /**
    * Constructor with object mapper.
-   * @param objectMapper - default object mapper used to serialize/deserialize
-   * DTOs.
+   * @param objectMapper - default object mapper used to serialize/deserialize DTOs.
    */
   TF_Controller(OATPP_COMPONENT(std::shared_ptr<ObjectMapper>, objectMapper))
       : oatpp::web::server::api::ApiController(objectMapper) {}
-      
+
   ADD_CORS(getDP_TFQuestion)
   ENDPOINT("GET", "/DP/TF", getDP_TFQuestion) {
-    try {
-      auto dto = Result_TF::createShared();
+    auto dto = Result_TF::createShared();
 
-      std::string path = "src/QuestionData/DesignPatterns/TrueFalse.json";
-      TrueOrFalse question = TrueOrFalse(path);
+    std::string path = "src/QuestionData/DesignPatterns/TrueFalse.json";
+    TrueOrFalse question(path);
 
-      dto->questionTextTF = question.getQuestionText();
-      
-      std::vector<std::string> Answers = question.getAnswers();
-      dto->trueText = Answers[0];
-      dto->falseText = Answers[1];
+    dto->questionTextTF = question.getQuestionText();
+    std::vector<std::string> Answers = question.getAnswers();
+    dto->trueText = Answers[0];
+    dto->falseText = Answers[1];
 
-      return createDtoResponse(Status::CODE_200, dto);
-    } catch (const std::exception& e) {
-      OATPP_LOGE("DPController", "Error: %s", e.what());
-      return createResponse(Status::CODE_500, "Internal Server Error");
-    } catch (...) {
-      OATPP_LOGE("DPController", "Unknown error occurred");
-      return createResponse(Status::CODE_500, "Internal Server Error");
-    }
-  } // GET Design Patterns TF
+    return createDtoResponse(Status::CODE_200, dto);
+  }  // GET Design Patterns TF
 
   ADD_CORS(getOOD_TFQuestion)
   ENDPOINT("GET", "/OOD/TF", getOOD_TFQuestion) {
     auto dto = Result_TF::createShared();
 
     std::string path = "src/QuestionData/ObjectOrientedDesign/TrueFalse.json";
-    TrueOrFalse question = TrueOrFalse(path);
+    TrueOrFalse question(path);
 
     dto->questionTextTF = question.getQuestionText();
     std::vector<std::string> Answers = question.getAnswers();
@@ -61,13 +50,12 @@ class TF_Controller : public oatpp::web::server::api::ApiController {
     return createDtoResponse(Status::CODE_200, dto);
   }  // GET Object-Oriented_Design TF
 
-
   ADD_CORS(getSE_TFQuestion)
   ENDPOINT("GET", "/SE/TF", getSE_TFQuestion) {
     auto dto = Result_TF::createShared();
 
     std::string path = "src/QuestionData/SoftwareEngineering/TrueFalse.json";
-    TrueOrFalse question = TrueOrFalse(path);
+    TrueOrFalse question(path);
 
     dto->questionTextTF = question.getQuestionText();
     std::vector<std::string> Answers = question.getAnswers();
@@ -79,28 +67,19 @@ class TF_Controller : public oatpp::web::server::api::ApiController {
 
   ADD_CORS(getVC_TFQuestion)
   ENDPOINT("GET", "/VC/TF", getVC_TFQuestion) {
-    try {
-      auto dto = Result_TF::createShared();  // Create DTO instance
+    auto dto = Result_TF::createShared();
 
-      std::string path = "src/QuestionData/VersionControl/TrueFalse.json";
-      TrueOrFalse question = TrueOrFalse(path);
+    std::string path = "src/QuestionData/VersionControl/TrueFalse.json";
+    TrueOrFalse question(path);
 
-      // Populate the DTO with question data
-      dto->questionTextTF = question.getQuestionText();
-      std::vector<std::string> Answers = question.getAnswers();
-      dto->trueText = Answers[0];
-      dto->falseText = Answers[1];
+    dto->questionTextTF = question.getQuestionText();
+    std::vector<std::string> Answers = question.getAnswers();
+    dto->trueText = Answers[0];
+    dto->falseText = Answers[1];
 
-      return createDtoResponse(Status::CODE_200, dto);
-    } catch (const std::exception& e) {
-      OATPP_LOGE("VCController", "Error: %s", e.what());
-      return createResponse(Status::CODE_500, "Internal Server Error: " + std::string(e.what()));
-    } catch (...) {
-      OATPP_LOGE("VCController", "Unknown error occurred");
-      return createResponse(Status::CODE_500, "Internal Server Error");
-    }
-  } // GET Version Control TF
-};  // End of Controller
+    return createDtoResponse(Status::CODE_200, dto);
+  }  // GET Version Control TF
+};
 
 #include OATPP_CODEGEN_END(ApiController)  ///< End Codegen
 
