@@ -9,7 +9,6 @@
 #include <algorithm>
 #include "src/service/Question.hpp"
 
-
 using json = nlohmann::json;
 
 class FillInBlank : public Question {
@@ -36,11 +35,15 @@ class FillInBlank : public Question {
     return WordBank;
   }
 
-  // Validate user input and provide feedback
+  // New getter method:
+  std::string getCorrectAnswer() const {
+    return CorrectAnswer;
+  }
+
   std::string validateAnswer(const std::string& userAnswer) {
-    if (std::find(WordBank.begin(), WordBank.end(),
-    userAnswer) == WordBank.end()) {
-      return "Error: Your answer must be one of the words in the word bank.";
+    if (std::find(WordBank.begin(), WordBank.end(), userAnswer) == WordBank.end()) {
+      // The user's answer is not in the word bank.
+      return "Incorrect. The correct answer is: " + CorrectAnswer;
     }
 
     if (userAnswer == CorrectAnswer) {

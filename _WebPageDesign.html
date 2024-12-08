@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <link rel="stylesheet" href="_MyStyle.css">
     <h1>Welcome to Group B's Final Project for CPSC3720!</h1>
@@ -15,6 +14,7 @@
 
 <body onload="fetchTopics()">
     <script src="_WebPageLogic.js"></script>
+
     <div id="ListOfTopics">
         <h2>Select a Topic:</h2>
         <ul>
@@ -27,26 +27,26 @@
     </div>
 
     <div id="ListOfQuestionTypes" style="display:none;">
-        <h2>Select a Question Types:</h2>
+        <h2>Select a Question Type:</h2>
         <ul>
             <li><a id="Q1" onclick="QuestionSelector('FIB')">Fill in the Blank</a></li>
             <li><a id="Q2" onclick="QuestionSelector('MAT')">Matching</a></li>
             <li><a id="Q3" onclick="QuestionSelector('MC')">Multiple Choice</a></li>
-            <li><a id="Q4" onclick="QuestionSelector('TF')">True Or False</a></li>
+            <li><a id="Q4" onclick="QuestionSelector('TF')">True/False</a></li>
             <li><a id="randQ" onclick="QuestionSelector('RandType')">Random Type</a></li>
         </ul>
     </div>
 
     <div id="FIB" style="display: none;">
         <h2 id="FIBQuestion"></h2>
-        <select>
+        <select id="fibAnswerSelect">
             <option id="word1"></option>
             <option id="word2"></option>
             <option id="word3"></option>
             <option id="word4"></option>
             <option id="word5"></option>
-        </select> <br> <br>
-        <button>Submit</button>
+        </select> <br><br>
+        <button id="fibSubmitBtn">Submit</button>
     </div>
 
     <div id="MAT" style="display: none;">
@@ -85,7 +85,7 @@
             <option class="defB"></option>
             <option class="defC"></option>
             <option class="defD"></option>
-        </select> <br> <br>
+        </select> <br><br>
 
         <button>Submit</button>
     </div>
@@ -122,5 +122,4 @@
         <button>Submit</button>
     </div>
 </body>
-
 </html>

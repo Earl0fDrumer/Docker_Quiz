@@ -6,6 +6,7 @@
 #include "oatpp/core/macro/codegen.hpp"
 #include "oatpp/core/macro/component.hpp"
 #include "oatpp/web/server/api/ApiController.hpp"
+#include "dto/AnswerSubmission_DTO.hpp"
 #include <memory>
 
 #include OATPP_CODEGEN_BEGIN(ApiController)  ///< Begin Codegen
@@ -90,6 +91,37 @@ class FillInBlank_Controller : public oatpp::web::server::api::ApiController {
 
     return createDtoResponse(Status::CODE_200, dto);
   }
+
+  // ===========================
+  // NEW POST ENDPOINT FOR VALIDATION
+  // ===========================
+
+  ADD_CORS(validateFIBAnswer)
+  ENDPOINT("POST", "/{topic}/FIB/validate", validateFIBAnswer,
+           PATH(String, topic),
+           BODY_DTO(AnswerSubmission::ObjectWrapper, answerDto)) {
+
+    try {
+      std::string path = "src/QuestionData/" + topic->std_str() + "/FillInBlank.json";
+      FillInBlank question(path);
+
+      auto resultDto = ValidationResult::createShared();
+      std::string validationMsg = question.validateAnswer(answerDto->answer->std_str());
+
+      if (validationMsg == "Correct!") {
+        resultDto->isCorrect = true;
+      } else {
+        resultDto->isCorrect = false;
+        // getCorrectAnswer() must exist in FillInBlank_Question.hpp
+        resultDto->correctAnswer = question.getCorrectAnswer().c_str();
+      }
+
+      return createDtoResponse(Status::CODE_200, resultDto);
+    } catch (...) {
+      return createResponse(Status::CODE_500, "Internal Server Error");
+    }
+  }
+
 };
 
 #include OATPP_CODEGEN_END(ApiController)  ///< End Codegen
