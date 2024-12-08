@@ -1,7 +1,7 @@
 #ifndef TOPICS_hpp
 #define TOPICS_hpp
 
-#include "src/service/json.hpp"
+#include "json.hpp"
 #include <vector>
 #include <string>
 #include <fstream>
