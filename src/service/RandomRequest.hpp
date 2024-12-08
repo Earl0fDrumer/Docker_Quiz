@@ -8,7 +8,6 @@
 #include "src/service/json.hpp"
 #include "src/service/Question.hpp"
 #include <fstream>
-#include <stdexcept>
 
 class RandomRequest {
 private:
@@ -35,7 +34,7 @@ public:
         if (it != topicFolderMap.end()) {
             return it->second;
         }
-        throw std::invalid_argument("Invalid topic code");
+        return ""; // Return an empty string if the topic code is invalid
     }
 
     // Select a random topic folder
@@ -55,7 +54,7 @@ public:
         // Generate a random topic
         thread_local std::mt19937 gen(static_cast<unsigned long>(std::time(nullptr)));
         std::uniform_int_distribution<> dist(0, topics.size() - 1);
-        return topics[dist(gen)];
+        return topics.empty() ? "" : topics[dist(gen)];
     }
 
     // Select a random question file
@@ -72,7 +71,7 @@ public:
         // Generate a random file
         thread_local std::mt19937 gen(static_cast<unsigned long>(std::time(nullptr)));
         std::uniform_int_distribution<> dist(0, questionFiles.size() - 1);
-        return questionFiles[dist(gen)];
+        return questionFiles.empty() ? "" : questionFiles[dist(gen)];
     }
 
     // Load questions from a file
@@ -82,7 +81,7 @@ public:
 
         // Check if the file can be opened
         if (!file.is_open()) {
-            throw std::runtime_error("Failed to open file: " + filePath);
+            return questions; // Return an empty vector if the file cannot be opened
         }
 
         nlohmann::json jsonData;
@@ -90,7 +89,7 @@ public:
 
         // Validate the JSON structure
         if (!jsonData.contains("questions")) {
-            throw std::runtime_error("Invalid JSON format: Missing 'questions' field");
+            return questions; // Return an empty vector if "questions" field is missing
         }
 
         for (const auto& item : jsonData["questions"]) {
@@ -121,8 +120,6 @@ public:
                     for (auto& [key, value] : answersObj.items()) {
                         question.addAnswer(value.get<std::string>());
                     }
-                } else {
-                    throw std::runtime_error("Invalid question format: 'answers' must have at least 2 entries.");
                 }
             } 
             // Parse Matching questions

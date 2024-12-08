@@ -107,9 +107,33 @@ void RandomType_Test::onRun() {
         // Reset overrides after getRandomTopicAndType tests
         RandomRequest::testSelectedTopic = "";
         RandomRequest::testSelectedFile = "";
+
+        // Additional tests for randomness
+        OATPP_LOGD("RandomType_Test", "Testing randomness for topics and files");
+
+        // Verify random topic generation
+        std::unordered_set<std::string> randomTopics;
+        for (int i = 0; i < 5; ++i) {
+          std::string randomTopic = RandomRequest::selectRandomTopic();
+          OATPP_LOGD("RandomType_Test", "Random Topic %d: %s", i + 1, randomTopic.c_str());
+          randomTopics.insert(randomTopic);
+        }
+        // Ensure multiple unique topics are generated
+        OATPP_ASSERT(randomTopics.size() > 1);
+
+        // Verify random file generation
+        std::unordered_set<std::string> randomFiles; // To track unique files
+        for (int i = 0; i < 5; ++i) {
+          std::string randomFile = RandomRequest::selectRandomQuestionFile();
+          OATPP_LOGD("RandomType_Test", "Random File %d: %s", i + 1, randomFile.c_str());
+          randomFiles.insert(randomFile);
+        }
+        // Ensure multiple unique files are generated
+        OATPP_ASSERT(randomFiles.size() > 1);
       },
       std::chrono::minutes(10) /* test timeout */);
 
   // Allow time for all server threads to finish
   std::this_thread::sleep_for(std::chrono::seconds(1));
 }
+
