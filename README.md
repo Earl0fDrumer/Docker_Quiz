@@ -32,4 +32,6 @@ This is the base code for the course project. Adapt as needed.
  * **True/False:** [http://localhost:8200/DP/TF](http://localhost:8200/DP/TF)     
  * **Matching:** [http://localhost:8200/DP/MAT](http://localhost:8200/DP/MAT)
  * **Fill In Blank:** [http://localhost:8200/DP/FIB](http://localhost:8200/DP/FIB)
+
+ To run the HTML, use "firefox _WebPageDesign.html"
  
