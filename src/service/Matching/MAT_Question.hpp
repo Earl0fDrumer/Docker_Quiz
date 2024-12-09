@@ -64,7 +64,7 @@ class Matching : public Question {
 
  private:
   std::vector<std::string> Definitions;
-  std::vector<std::string> correctAnswerVector = {"c", "a", "d", "b"};
+  std::vector<std::string> correctAnswerVector = {"a", "b", "c", "d"};
 };
 
 #endif /* MAT_QUESTION_hpp */

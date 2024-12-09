@@ -270,40 +270,60 @@ function displayFIB(text) {
     };
 }
 
-
 function displayMAT(text) {
     document.getElementById("ListOfQuestionTypes").style.display = "none";
     document.getElementById("MAT").style.display = "block";
 
-    if (text == "error") {
+    if (text === "error") {
         document.getElementById("MATQuestion").innerText = "ERROR: Double check server";
-        document.getElementById("termA").innerText = "ERROR: Double check server";
-        document.getElementById("termB").innerText = "ERROR: Double check server";
-        document.getElementById("termC").innerText = "ERROR: Double check server";
-        document.getElementById("termD").innerText = "ERROR: Double check server";
-        // Set definitions to ERROR as well
-    } else {
-        document.getElementById("MATQuestion").innerText = text.questionTextMAT;
-        document.getElementById("termA").innerText = text.termA;
-        document.getElementById("termB").innerText = text.termB;
-        document.getElementById("termC").innerText = text.termC;
-        document.getElementById("termD").innerText = text.termD;
-
-        // Assuming you have <select> elements for each term where user selects definitions:
-        // Assign definitions to the option elements in each select. For simplicity:
-        let selects = document.querySelectorAll("#MAT select");
-        // For example, first select corresponds to termA:
-        // set each <option> value or text to 'a','b','c','d'
-        // The user will choose matches. Then on submit, you gather their chosen values.
-
+        document.getElementById("termA").innerText = "ERROR";
+        document.getElementById("termB").innerText = "ERROR";
+        document.getElementById("termC").innerText = "ERROR";
+        document.getElementById("termD").innerText = "ERROR";
+        return;
     }
 
-    const MATSubmitBtn = document.getElementById("MATSubmitBtn");
-    MATSubmitBtn.onclick = function() {
+    document.getElementById("MATQuestion").innerText = text.questionTextMAT;
+    document.getElementById("termA").innerText = text.termA;
+    document.getElementById("termB").innerText = text.termB;
+    document.getElementById("termC").innerText = text.termC;
+    document.getElementById("termD").innerText = text.termD;
 
+    // Assign definitions to each of the .defX options in each select
+    // Each select has defA, defB, defC, defD. 
+    // We'll just set their innerText according to text.definitionA, text.definitionB, etc.
 
+    // For selectA:
+    document.querySelector("#selectA .defA").innerText = text.definitionA;
+    document.querySelector("#selectA .defB").innerText = text.definitionB;
+    document.querySelector("#selectA .defC").innerText = text.definitionC;
+    document.querySelector("#selectA .defD").innerText = text.definitionD;
 
-        // Ensure Topic is set before fetch
+    // Repeat for selectB, selectC, selectD:
+    document.querySelector("#selectB .defA").innerText = text.definitionA;
+    document.querySelector("#selectB .defB").innerText = text.definitionB;
+    document.querySelector("#selectB .defC").innerText = text.definitionC;
+    document.querySelector("#selectB .defD").innerText = text.definitionD;
+
+    document.querySelector("#selectC .defA").innerText = text.definitionA;
+    document.querySelector("#selectC .defB").innerText = text.definitionB;
+    document.querySelector("#selectC .defC").innerText = text.definitionC;
+    document.querySelector("#selectC .defD").innerText = text.definitionD;
+
+    document.querySelector("#selectD .defA").innerText = text.definitionA;
+    document.querySelector("#selectD .defB").innerText = text.definitionB;
+    document.querySelector("#selectD .defC").innerText = text.definitionC;
+    document.querySelector("#selectD .defD").innerText = text.definitionD;
+
+    const matSubmitBtn = document.querySelector("#MAT button");
+    matSubmitBtn.onclick = function() {
+        let userAnswers = [
+            document.getElementById("selectA").value,
+            document.getElementById("selectB").value,
+            document.getElementById("selectC").value,
+            document.getElementById("selectD").value
+        ];
+
         if (!Topic || Topic.length === 0) {
             alert("No topic selected.");
             return;
@@ -311,35 +331,33 @@ function displayMAT(text) {
 
         ConvertTopicFormat();
 
-        fetch(`http://localhost:8200/${Topic}/TF/validate`, {
+        fetch(`http://localhost:8200/${Topic}/MAT/validate`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ answer: selectedOption })
+            body: JSON.stringify({ answers: userAnswers })
         })
         .then(resp => {
-            if (!resp.ok) {
-                throw new Error("Network response was not ok");
-            }
+            if(!resp.ok) throw new Error("Network not ok");
             return resp.json();
         })
         .then(result => {
-            console.log("Validation result from server:", result);
             if (result.isCorrect) {
                 alert("Correct!");
-                document.getElementById("ListOfTopics").style.display = "block";
-                document.getElementById("MAT").style.display = "none";
                 AnswerTracker(true);
             } else {
-                alert("Incorrect!");
+                alert("Incorrect! One or more matches were wrong.");
                 AnswerTracker(false);
             }
         })
         .catch(error => {
-            console.error("Validation error:", error);
+            console.error("MAT Validation error:", error);
+            AnswerTracker(false);
             alert("Error validating answer. Please try again.");
         });
     };
 }
+
+  
 
 
 function displayMC(text) {
