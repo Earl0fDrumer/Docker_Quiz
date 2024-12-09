@@ -39,7 +39,6 @@ class MultipleChoice : public Question {
       return "Incorrect. The correct answer is: " + CorrectAnswer;
     }
   }
-
 };
 
 #endif // MC_QUESTION_HPP

@@ -28,14 +28,17 @@ class Matching : public Question {
     Answers.push_back(jsonFileData["questions"][0]["terms"]["d"]);
 
     // Extract definitions
-    // For example, we might be intentionally mismatching order to randomize the challenge
-    // According to the previous logic, correctAnswerVector = {"c", "a", "d", "b"}:
+    // For example, we might be intentionally
+    // mismatching order to randomize the challenge
+    // According to the previous logic,
+    // correctAnswerVector = {"c", "a", "d", "b"}:
     // This means for termA (Answers[0]), correct = 'c'
     // for termB (Answers[1]), correct = 'a'
     // for termC (Answers[2]), correct = 'd'
     // for termD (Answers[3]), correct = 'b'
 
-    // Just as an example, let's place the definitions in order c,a,d,b to match the correct answer vector:
+    // Just as an example, let's place the definitions
+    // in order c,a,d,b to match the correct answer vector:
     Definitions.push_back(jsonFileData["questions"][0]["definitions"]["a"]);
     Definitions.push_back(jsonFileData["questions"][0]["definitions"]["b"]);
     Definitions.push_back(jsonFileData["questions"][0]["definitions"]["c"]);

@@ -16,11 +16,14 @@
 
 class Random_Controller : public oatpp::web::server::api::ApiController {
  public:
-  Random_Controller(OATPP_COMPONENT(std::shared_ptr<ObjectMapper>, objectMapper))
+  Random_Controller(
+    OATPP_COMPONENT(std::shared_ptr<ObjectMapper>, objectMapper))
       : oatpp::web::server::api::ApiController(objectMapper) {}
 
   ADD_CORS(getRandomByTopic)
-  ENDPOINT("GET", "/{topic}/random", getRandomByTopic, PATH(oatpp::String, topic)) {
+  ENDPOINT("GET", "/{topic}/random",
+            getRandomByTopic,
+            PATH(oatpp::String, topic)) {
     // Map topic to folder
     std::string topicFolder = RandomRequest::mapTopicToFolder(topic->c_str());
 
@@ -28,7 +31,11 @@ class Random_Controller : public oatpp::web::server::api::ApiController {
     std::string selectedFile = RandomRequest::selectRandomQuestionFile();
 
     // Load questions
-    std::string filePath = "src/QuestionData/" + topicFolder + "/" + selectedFile;
+    std::string filePath =
+      "src/QuestionData/" +
+      topicFolder +
+      "/" +
+      selectedFile;
     RandomRequest loader(topicFolder);
     auto questions = loader.loadQuestions(filePath);
 
@@ -84,7 +91,11 @@ class Random_Controller : public oatpp::web::server::api::ApiController {
     std::string selectedFile = RandomRequest::selectRandomQuestionFile();
 
     // Load questions from the randomized topic and file
-    std::string filePath = "src/QuestionData/" + randomTopicFolder + "/" + selectedFile;
+    std::string filePath =
+      "src/QuestionData/" +
+      randomTopicFolder +
+      "/" +
+      selectedFile;
     RandomRequest loader(randomTopicFolder);
     auto questions = loader.loadQuestions(filePath);
 
