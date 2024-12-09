@@ -15,7 +15,6 @@
 class MyApiTestClient : public oatpp::web::client::ApiClient {
   API_CLIENT_INIT(MyApiTestClient)
 
-  API_CALL("GET", "/selene", getSelene)
   //Multiple Choice
   API_CALL("GET", "/DP/MC", getDP_MCQuestion)
   API_CALL("GET", "/OOD/MC", getOOD_MCQuestion)

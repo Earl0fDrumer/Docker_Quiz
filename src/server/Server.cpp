@@ -1,6 +1,5 @@
 #include "oatpp/network/Server.hpp"
 
-#include "../controller/SeleneController.hpp"
 #include "../controller/MultipleChoice/MC_Controller.hpp"
 #include "../controller/FillInBlank/FillInBlank_Controller.hpp"
 #include "../controller/TrueOrFalse/TF_Controller.hpp"
@@ -19,10 +18,6 @@ void run() {
 
   /* Create Router for HTTP requests routing */
   OATPP_COMPONENT(std::shared_ptr<oatpp::web::server::HttpRouter>, router);
-
-  /* Create SeleneController and add all of its endpoints to router */
-  auto controller = std::make_shared<SeleneController>();
-  router->addController(controller);
 
   /* Create FillInBlank_Controller and add all of its endpoints to the router */
   auto fillInBlankController = std::make_shared<FillInBlank_Controller>();

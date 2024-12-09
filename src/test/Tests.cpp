@@ -1,7 +1,5 @@
 #include <iostream>
 
-#include "selene/SeleneTest.hpp"
-
 //Multiple Choice Tests
 #include "src/test/MultipleChoiceTests/DP_MC_Test.hpp"
 #include "src/test/MultipleChoiceTests/OOD_MC_Test.hpp"
@@ -33,7 +31,6 @@
 #include "src/test/RandomTests/RandomType_Test.hpp"
 
 void runTests() {
-  OATPP_RUN_TEST(SeleneTest);
   // Multiple Choice Tests
   OATPP_RUN_TEST(DP_MC_Test);
   OATPP_RUN_TEST(OOD_MC_Test);

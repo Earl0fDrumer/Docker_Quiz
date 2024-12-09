@@ -30,7 +30,8 @@ void SE_FIB_Test::onRun() {
   FillInBlank question(path);
   OATPP_ASSERT(question.getCorrectAnswer() == "waterfall");
   OATPP_ASSERT(question.validateAnswer("waterfall") == "Correct!");
-  OATPP_ASSERT(question.validateAnswer("agile") == "Incorrect. The correct answer is: waterfall");
+  OATPP_ASSERT(question.validateAnswer("agile") ==
+    "Incorrect. The correct answer is: waterfall");
 
   /* Run the test */
   runner.run(
@@ -96,16 +97,20 @@ void SE_FIB_Test::onRun() {
         /* Test answer validation - correct case */
         auto submission = AnswerSubmission::createShared();
         submission->answer = "waterfall";
-        auto validationResponse = client->validateFIBAnswer("SoftwareEngineering", submission);
+        auto validationResponse = client->
+          validateFIBAnswer("SoftwareEngineering", submission);
         OATPP_ASSERT(validationResponse->getStatusCode() == 200);
-        auto result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        auto result = validationResponse->readBodyToDto
+          <oatpp::Object<ValidationResult>>(objectMapper.get());
         OATPP_ASSERT(result->isCorrect == true);
 
         /* Test answer validation - incorrect case */
         submission->answer = "agile";
-        validationResponse = client->validateFIBAnswer("SoftwareEngineering", submission);
+        validationResponse = client->
+          validateFIBAnswer("SoftwareEngineering", submission);
         OATPP_ASSERT(validationResponse->getStatusCode() == 200);
-        result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        result = validationResponse->readBodyToDto
+          <oatpp::Object<ValidationResult>>(objectMapper.get());
         OATPP_ASSERT(result->isCorrect == false);
         OATPP_ASSERT(result->correctAnswer == "waterfall");
       },

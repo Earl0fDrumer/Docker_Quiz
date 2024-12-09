@@ -30,7 +30,8 @@ void VC_FIB_Test::onRun() {
   FillInBlank question(path);
   OATPP_ASSERT(question.getCorrectAnswer() == "push");
   OATPP_ASSERT(question.validateAnswer("push") == "Correct!");
-  OATPP_ASSERT(question.validateAnswer("pull") == "Incorrect. The correct answer is: push");
+  OATPP_ASSERT(question.validateAnswer("pull") ==
+    "Incorrect. The correct answer is: push");
 
   /* Run the test */
   runner.run(
@@ -95,16 +96,20 @@ void VC_FIB_Test::onRun() {
                 /* Test answer validation - correct case */
         auto submission = AnswerSubmission::createShared();
         submission->answer = "push";
-        auto validationResponse = client->validateFIBAnswer("VersionControl", submission);
+        auto validationResponse = client->
+          validateFIBAnswer("VersionControl", submission);
         OATPP_ASSERT(validationResponse->getStatusCode() == 200);
-        auto result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        auto result = validationResponse->
+          readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
         OATPP_ASSERT(result->isCorrect == true);
 
         /* Test answer validation - incorrect case */
         submission->answer = "pull";
-        validationResponse = client->validateFIBAnswer("VersionControl", submission);
+        validationResponse = client->
+          validateFIBAnswer("VersionControl", submission);
         OATPP_ASSERT(validationResponse->getStatusCode() == 200);
-        result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        result = validationResponse->readBodyToDto
+          <oatpp::Object<ValidationResult>>(objectMapper.get());
         OATPP_ASSERT(result->isCorrect == false);
         OATPP_ASSERT(result->correctAnswer == "push");
       },

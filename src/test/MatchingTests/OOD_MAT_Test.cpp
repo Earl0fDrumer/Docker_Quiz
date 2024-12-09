@@ -3,6 +3,8 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <vector>
+
 #include "src/controller/Matching/MAT_Controller.hpp"
 #include "../app/MyApiTestClient.hpp"
 #include "../app/TestComponent.hpp"
@@ -22,15 +24,15 @@ void OOD_MAT_Test::onRun() {
   /* Test service class methods directly */
   std::string path = "src/QuestionData/ObjectOrientedDesign/Matching.json";
   Matching question(path);
-  
+
   // Test valid answer
   std::vector<std::string> correctAnswers = {"c", "a", "d", "b"};
   OATPP_ASSERT(question.validateAllAnswers(correctAnswers) == true);
-  
+
   // Test wrong size answer
   std::vector<std::string> wrongSizeAnswers = {"c", "a", "d"};
   OATPP_ASSERT(question.validateAllAnswers(wrongSizeAnswers) == false);
-  
+
   // Test wrong answer
   std::vector<std::string> wrongAnswers = {"a", "b", "c", "d"};
   OATPP_ASSERT(question.validateAllAnswers(wrongAnswers) == false);
@@ -101,9 +103,11 @@ void OOD_MAT_Test::onRun() {
         submission->answers->push_back("d");
         submission->answers->push_back("b");
 
-        auto validationResponse = client->validateMATAnswer("ObjectOrientedDesign", submission);
+        auto validationResponse = client->
+          validateMATAnswer("ObjectOrientedDesign", submission);
         OATPP_ASSERT(validationResponse->getStatusCode() == 200);
-        auto result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        auto result = validationResponse->readBodyToDto
+          <oatpp::Object<ValidationResult>>(objectMapper.get());
         OATPP_ASSERT(result->isCorrect == true);
 
         // Test incorrect answer
@@ -113,9 +117,11 @@ void OOD_MAT_Test::onRun() {
         submission->answers->push_back("c");
         submission->answers->push_back("d");
 
-        validationResponse = client->validateMATAnswer("ObjectOrientedDesign", submission);
+        validationResponse = client->
+          validateMATAnswer("ObjectOrientedDesign", submission);
         OATPP_ASSERT(validationResponse->getStatusCode() == 200);
-        result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        result = validationResponse->readBodyToDto
+          <oatpp::Object<ValidationResult>>(objectMapper.get());
         OATPP_ASSERT(result->isCorrect == false);
       },
       std::chrono::minutes(10) /* test timeout */);

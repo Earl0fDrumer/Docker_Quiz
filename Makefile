@@ -19,7 +19,6 @@ SRC_DIR_SERVICE_FIB_QUESTION = src/service/FillInBlank
 SRC_DIR_SERVICE_RANDOM_BY_TYPE = src/service
 
 SRC_DIR_TESTS = src/test
-SRC_DIR_TESTS_Selene = src/test/selene
 SRC_DIR_TESTS_MultipleChoice = src/test/MultipleChoiceTests
 SRC_DIR_TESTS_TrueOrFalse = src/test/TrueOrFalseTests
 SRC_DIR_TESTS_Matching = src/test/MatchingTests
@@ -79,7 +78,6 @@ stop:
 
 $(TEST_SERVER): $(SRC_DIR_TESTS)
 	$(CXX) $(CXXFLAGS) -o $(TEST_SERVER) $(OATPP_INCLUDE) \
-	$(SRC_DIR_TESTS_Selene)/*.cpp \
 	$(SRC_DIR_TESTS_MultipleChoice)/*.cpp \
 	$(SRC_DIR_TESTS_TrueOrFalse)/*.cpp \
 	$(SRC_DIR_TESTS_Matching)/*.cpp \

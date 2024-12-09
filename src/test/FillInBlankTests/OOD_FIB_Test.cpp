@@ -31,7 +31,8 @@ void OOD_FIB_Test::onRun() {
   FillInBlank question(path);
   OATPP_ASSERT(question.getCorrectAnswer() == "encapsulation");
   OATPP_ASSERT(question.validateAnswer("encapsulation") == "Correct!");
-  OATPP_ASSERT(question.validateAnswer("inheritance") == "Incorrect. The correct answer is: encapsulation");
+  OATPP_ASSERT(question.validateAnswer("inheritance") ==
+    "Incorrect. The correct answer is: encapsulation");
 
   /* Run the test */
   runner.run(
@@ -97,16 +98,20 @@ void OOD_FIB_Test::onRun() {
         /* Test answer validation - correct case */
         auto submission = AnswerSubmission::createShared();
         submission->answer = "encapsulation";
-        auto validationResponse = client->validateFIBAnswer("ObjectOrientedDesign", submission);
+        auto validationResponse = client->
+          validateFIBAnswer("ObjectOrientedDesign", submission);
         OATPP_ASSERT(validationResponse->getStatusCode() == 200);
-        auto result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        auto result = validationResponse->readBodyToDto
+          <oatpp::Object<ValidationResult>>(objectMapper.get());
         OATPP_ASSERT(result->isCorrect == true);
 
         /* Test answer validation - incorrect case */
         submission->answer = "inheritance";
-        validationResponse = client->validateFIBAnswer("ObjectOrientedDesign", submission);
+        validationResponse = client->
+          validateFIBAnswer("ObjectOrientedDesign", submission);
         OATPP_ASSERT(validationResponse->getStatusCode() == 200);
-        result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        result = validationResponse->readBodyToDto
+          <oatpp::Object<ValidationResult>>(objectMapper.get());
         OATPP_ASSERT(result->isCorrect == false);
         OATPP_ASSERT(result->correctAnswer == "encapsulation");
       },

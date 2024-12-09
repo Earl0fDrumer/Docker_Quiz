@@ -30,7 +30,8 @@ void DP_FIB_Test::onRun() {
   FillInBlank question(path);
   OATPP_ASSERT(question.getCorrectAnswer() == "Singleton");
   OATPP_ASSERT(question.validateAnswer("Singleton") == "Correct!");
-  OATPP_ASSERT(question.validateAnswer("Factory") == "Incorrect. The correct answer is: Singleton");
+  OATPP_ASSERT(question.validateAnswer("Factory") ==
+    "Incorrect. The correct answer is: Singleton");
 
   /* Run the test */
   runner.run(
@@ -97,16 +98,20 @@ void DP_FIB_Test::onRun() {
         /* Test answer validation - correct case */
         auto submission = AnswerSubmission::createShared();
         submission->answer = "Singleton";
-        auto validationResponse = client->validateFIBAnswer("DesignPatterns", submission);
+        auto validationResponse = client->
+          validateFIBAnswer("DesignPatterns", submission);
         OATPP_ASSERT(validationResponse->getStatusCode() == 200);
-        auto result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        auto result = validationResponse->readBodyToDto
+          <oatpp::Object<ValidationResult>>(objectMapper.get());
         OATPP_ASSERT(result->isCorrect == true);
 
         /* Test answer validation - incorrect case */
         submission->answer = "Factory";
-        validationResponse = client->validateFIBAnswer("DesignPatterns", submission);
+        validationResponse = client->
+          validateFIBAnswer("DesignPatterns", submission);
         OATPP_ASSERT(validationResponse->getStatusCode() == 200);
-        result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        result = validationResponse->readBodyToDto
+          <oatpp::Object<ValidationResult>>(objectMapper.get());
         OATPP_ASSERT(result->isCorrect == false);
         OATPP_ASSERT(result->correctAnswer == "Singleton");
       },

@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <memory>
+#include <string>
 
 #include "../../controller/TrueOrFalse/TF_Controller.hpp"
 #include "../app/MyApiTestClient.hpp"
@@ -26,11 +27,12 @@ void OOD_TF_Test::onRun() {
   /* Test service class methods */
   std::string path = "src/QuestionData/ObjectOrientedDesign/TrueFalse.json";
   TrueOrFalse question(path);
-  
+
   /* Test getCorrectAnswer and validateAnswer */
   OATPP_ASSERT(question.getCorrectAnswer() == "b");
   OATPP_ASSERT(question.validateAnswer("b") == "Correct!");
-  OATPP_ASSERT(question.validateAnswer("a") == "Incorrect. The correct answer is: b");
+  OATPP_ASSERT(question.validateAnswer("a") ==
+    "Incorrect. The correct answer is: b");
 
   /* Run test */
   runner.run(
@@ -73,17 +75,22 @@ void OOD_TF_Test::onRun() {
         /* Test answer validation - correct case */
         auto submission = AnswerSubmission::createShared();
         submission->answer = "b";
-        auto validationResponse = client->validateTFAnswer("ObjectOrientedDesign", submission);
+        auto validationResponse = client->
+            validateTFAnswer("ObjectOrientedDesign", submission);
         OATPP_ASSERT(validationResponse->getStatusCode() == 200);
-        auto result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        auto result = validationResponse->readBodyToDto
+            <oatpp::Object<ValidationResult>>(objectMapper.get());
         OATPP_ASSERT(result->isCorrect == true);
 
         /* Test answer validation - incorrect case */
         submission->answer = "a";
-        validationResponse = client->validateTFAnswer("ObjectOrientedDesign", submission);
+        validationResponse = client->
+            validateTFAnswer("ObjectOrientedDesign", submission);
         OATPP_ASSERT(validationResponse->getStatusCode() == 200);
-        result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
-        OATPP_LOGI("Test", "correctAnswer value: '%s'", result->correctAnswer->c_str());
+        result = validationResponse->readBodyToDto
+            <oatpp::Object<ValidationResult>>(objectMapper.get());
+        OATPP_LOGI("Test", "correctAnswer value: '%s'",
+            result->correctAnswer->c_str());
         OATPP_ASSERT(result->isCorrect == false);
         OATPP_ASSERT(result->correctAnswer == "b");
       },
