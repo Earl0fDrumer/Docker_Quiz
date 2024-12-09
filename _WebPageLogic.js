@@ -339,6 +339,8 @@ function DisplayAndValidateMAT(text) {
         .then(result => {
             if (result.isCorrect) {
                 alert("Correct!");
+                document.getElementById("ListOfTopics").style.display = "block";
+                document.getElementById("MAT").style.display = "none";
                 AnswerTracker(true);
             } else {
                 alert("Incorrect! One or more matches were wrong.");
