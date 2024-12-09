@@ -239,6 +239,8 @@ function displayFIB(text) {
             return;
         }
 
+        ConvertTopicFormat();
+
         fetch(`http://localhost:8200/${Topic}/FIB/validate`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -370,6 +372,8 @@ function displayMC(text) {
             return;
         }
 
+        ConvertTopicFormat();
+
         fetch(`http://localhost:8200/${Topic}/MC/validate`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -417,4 +421,15 @@ function displayTF(text) {
         document.getElementById("trueText").innerText = text.trueText;
         document.getElementById("falseText").innerText = text.falseText;
     }
+}
+
+function ConvertTopicFormat() {
+    if (Topic == "DP")
+        Topic = "DesignPatterns"
+    else if (Topic == "OOD")
+        Topic = "ObjectOrientedDesign"
+    else if (Topic == "SE")
+        Topic = "SoftwareEngineering"
+    else if (Topic == "VC")
+        Topic = "VersionControl"
 }
