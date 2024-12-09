@@ -47,7 +47,7 @@ void RandomType_Test::onRun() {
 
         // Test cases for getRandomByTopic with each
         // question type for specific topics
-        const vector<std::pair<string, string>>
+        const std::vector<std::pair<std::string, std::string>>
         byTopicTestCases = {
             {"FillInBlank.json", "SE"},
             {"MultipleChoice.json", "DP"},
@@ -81,7 +81,7 @@ void RandomType_Test::onRun() {
 
         // Test cases for getRandomTopicAndType for all
         // combinations of topic and file
-        const vector<std::pair<string, string>>
+        const std::vector<std::pair<std::string, std::string>>
         randomTestCases = {
             {"SE", "FillInBlank.json"},
             {"SE", "MultipleChoice.json"},
@@ -132,9 +132,9 @@ void RandomType_Test::onRun() {
           "RandomType_Test", "Testing randomness for topics and files");
 
         // Verify random topic generation
-        std::unordered_set<string> randomTopics;
+        std::unordered_set<std::string> randomTopics;
         for (int i = 0; i < 5; ++i) {
-          string randomTopic = RandomRequest::selectRandomTopic();
+          std::string randomTopic = RandomRequest::selectRandomTopic();
           OATPP_LOGD(
             "RandomType_Test",
             "Random Topic %d: %s",
@@ -146,9 +146,9 @@ void RandomType_Test::onRun() {
         OATPP_ASSERT(randomTopics.size() > 1);
 
         // Verify random file generation
-        std::unordered_set<string> randomFiles; // To track unique files
+        std::unordered_set<std::string> randomFiles; // To track unique files
         for (int i = 0; i < 5; ++i) {
-          string randomFile = RandomRequest::selectRandomQuestionFile();
+          std::string randomFile = RandomRequest::selectRandomQuestionFile();
           OATPP_LOGD(
             "RandomType_Test",
             "Random File %d: %s",
