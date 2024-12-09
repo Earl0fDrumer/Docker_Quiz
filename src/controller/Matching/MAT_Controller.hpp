@@ -17,15 +17,13 @@ class MAT_Controller : public oatpp::web::server::api::ApiController {
  public:
   /**
    * Constructor with object mapper.
-   * @param objectMapper - default object mapper used to serialize/deserialize
-   * DTOs.
+   * @param objectMapper - default object mapper used to serialize/deserialize DTOs.
    */
   MAT_Controller(OATPP_COMPONENT(std::shared_ptr<ObjectMapper>, objectMapper))
       : oatpp::web::server::api::ApiController(objectMapper) {}
 
   ADD_CORS(getDP_MATQuestion)
   ENDPOINT("GET", "/DP/MAT", getDP_MATQuestion) {
-
     auto obj_dto = Result_MAT::createShared();
     std::string path = "src/QuestionData/DesignPatterns/Matching.json";
     
@@ -45,11 +43,10 @@ class MAT_Controller : public oatpp::web::server::api::ApiController {
     obj_dto->definitionD = Definitions[3];
 
     return createDtoResponse(Status::CODE_200, obj_dto);
-  }  // GET DesignPatter MAT
+  }  // GET DP MAT
 
   ADD_CORS(getOOD_MATQuestion)
   ENDPOINT("GET", "/OOD/MAT", getOOD_MATQuestion) {
-
     auto obj_dto = Result_MAT::createShared();
     std::string path = "src/QuestionData/ObjectOrientedDesign/Matching.json";
     
@@ -69,11 +66,10 @@ class MAT_Controller : public oatpp::web::server::api::ApiController {
     obj_dto->definitionD = Definitions[3];
 
     return createDtoResponse(Status::CODE_200, obj_dto);
-  }  // GET Object-Oriented_Design MAT
+  }  // GET OOD MAT
 
   ADD_CORS(getVC_MATQuestion)
   ENDPOINT("GET", "/VC/MAT", getVC_MATQuestion) {
-
     auto obj_dto = Result_MAT::createShared();
     std::string path = "src/QuestionData/VersionControl/Matching.json";
     
@@ -93,11 +89,10 @@ class MAT_Controller : public oatpp::web::server::api::ApiController {
     obj_dto->definitionD = Definitions[3];
 
     return createDtoResponse(Status::CODE_200, obj_dto);
-  }  // GET VersionControl MAT
+  }  // GET VC MAT
 
   ADD_CORS(getSE_MATQuestion)
   ENDPOINT("GET", "/SE/MAT", getSE_MATQuestion) {
-
     auto obj_dto = Result_MAT::createShared();
     std::string path = "src/QuestionData/SoftwareEngineering/Matching.json";
     
@@ -117,32 +112,30 @@ class MAT_Controller : public oatpp::web::server::api::ApiController {
     obj_dto->definitionD = Definitions[3];
 
     return createDtoResponse(Status::CODE_200, obj_dto);
-  }  // GET SoftwareEngineering MAT
+  }  // GET SE MAT
 
   ADD_CORS(validateMATAnswer)
   ENDPOINT("POST", "/{topic}/MAT/validate", validateMATAnswer,
-         PATH(String, topic),
-         BODY_DTO(Object<MultipleAnswersSubmission>, answerDto)) {
+           PATH(String, topic),
+           BODY_DTO(Object<MultipleAnswersSubmission>, answerDto)) {
 
-  std::string topicStr = topic->c_str();
-  std::string path = "src/QuestionData/" + topicStr + "/Matching.json";
+    std::string topicStr = topic->c_str();
+    std::string path = "src/QuestionData/" + topicStr + "/Matching.json";
 
-  Matching MAT_question(path);
+    Matching MAT_question(path);
 
-  // answerDto->answers is a Vector<String>
-  // Convert Vector<String> to std::vector<std::string>
-  std::vector<std::string> userAnswers;
-  for (auto &ans : *answerDto->answers) {
-    userAnswers.push_back(ans->c_str());
+    std::vector<std::string> userAnswers;
+    for (auto &ans : *answerDto->answers) {
+      userAnswers.push_back(ans->c_str());
+    }
+
+    bool isCorrect = MAT_question.validateAllAnswers(userAnswers);
+
+    auto resultDto = ValidationResult::createShared();
+    resultDto->isCorrect = isCorrect;
+
+    return createDtoResponse(Status::CODE_200, resultDto);
   }
-
-  bool isCorrect = MAT_question.validateAllAnswers(userAnswers);
-
-  auto resultDto = ValidationResult::createShared();
-  resultDto->isCorrect = isCorrect;
-
-  return createDtoResponse(Status::CODE_200, resultDto);
-}
 
 };  // End of Controller
 

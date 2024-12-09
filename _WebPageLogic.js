@@ -8,7 +8,6 @@ function AnswerTracker(isCorrect) {
     } else {
         IncorrectAnswers++;
     }
-
     document.getElementById("CorrectAnswerTracker").innerText = "Correct Answers: " + CorrectAnswers;
     document.getElementById("IncorrectAnswerTracker").innerText = "Incorrect Answers: " + IncorrectAnswers;
 }
@@ -17,7 +16,7 @@ function fetchTopics() {
     fetch("http://localhost:8200/topics")
     .then((resp) => {
         if (!resp.ok) {
-            throw new Error("HTTP error: ${resp.status}");
+            throw new Error(`HTTP error: ${resp.status}`);
         }
         return resp.json();
     })
@@ -138,7 +137,6 @@ function QuestionSelector(Type) {
         })
         .then((text) => {
             document.getElementById("ListOfTopics").style.display = "none";
-
             if (text.questionTextFIB != null) {
                 displayFIB(text);
             } else if (text.questionTextMAT != null) {
@@ -190,10 +188,10 @@ function displayFIB(text) {
         if (text.wordBank && text.wordBank.length > 0) {
             document.getElementById("word1").value = text.wordBank[0];
             document.getElementById("word1").innerText = text.wordBank[0];
-        } else {
+            } else {
             document.getElementById("word1").value = "";
             document.getElementById("word1").innerText = "";
-        }
+            }
 
         if (text.wordBank && text.wordBank.length > 1) {
             document.getElementById("word2").value = text.wordBank[1];
@@ -237,7 +235,6 @@ function displayFIB(text) {
             alert("No topic selected.");
             return;
         }
-
         ConvertTopicFormat();
 
         fetch(`http://localhost:8200/${Topic}/FIB/validate`, {
@@ -252,7 +249,6 @@ function displayFIB(text) {
             return resp.json();
         })
         .then(result => {
-            console.log("Validation result from server:", result);
             if (result.isCorrect) {
                 alert("Correct!");
                 document.getElementById("ListOfTopics").style.display = "block";
@@ -289,17 +285,12 @@ function displayMAT(text) {
     document.getElementById("termC").innerText = text.termC;
     document.getElementById("termD").innerText = text.termD;
 
-    // Assign definitions to each of the .defX options in each select
-    // Each select has defA, defB, defC, defD. 
-    // We'll just set their innerText according to text.definitionA, text.definitionB, etc.
-
-    // For selectA:
+    // Populate definition options for each select
     document.querySelector("#selectA .defA").innerText = text.definitionA;
     document.querySelector("#selectA .defB").innerText = text.definitionB;
     document.querySelector("#selectA .defC").innerText = text.definitionC;
     document.querySelector("#selectA .defD").innerText = text.definitionD;
 
-    // Repeat for selectB, selectC, selectD:
     document.querySelector("#selectB .defA").innerText = text.definitionA;
     document.querySelector("#selectB .defB").innerText = text.definitionB;
     document.querySelector("#selectB .defC").innerText = text.definitionC;
@@ -357,9 +348,6 @@ function displayMAT(text) {
     };
 }
 
-  
-
-
 function displayMC(text) {
     document.getElementById("ListOfQuestionTypes").style.display = "none";
     document.getElementById("MC").style.display = "block";
@@ -371,10 +359,7 @@ function displayMC(text) {
         document.getElementById("option3").innerText = "ERROR: Double check server";
         document.getElementById("option4").innerText = "ERROR: Double check server";
     } else {
-        //Display Question
         document.getElementById("MCQuestion").innerText = text.questionTextMC;
-
-        //Display options
         document.getElementById("option1").innerText = text.optionA;
         document.getElementById("option2").innerText = text.optionB;
         document.getElementById("option3").innerText = text.optionC;
@@ -383,14 +368,12 @@ function displayMC(text) {
 
     const mcSubmitBtn = document.getElementById("mcSubmitBtn");
     mcSubmitBtn.onclick = function() {
-        selectedOption = getRadioValue("MC");
-
+        let selectedOption = getRadioValue("MC");
         if (!selectedOption) {
             alert("Please select an answer.");
             return;
         }
 
-        // Ensure Topic is set before fetch
         if (!Topic || Topic.length === 0) {
             alert("No topic selected.");
             return;
@@ -410,7 +393,6 @@ function displayMC(text) {
             return resp.json();
         })
         .then(result => {
-            console.log("MC Validation result from server:", result);
             if (result.isCorrect) {
                 alert("Correct!");
                 document.getElementById("ListOfTopics").style.display = "block";
@@ -431,7 +413,6 @@ function displayMC(text) {
     };
 }
 
-
 function displayTF(text) {
     document.getElementById("ListOfQuestionTypes").style.display = "none";
     document.getElementById("TF").style.display = "block";
@@ -448,9 +429,7 @@ function displayTF(text) {
 
     const TFSubmitBtn = document.getElementById("TFSubmitBtn");
     TFSubmitBtn.onclick = function() {
-        selectedOption = getRadioValue("TF");
-
-        // Ensure Topic is set before fetch
+        let selectedOption = getRadioValue("TF");
         if (!Topic || Topic.length === 0) {
             alert("No topic selected.");
             return;
@@ -470,7 +449,6 @@ function displayTF(text) {
             return resp.json();
         })
         .then(result => {
-            console.log("Validation result from server:", result);
             if (result.isCorrect) {
                 alert("Correct!");
                 document.getElementById("ListOfTopics").style.display = "block";
@@ -488,7 +466,6 @@ function displayTF(text) {
     };
 }
 
-
 function ConvertTopicFormat() {
     if (Topic == "DP")
         Topic = "DesignPatterns"
@@ -502,11 +479,10 @@ function ConvertTopicFormat() {
 
 function getRadioValue(name) {
     const radios = document.getElementsByName(name);
-        let selectedOption = "";
-        for (let i = 0; i < radios.length; i++) {
-            if (radios[i].checked) {
-                selectedOption = radios[i].value; // should be 'a', 'b', 'c', or 'd'
-                return selectedOption;
-            }
+    for (let i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            return radios[i].value;
         }
+    }
+    return "";
 }
