@@ -327,6 +327,48 @@ function displayMAT(text) {
              element.innerText = text.definitionD;
          });
     }
+
+    const MATSubmitBtn = document.getElementById("MATSubmitBtn");
+    MATSubmitBtn.onclick = function() {
+
+
+
+        // Ensure Topic is set before fetch
+        if (!Topic || Topic.length === 0) {
+            alert("No topic selected.");
+            return;
+        }
+
+        ConvertTopicFormat();
+
+        fetch(`http://localhost:8200/${Topic}/TF/validate`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ answer: selectedOption })
+        })
+        .then(resp => {
+            if (!resp.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return resp.json();
+        })
+        .then(result => {
+            console.log("Validation result from server:", result);
+            if (result.isCorrect) {
+                alert("Correct!");
+                document.getElementById("ListOfTopics").style.display = "block";
+                document.getElementById("MAT").style.display = "none";
+                AnswerTracker(true);
+            } else {
+                alert("Incorrect!");
+                AnswerTracker(false);
+            }
+        })
+        .catch(error => {
+            console.error("Validation error:", error);
+            alert("Error validating answer. Please try again.");
+        });
+    };
 }
 
 function displayMC(text) {
@@ -352,15 +394,7 @@ function displayMC(text) {
 
     const mcSubmitBtn = document.getElementById("mcSubmitBtn");
     mcSubmitBtn.onclick = function() {
-        // Find selected radio button
-        const radios = document.getElementsByName("MC");
-        let selectedOption = "";
-        for (let i = 0; i < radios.length; i++) {
-            if (radios[i].checked) {
-                selectedOption = radios[i].value; // should be 'a', 'b', 'c', or 'd'
-                break;
-            }
-        }
+        selectedOption = getRadioValue("MC");
 
         if (!selectedOption) {
             alert("Please select an answer.");
@@ -427,6 +461,47 @@ function displayTF(text) {
         document.getElementById("trueText").innerText = text.trueText;
         document.getElementById("falseText").innerText = text.falseText;
     }
+
+    const TFSubmitBtn = document.getElementById("TFSubmitBtn");
+    TFSubmitBtn.onclick = function() {
+        selectedOption = getRadioValue("TF");
+
+        // Ensure Topic is set before fetch
+        if (!Topic || Topic.length === 0) {
+            alert("No topic selected.");
+            return;
+        }
+
+        ConvertTopicFormat();
+
+        fetch(`http://localhost:8200/${Topic}/TF/validate`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ answer: selectedOption })
+        })
+        .then(resp => {
+            if (!resp.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return resp.json();
+        })
+        .then(result => {
+            console.log("Validation result from server:", result);
+            if (result.isCorrect) {
+                alert("Correct!");
+                document.getElementById("ListOfTopics").style.display = "block";
+                document.getElementById("TF").style.display = "none";
+                AnswerTracker(true);
+            } else {
+                alert("Incorrect!");
+                AnswerTracker(false);
+            }
+        })
+        .catch(error => {
+            console.error("Validation error:", error);
+            alert("Error validating answer. Please try again.");
+        });
+    };
 }
 
 function ConvertTopicFormat() {
@@ -438,4 +513,15 @@ function ConvertTopicFormat() {
         Topic = "SoftwareEngineering"
     else if (Topic == "VC")
         Topic = "VersionControl"
+}
+
+function getRadioValue(name) {
+    const radios = document.getElementsByName(name);
+        let selectedOption = "";
+        for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                selectedOption = radios[i].value; // should be 'a', 'b', 'c', or 'd'
+                return selectedOption;
+            }
+        }
 }
