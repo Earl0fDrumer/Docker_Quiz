@@ -11,7 +11,6 @@ function AnswerTracker(isCorrect) {
 
     document.getElementById("CorrectAnswerTracker").innerText = "Correct Answers: " + CorrectAnswers;
     document.getElementById("IncorrectAnswerTracker").innerText = "Incorrect Answers: " + IncorrectAnswers;
-
 }
 
 function fetchTopics() {
@@ -255,11 +254,13 @@ function displayFIB(text) {
         .then(result => {
             console.log("Validation result from server:", result);
             if (result.isCorrect) {
-                AnswerTracker(true);
                 alert("Correct!");
+                document.getElementById("ListOfTopics").style.display = "block";
+                document.getElementById("FIB").style.display = "none";
+                AnswerTracker(true);
             } else {
+                alert("Incorrect!");
                 AnswerTracker(false);
-                alert("Incorrect! The correct answer is: " + result.correctAnswer);
             }
         })
         .catch(error => {
@@ -388,17 +389,22 @@ function displayMC(text) {
         .then(result => {
             console.log("MC Validation result from server:", result);
             if (result.isCorrect) {
-                AnswerTracker(true);
                 alert("Correct!");
+                document.getElementById("ListOfTopics").style.display = "block";
+                document.getElementById("MC").style.display = "none";
+                AnswerTracker(true);
             } else {
+                alert("Incorrect!")
                 AnswerTracker(false);
-                alert("Incorrect! The correct answer is: " + result.correctAnswer);
             }
         })
         .catch(error => {
             console.error("MC Validation error:", error);
             alert("Error validating answer. Please try again.");
         });
+
+        document.getElementById("ListOfTopics").style.display = "block";
+        document.getElementById("MC").style.display = "none";
     };
 }
 
