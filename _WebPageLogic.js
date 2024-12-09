@@ -51,10 +51,10 @@ function QuestionSelector(Type) {
             return resp.json();
         })
         .then((text) => {
-            displayFIB(text);
+            DisplayAndValidateFIB(text);
         })
         .catch((error) => {
-            displayFIB("error");
+            DisplayAndValidateFIB("error");
         });
     } else if (Type == "MAT") {
         fetch("http://localhost:8200/" + Topic + "/MAT")
@@ -65,10 +65,10 @@ function QuestionSelector(Type) {
             return resp.json();
         })
         .then((text) => {
-            displayMAT(text);
+            DisplayAndValidateMAT(text);
         })
         .catch((error) => {
-            displayMAT("error");
+            DisplayAndValidateMAT("error");
         });
     } else if (Type == "MC") {
         fetch("http://localhost:8200/" + Topic + "/MC")
@@ -79,10 +79,10 @@ function QuestionSelector(Type) {
             return resp.json();
         })
         .then((text) => {
-            displayMC(text);
+            DisplayAndValidateMC(text);
         })
         .catch((error) => {
-            displayMC("error")
+            DisplayAndValidateMC("error")
         });
     } else if(Type == "TF") {
         fetch("http://localhost:8200/" + Topic + "/TF")
@@ -93,10 +93,10 @@ function QuestionSelector(Type) {
             return resp.json();
         })
         .then((text) => {
-            displayTF(text);
+            DisplayAndValidateTF(text);
         })
         .catch((error) => {
-            displayTF("error");
+            DisplayAndValidateTF("error");
         });
     } else if (Type == "RandType") {
         fetch("http://localhost:8200/" + Topic + "/random")
@@ -108,24 +108,24 @@ function QuestionSelector(Type) {
         })
         .then((text) => {
             if (text.questionTextFIB != null) {
-                displayFIB(text);
+                DisplayAndValidateFIB(text);
             } else if (text.questionTextMAT != null) {
-                displayMAT(text);
+                DisplayAndValidateMAT(text);
             } else if (text.questionTextMC != null) {
-                displayMC(text);
+                DisplayAndValidateMC(text);
             } else if (text.questionTextTF != null) {
-                displayTF(text);
+                DisplayAndValidateTF(text);
             }
         })
         .catch((error) => {
             if (text.questionTextFIB != null) {
-                displayFIB("error");
+                DisplayAndValidateFIB("error");
             } else if (text.questionTextMAT != null) {
-                displayMAT("error");
+                DisplayAndValidateMAT("error");
             } else if (text.questionTextMC != null) {
-                displayMC("error");
+                DisplayAndValidateMC("error");
             } else if (text.questionTextTF != null) {
-                displayTF("error");
+                DisplayAndValidateTF("error");
             }
         });
     } else if (Type == "FullyRand") {
@@ -140,32 +140,32 @@ function QuestionSelector(Type) {
             document.getElementById("ListOfTopics").style.display = "none";
 
             if (text.questionTextFIB != null) {
-                displayFIB(text);
+                DisplayAndValidateFIB(text);
             } else if (text.questionTextMAT != null) {
-                displayMAT(text);
+                DisplayAndValidateMAT(text);
             } else if (text.questionTextMC != null) {
-                displayMC(text);
+                DisplayAndValidateMC(text);
             } else if (text.questionTextTF != null) {
-                displayTF(text);
+                DisplayAndValidateTF(text);
             }
         })
         .catch((error) => {
             document.getElementById("ListOfTopics").style.display = "none";
 
             if (text.questionTextFIB != null) {
-                displayFIB("error");
+                DisplayAndValidateFIB("error");
             } else if (text.questionTextMAT != null) {
-                displayMAT("error");
+                DisplayAndValidateMAT("error");
             } else if (text.questionTextMC != null) {
-                displayMC("error");
+                DisplayAndValidateMC("error");
             } else if (text.questionTextTF != null) {
-                displayTF("error");
+                DisplayAndValidateTF("error");
             }
         });
     }
 }
 
-function displayFIB(text) {
+function DisplayAndValidateFIB(text) {
     document.getElementById("ListOfQuestionTypes").style.display = "none";
     document.getElementById("FIB").style.display = "block";
 
@@ -271,7 +271,7 @@ function displayFIB(text) {
 }
 
 
-function displayMAT(text) {
+function DisplayAndValidateMAT(text) {
     document.getElementById("ListOfQuestionTypes").style.display = "none";
     document.getElementById("MAT").style.display = "block";
 
@@ -281,7 +281,23 @@ function displayMAT(text) {
         document.getElementById("termB").innerText = "ERROR: Double check server";
         document.getElementById("termC").innerText = "ERROR: Double check server";
         document.getElementById("termD").innerText = "ERROR: Double check server";
-        // Set definitions to ERROR as well
+
+        var result = document.getElementsByClassName("defA");
+        Array.from(result).forEach(element => {
+            element.innerText = "ERROR: Double check server";
+        });
+        var result = document.getElementsByClassName("defB");
+        Array.from(result).forEach(element => {
+            element.innerText = "ERROR: Double check server";
+        });
+        var result = document.getElementsByClassName("defC");
+        Array.from(result).forEach(element => {
+            element.innerText = "ERROR: Double check server";
+        });
+        var result = document.getElementsByClassName("defD");
+        Array.from(result).forEach(element => {
+            element.innerText = "ERROR: Double check server";
+        });
     } else {
         document.getElementById("MATQuestion").innerText = text.questionTextMAT;
         document.getElementById("termA").innerText = text.termA;
@@ -289,19 +305,34 @@ function displayMAT(text) {
         document.getElementById("termC").innerText = text.termC;
         document.getElementById("termD").innerText = text.termD;
 
-        // Assuming you have <select> elements for each term where user selects definitions:
-        // Assign definitions to the option elements in each select. For simplicity:
-        let selects = document.querySelectorAll("#MAT select");
-        // For example, first select corresponds to termA:
-        // set each <option> value or text to 'a','b','c','d'
-        // The user will choose matches. Then on submit, you gather their chosen values.
-
+        //Display definitions for each drop down menu
+        var result = document.getElementsByClassName("defA");
+        Array.from(result).forEach(element => {
+            element.innerText = text.definitionA;
+        });
+        var result = document.getElementsByClassName("defB");
+        Array.from(result).forEach(element => {
+            element.innerText = text.definitionB;
+        });
+        var result = document.getElementsByClassName("defC");
+        Array.from(result).forEach(element => {
+            element.innerText = text.definitionC;
+        });
+        var result = document.getElementsByClassName("defD");
+        Array.from(result).forEach(element => {
+            element.innerText = text.definitionD;
+        });
     }
 
     const MATSubmitBtn = document.getElementById("MATSubmitBtn");
     MATSubmitBtn.onclick = function() {
-
-
+        let selectedAnswers = new Array(4);
+        
+        selectedAnswers.push(document.getElementById("MATAnswerSelect1").value);
+        selectedAnswers.push(document.getElementById("MATAnswerSelect2").value);
+        selectedAnswers.push(document.getElementById("MATAnswerSelect3").value);
+        selectedAnswers.push(document.getElementById("MATAnswerSelect4").value);
+        
 
         // Ensure Topic is set before fetch
         if (!Topic || Topic.length === 0) {
@@ -311,10 +342,10 @@ function displayMAT(text) {
 
         ConvertTopicFormat();
 
-        fetch(`http://localhost:8200/${Topic}/TF/validate`, {
+        fetch(`http://localhost:8200/${Topic}/MAT/validate`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ answer: selectedOption })
+            body: JSON.stringify({ answer: selectedAnswers })
         })
         .then(resp => {
             if (!resp.ok) {
@@ -342,7 +373,7 @@ function displayMAT(text) {
 }
 
 
-function displayMC(text) {
+function DisplayAndValidateMC(text) {
     document.getElementById("ListOfQuestionTypes").style.display = "none";
     document.getElementById("MC").style.display = "block";
 
@@ -414,7 +445,7 @@ function displayMC(text) {
 }
 
 
-function displayTF(text) {
+function DisplayAndValidateTF(text) {
     document.getElementById("ListOfQuestionTypes").style.display = "none";
     document.getElementById("TF").style.display = "block";
 
