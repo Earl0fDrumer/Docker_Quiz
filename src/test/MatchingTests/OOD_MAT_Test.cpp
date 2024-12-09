@@ -19,6 +19,22 @@ void OOD_MAT_Test::onRun() {
   // Add MAT_Controller endpoints to the router of the test server
   runner.addController(std::make_shared<MAT_Controller>());
 
+  /* Test service class methods directly */
+  std::string path = "src/QuestionData/ObjectOrientedDesign/Matching.json";
+  Matching question(path);
+  
+  // Test valid answer
+  std::vector<std::string> correctAnswers = {"c", "a", "d", "b"};
+  OATPP_ASSERT(question.validateAllAnswers(correctAnswers) == true);
+  
+  // Test wrong size answer
+  std::vector<std::string> wrongSizeAnswers = {"c", "a", "d"};
+  OATPP_ASSERT(question.validateAllAnswers(wrongSizeAnswers) == false);
+  
+  // Test wrong answer
+  std::vector<std::string> wrongAnswers = {"a", "b", "c", "d"};
+  OATPP_ASSERT(question.validateAllAnswers(wrongAnswers) == false);
+
   // Run test
   runner.run(
       [this, &runner] {
@@ -74,6 +90,33 @@ void OOD_MAT_Test::onRun() {
         s = "A procedure that defines the behavior of objects"
             " created from a class.";
         OATPP_ASSERT(message->definitionD == s);
+
+                /* Test POST endpoint */
+        auto submission = MultipleAnswersSubmission::createShared();
+
+        // Test correct answer
+        submission->answers = oatpp::Vector<oatpp::String>::createShared();
+        submission->answers->push_back("c");
+        submission->answers->push_back("a");
+        submission->answers->push_back("d");
+        submission->answers->push_back("b");
+
+        auto validationResponse = client->validateMATAnswer("ObjectOrientedDesign", submission);
+        OATPP_ASSERT(validationResponse->getStatusCode() == 200);
+        auto result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        OATPP_ASSERT(result->isCorrect == true);
+
+        // Test incorrect answer
+        submission->answers->clear();
+        submission->answers->push_back("a");
+        submission->answers->push_back("b");
+        submission->answers->push_back("c");
+        submission->answers->push_back("d");
+
+        validationResponse = client->validateMATAnswer("ObjectOrientedDesign", submission);
+        OATPP_ASSERT(validationResponse->getStatusCode() == 200);
+        result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        OATPP_ASSERT(result->isCorrect == false);
       },
       std::chrono::minutes(10) /* test timeout */);
 

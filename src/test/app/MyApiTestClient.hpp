@@ -3,6 +3,7 @@
 
 #include "oatpp/core/macro/codegen.hpp"
 #include "oatpp/web/client/ApiClient.hpp"
+#include "dto/AnswerSubmission_DTO.hpp"
 
 /* Begin Api Client code generation */
 #include OATPP_CODEGEN_BEGIN(ApiClient)
@@ -37,6 +38,19 @@ class MyApiTestClient : public oatpp::web::client::ApiClient {
   API_CALL("GET", "/VC/FIB", getVC_FIBQuestion)
   //List Topics
   API_CALL("GET", "/topics", getTopics)
+  //Validate Answers
+  API_CALL("POST", "/{topic}/FIB/validate", validateFIBAnswer,
+    PATH(String, topic),
+    BODY_DTO(Object<AnswerSubmission>, submission))
+  API_CALL("POST", "/{topic}/MAT/validate", validateMATAnswer,
+    PATH(String, topic),
+    BODY_DTO(Object<MultipleAnswersSubmission>, submission))
+  API_CALL("POST", "/{topic}/MC/validate", validateMCAnswer,
+    PATH(String, topic),
+    BODY_DTO(Object<AnswerSubmission>, submission))
+  API_CALL("POST", "/{topic}/TF/validate", validateTFAnswer,
+    PATH(String, topic),
+    BODY_DTO(Object<AnswerSubmission>, submission))
   //Random Type and Random Topic/Type
   API_CALL(
     "GET", "/{topic}/random", getRandomByTopic, PATH(oatpp::String, topic))

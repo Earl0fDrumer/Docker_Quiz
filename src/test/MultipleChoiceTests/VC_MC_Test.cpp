@@ -16,6 +16,19 @@ void VC_MC_Test::onRun() {
 
   runner.addController(std::make_shared<MC_Controller>());
 
+  /* Test service class methods directly */
+  std::string path = "src/QuestionData/VersionControl/MultipleChoice.json";
+  MultipleChoice question(path);
+  
+  // Test getCorrectAnswer
+  OATPP_ASSERT(question.getCorrectAnswer() == "a");
+  
+  // Test validateAnswer with correct answer
+  OATPP_ASSERT(question.validateAnswer("a") == "Correct!");
+  
+  // Test validateAnswer with wrong answer
+  OATPP_ASSERT(question.validateAnswer("c") == "Incorrect. The correct answer is: a");
+
   runner.run(
       [this, &runner] {
         OATPP_COMPONENT(
@@ -48,6 +61,24 @@ void VC_MC_Test::onRun() {
         OATPP_ASSERT(message->optionB == "git start");
         OATPP_ASSERT(message->optionC == "git begin");
         OATPP_ASSERT(message->optionD == "git create");
+
+        /* Test POST endpoint */
+        auto submission = AnswerSubmission::createShared();
+        
+        // Test correct answer
+        submission->answer = "a";
+        auto validationResponse = client->validateMCAnswer("VersionControl", submission);
+        OATPP_ASSERT(validationResponse->getStatusCode() == 200);
+        auto result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        OATPP_ASSERT(result->isCorrect == true);
+
+        // Test incorrect answer
+        submission->answer = "c";
+        validationResponse = client->validateMCAnswer("VersionControl", submission);
+        OATPP_ASSERT(validationResponse->getStatusCode() == 200);
+        result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        OATPP_ASSERT(result->isCorrect == false);
+        OATPP_ASSERT(result->correctAnswer == "a");
       },
       std::chrono::minutes(1) /* test timeout */);
 

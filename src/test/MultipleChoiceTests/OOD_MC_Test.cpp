@@ -23,6 +23,19 @@ void OOD_MC_Test::onRun() {
   /* Add SeleneController endpoints to the router of the test server */
   runner.addController(std::make_shared<MC_Controller>());
 
+    /* Test service class methods directly */
+  std::string path = "src/QuestionData/ObjectOrientedDesign/MultipleChoice.json";
+  MultipleChoice question(path);
+  
+  // Test getCorrectAnswer
+  OATPP_ASSERT(question.getCorrectAnswer() == "b");
+  
+  // Test validateAnswer with correct answer
+  OATPP_ASSERT(question.validateAnswer("b") == "Correct!");
+  
+  // Test validateAnswer with wrong answer
+  OATPP_ASSERT(question.validateAnswer("a") == "Incorrect. The correct answer is: b");
+
   /* Run test */
   runner.run(
       [this, &runner] {
@@ -58,6 +71,24 @@ void OOD_MC_Test::onRun() {
         /* Assert that received message is as expected */
         OATPP_ASSERT(message);
         OATPP_ASSERT(message->questionTextMC == "What does OOD stand for?");
+
+        /* Test POST endpoint */
+        auto submission = AnswerSubmission::createShared();
+        
+        // Test correct answer
+        submission->answer = "b";
+        auto validationResponse = client->validateMCAnswer("ObjectOrientedDesign", submission);
+        OATPP_ASSERT(validationResponse->getStatusCode() == 200);
+        auto result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        OATPP_ASSERT(result->isCorrect == true);
+
+        // Test incorrect answer
+        submission->answer = "a";
+        validationResponse = client->validateMCAnswer("ObjectOrientedDesign", submission);
+        OATPP_ASSERT(validationResponse->getStatusCode() == 200);
+        result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        OATPP_ASSERT(result->isCorrect == false);
+        OATPP_ASSERT(result->correctAnswer == "b");
       },
       std::chrono::minutes(10) /* test timeout */);
 

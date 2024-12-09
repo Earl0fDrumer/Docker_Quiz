@@ -23,6 +23,19 @@ void SE_MC_Test::onRun() {
   /* Add SeleneController endpoints to the router of the test server */
   runner.addController(std::make_shared<MC_Controller>());
 
+  /* Test service class methods directly */
+  std::string path = "src/QuestionData/SoftwareEngineering/MultipleChoice.json";
+  MultipleChoice question(path);
+  
+  // Test getCorrectAnswer
+  OATPP_ASSERT(question.getCorrectAnswer() == "a");
+  
+  // Test validateAnswer with correct answer
+  OATPP_ASSERT(question.validateAnswer("a") == "Correct!");
+  
+  // Test validateAnswer with wrong answer
+  OATPP_ASSERT(question.validateAnswer("c") == "Incorrect. The correct answer is: a");
+
   /* Run test */
   runner.run(
       [this, &runner] {
@@ -70,6 +83,24 @@ void SE_MC_Test::onRun() {
         OATPP_ASSERT(message->optionD ==
          "Branch of computer science that deals with the creation,"
          " deletion, and maintance of Serialized Exponents (SE)");
+
+        /* Test POST endpoint */
+        auto submission = AnswerSubmission::createShared();
+        
+        // Test correct answer
+        submission->answer = "a";
+        auto validationResponse = client->validateMCAnswer("SoftwareEngineering", submission);
+        OATPP_ASSERT(validationResponse->getStatusCode() == 200);
+        auto result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        OATPP_ASSERT(result->isCorrect == true);
+
+        // Test incorrect answer
+        submission->answer = "c";
+        validationResponse = client->validateMCAnswer("SoftwareEngineering", submission);
+        OATPP_ASSERT(validationResponse->getStatusCode() == 200);
+        result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        OATPP_ASSERT(result->isCorrect == false);
+        OATPP_ASSERT(result->correctAnswer == "a");
       },
       std::chrono::minutes(10) /* test timeout */);
 

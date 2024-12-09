@@ -81,23 +81,21 @@ class TF_Controller : public oatpp::web::server::api::ApiController {
     return createDtoResponse(Status::CODE_200, dto);
   }  // GET Version Control TF
 
-  ADD_CORS(validateTFAnswer)
+ADD_CORS(validateTFAnswer)
 ENDPOINT("POST", "/{topic}/TF/validate", validateTFAnswer,
          PATH(String, topic),
          BODY_DTO(Object<AnswerSubmission>, answerDto)) {
-  std::string topicStr = topic->c_str();
-  std::string path = "src/QuestionData/" + topicStr + "/TrueFalse.json";
-  
-  TrueOrFalse question(path);
-  std::string userAnswer = std::string(answerDto->answer->c_str());
-
-  std::string validationMsg = question.validateAnswer(userAnswer);
-  bool isCorrect = (validationMsg == "Correct!");
-  
-  nlohmann::json response;
-  response["isCorrect"] = isCorrect;
-  
-  return createResponse(Status::CODE_200, response.dump().c_str());
+    
+    std::string path = "src/QuestionData/" + std::string(topic->c_str()) + "/TrueFalse.json";
+    TrueOrFalse question(path);
+    
+    auto result = ValidationResult::createShared();
+    result->isCorrect = (question.validateAnswer(answerDto->answer->c_str()) == "Correct!");
+    if (!result->isCorrect) {
+        result->correctAnswer = question.getCorrectAnswer();
+    }
+    
+    return createDtoResponse(Status::CODE_200, result);
 }
 
 };

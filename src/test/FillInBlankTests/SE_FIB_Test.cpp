@@ -25,6 +25,13 @@ void SE_FIB_Test::onRun() {
   /* Add FillInBlank_Controller endpoints to the router of the test server */
   runner.addController(std::make_shared<FillInBlank_Controller>());
 
+  /* Test service class methods directly */
+  std::string path = "src/QuestionData/SoftwareEngineering/FillInBlank.json";
+  FillInBlank question(path);
+  OATPP_ASSERT(question.getCorrectAnswer() == "waterfall");
+  OATPP_ASSERT(question.validateAnswer("waterfall") == "Correct!");
+  OATPP_ASSERT(question.validateAnswer("agile") == "Incorrect. The correct answer is: waterfall");
+
   /* Run the test */
   runner.run(
       [this, &runner]() {
@@ -86,6 +93,21 @@ void SE_FIB_Test::onRun() {
           }
           OATPP_ASSERT(found);  // Assert that the word was found
         }
+        /* Test answer validation - correct case */
+        auto submission = AnswerSubmission::createShared();
+        submission->answer = "waterfall";
+        auto validationResponse = client->validateFIBAnswer("SoftwareEngineering", submission);
+        OATPP_ASSERT(validationResponse->getStatusCode() == 200);
+        auto result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        OATPP_ASSERT(result->isCorrect == true);
+
+        /* Test answer validation - incorrect case */
+        submission->answer = "agile";
+        validationResponse = client->validateFIBAnswer("SoftwareEngineering", submission);
+        OATPP_ASSERT(validationResponse->getStatusCode() == 200);
+        result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        OATPP_ASSERT(result->isCorrect == false);
+        OATPP_ASSERT(result->correctAnswer == "waterfall");
       },
       std::chrono::minutes(1) /* test timeout */);
 

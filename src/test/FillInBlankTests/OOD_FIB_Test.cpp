@@ -26,6 +26,13 @@ void OOD_FIB_Test::onRun() {
   /* Add FillInBlank_Controller endpoints to the router of the test server */
   runner.addController(std::make_shared<FillInBlank_Controller>());
 
+  /* Test service class methods directly */
+  std::string path = "src/QuestionData/ObjectOrientedDesign/FillInBlank.json";
+  FillInBlank question(path);
+  OATPP_ASSERT(question.getCorrectAnswer() == "encapsulation");
+  OATPP_ASSERT(question.validateAnswer("encapsulation") == "Correct!");
+  OATPP_ASSERT(question.validateAnswer("inheritance") == "Incorrect. The correct answer is: encapsulation");
+
   /* Run the test */
   runner.run(
       [this, &runner]() {
@@ -87,6 +94,21 @@ void OOD_FIB_Test::onRun() {
           }
           OATPP_ASSERT(found);  // Assert that the word was found
         }
+        /* Test answer validation - correct case */
+        auto submission = AnswerSubmission::createShared();
+        submission->answer = "encapsulation";
+        auto validationResponse = client->validateFIBAnswer("ObjectOrientedDesign", submission);
+        OATPP_ASSERT(validationResponse->getStatusCode() == 200);
+        auto result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        OATPP_ASSERT(result->isCorrect == true);
+
+        /* Test answer validation - incorrect case */
+        submission->answer = "inheritance";
+        validationResponse = client->validateFIBAnswer("ObjectOrientedDesign", submission);
+        OATPP_ASSERT(validationResponse->getStatusCode() == 200);
+        result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+        OATPP_ASSERT(result->isCorrect == false);
+        OATPP_ASSERT(result->correctAnswer == "encapsulation");
       },
       std::chrono::minutes(1) /* test timeout */);
 

@@ -16,6 +16,15 @@ void DP_TF_Test::onRun() {
   // Create client-server test runner
   oatpp::test::web::ClientServerTestRunner runner;
 
+  /* Test service class methods */
+  std::string path = "src/QuestionData/DesignPatterns/TrueFalse.json";
+  TrueOrFalse question(path);
+  
+  /* Test getCorrectAnswer and validateAnswer */
+  OATPP_ASSERT(question.getCorrectAnswer() == "a");
+  OATPP_ASSERT(question.validateAnswer("a") == "Correct!");
+  OATPP_ASSERT(question.validateAnswer("b") == "Incorrect. The correct answer is: a");
+
   // Add MC_Controller endpoints to the router of the test server
   runner.addController(std::make_shared<TF_Controller>());
 
@@ -53,6 +62,23 @@ void DP_TF_Test::onRun() {
         OATPP_ASSERT(message);
         OATPP_ASSERT(message->questionTextTF ==
          "A Design Pattern can help a developer write code more efficiently.");
+
+      /* Test answer validation - correct case */
+      auto submission = AnswerSubmission::createShared();
+      submission->answer = "a";
+      auto validationResponse = client->validateTFAnswer("DesignPatterns", submission);
+      OATPP_ASSERT(validationResponse->getStatusCode() == 200);
+      auto result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+      OATPP_ASSERT(result->isCorrect == true);
+
+      /* Test answer validation - incorrect case */
+      submission->answer = "b";
+      validationResponse = client->validateTFAnswer("DesignPatterns", submission);
+      OATPP_ASSERT(validationResponse->getStatusCode() == 200);
+      result = validationResponse->readBodyToDto<oatpp::Object<ValidationResult>>(objectMapper.get());
+      OATPP_LOGI("Test", "correctAnswer value: '%s'", result->correctAnswer->c_str());
+      OATPP_ASSERT(result->isCorrect == false);
+      OATPP_ASSERT(result->correctAnswer == "a");
       },
       std::chrono::minutes(10) /* test timeout */);
 
