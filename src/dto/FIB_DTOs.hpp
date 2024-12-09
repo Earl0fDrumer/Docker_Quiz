@@ -9,6 +9,7 @@
 class Result_FIB : public oatpp::DTO {
   DTO_INIT(Result_FIB, DTO /* Extends */)
 
+  DTO_FIELD(String, topic);
   DTO_FIELD(String, questionTextFIB);  ///< The question text with blanks
   DTO_FIELD(Vector<String>::ObjectWrapper, wordBank); ///< The word bank
 };

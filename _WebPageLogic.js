@@ -50,10 +50,10 @@ function QuestionSelector(Type) {
             return resp.json();
         })
         .then((text) => {
-            displayFIB(text);
+            DisplayAndValidateFIB(text);
         })
         .catch((error) => {
-            displayFIB("error");
+            DisplayAndValidateFIB("error");
         });
     } else if (Type == "MAT") {
         fetch("http://localhost:8200/" + Topic + "/MAT")
@@ -64,10 +64,10 @@ function QuestionSelector(Type) {
             return resp.json();
         })
         .then((text) => {
-            displayMAT(text);
+            DisplayAndValidateMAT(text);
         })
         .catch((error) => {
-            displayMAT("error");
+            DisplayAndValidateMAT("error");
         });
     } else if (Type == "MC") {
         fetch("http://localhost:8200/" + Topic + "/MC")
@@ -78,10 +78,10 @@ function QuestionSelector(Type) {
             return resp.json();
         })
         .then((text) => {
-            displayMC(text);
+            DisplayAndValidateMC(text);
         })
         .catch((error) => {
-            displayMC("error")
+            DisplayAndValidateMC("error")
         });
     } else if(Type == "TF") {
         fetch("http://localhost:8200/" + Topic + "/TF")
@@ -92,10 +92,10 @@ function QuestionSelector(Type) {
             return resp.json();
         })
         .then((text) => {
-            displayTF(text);
+            DisplayAndValidateTF(text);
         })
         .catch((error) => {
-            displayTF("error");
+            DisplayAndValidateTF("error");
         });
     } else if (Type == "RandType") {
         fetch("http://localhost:8200/" + Topic + "/random")
@@ -107,24 +107,24 @@ function QuestionSelector(Type) {
         })
         .then((text) => {
             if (text.questionTextFIB != null) {
-                displayFIB(text);
+                DisplayAndValidateFIB(text);
             } else if (text.questionTextMAT != null) {
-                displayMAT(text);
+                DisplayAndValidateMAT(text);
             } else if (text.questionTextMC != null) {
-                displayMC(text);
+                DisplayAndValidateMC(text);
             } else if (text.questionTextTF != null) {
-                displayTF(text);
+                DisplayAndValidateTF(text);
             }
         })
         .catch((error) => {
             if (text.questionTextFIB != null) {
-                displayFIB("error");
+                DisplayAndValidateFIB("error");
             } else if (text.questionTextMAT != null) {
-                displayMAT("error");
+                DisplayAndValidateMAT("error");
             } else if (text.questionTextMC != null) {
-                displayMC("error");
+                DisplayAndValidateMC("error");
             } else if (text.questionTextTF != null) {
-                displayTF("error");
+                DisplayAndValidateTF("error");
             }
         });
     } else if (Type == "FullyRand") {
@@ -138,32 +138,36 @@ function QuestionSelector(Type) {
         .then((text) => {
             document.getElementById("ListOfTopics").style.display = "none";
             if (text.questionTextFIB != null) {
-                displayFIB(text);
+                Topic = text.topic;
+                DisplayAndValidateFIB(text);
             } else if (text.questionTextMAT != null) {
-                displayMAT(text);
+                Topic = text.topic;
+                DisplayAndValidateMAT(text);
             } else if (text.questionTextMC != null) {
-                displayMC(text);
+                Topic = text.topic;
+                DisplayAndValidateMC(text);
             } else if (text.questionTextTF != null) {
-                displayTF(text);
+                Topic = text.topic;
+                DisplayAndValidateTF(text);
             }
         })
         .catch((error) => {
             document.getElementById("ListOfTopics").style.display = "none";
 
             if (text.questionTextFIB != null) {
-                displayFIB("error");
+                DisplayAndValidateFIB("error");
             } else if (text.questionTextMAT != null) {
-                displayMAT("error");
+                DisplayAndValidateMAT("error");
             } else if (text.questionTextMC != null) {
-                displayMC("error");
+                DisplayAndValidateMC("error");
             } else if (text.questionTextTF != null) {
-                displayTF("error");
+                DisplayAndValidateTF("error");
             }
         });
     }
 }
 
-function displayFIB(text) {
+function DisplayAndValidateFIB(text) {
     document.getElementById("ListOfQuestionTypes").style.display = "none";
     document.getElementById("FIB").style.display = "block";
 
@@ -266,7 +270,8 @@ function displayFIB(text) {
     };
 }
 
-function displayMAT(text) {
+
+function DisplayAndValidateMAT(text) {
     document.getElementById("ListOfQuestionTypes").style.display = "none";
     document.getElementById("MAT").style.display = "block";
 
@@ -345,10 +350,23 @@ function displayMAT(text) {
             AnswerTracker(false);
             alert("Error validating answer. Please try again.");
         });
-    };
+        var result = document.getElementsByClassName("defB");
+        Array.from(result).forEach(element => {
+            element.innerText = text.definitionB;
+        });
+        var result = document.getElementsByClassName("defC");
+        Array.from(result).forEach(element => {
+            element.innerText = text.definitionC;
+        });
+        var result = document.getElementsByClassName("defD");
+        Array.from(result).forEach(element => {
+            element.innerText = text.definitionD;
+        });
+    }
 }
 
-function displayMC(text) {
+
+function DisplayAndValidateMC(text) {
     document.getElementById("ListOfQuestionTypes").style.display = "none";
     document.getElementById("MC").style.display = "block";
 
@@ -407,13 +425,11 @@ function displayMC(text) {
             console.error("MC Validation error:", error);
             alert("Error validating answer. Please try again.");
         });
-
-        document.getElementById("ListOfTopics").style.display = "block";
-        document.getElementById("MC").style.display = "none";
     };
 }
 
-function displayTF(text) {
+
+function DisplayAndValidateTF(text) {
     document.getElementById("ListOfQuestionTypes").style.display = "none";
     document.getElementById("TF").style.display = "block";
 
