@@ -49,6 +49,19 @@ class Matching : public Question {
     }
   }
 
+  bool validateAllAnswers(const std::vector<std::string>& userAnswers) {
+    if (userAnswers.size() != correctAnswerVector.size()) {
+        return false;
+    }
+    for (size_t i = 0; i < correctAnswerVector.size(); i++) {
+        if (userAnswers[i] != correctAnswerVector[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
  private:
   std::vector<std::string> Definitions;
   std::vector<std::string> correctAnswerVector = {"c", "a", "d", "b"};
