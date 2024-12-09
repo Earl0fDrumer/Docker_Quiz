@@ -41,11 +41,6 @@ class FillInBlank : public Question {
   }
 
   std::string validateAnswer(const std::string& userAnswer) {
-    if (std::find(WordBank.begin(), WordBank.end(), userAnswer) == WordBank.end()) {
-      // The user's answer is not in the word bank.
-      return "Incorrect. The correct answer is: " + CorrectAnswer;
-    }
-
     if (userAnswer == CorrectAnswer) {
       return "Correct!";
     } else {

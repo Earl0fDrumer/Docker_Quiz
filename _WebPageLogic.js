@@ -11,7 +11,6 @@ function AnswerTracker(isCorrect) {
 
     document.getElementById("CorrectAnswerTracker").innerText = "Correct Answers: " + CorrectAnswers;
     document.getElementById("IncorrectAnswerTracker").innerText = "Incorrect Answers: " + IncorrectAnswers;
-
 }
 
 function fetchTopics() {
@@ -255,11 +254,13 @@ function displayFIB(text) {
         .then(result => {
             console.log("Validation result from server:", result);
             if (result.isCorrect) {
-                AnswerTracker(true);
                 alert("Correct!");
+                document.getElementById("ListOfTopics").style.display = "block";
+                document.getElementById("FIB").style.display = "none";
+                AnswerTracker(true);
             } else {
+                alert("Incorrect!");
                 AnswerTracker(false);
-                alert("Incorrect! The correct answer is: " + result.correctAnswer);
             }
         })
         .catch(error => {
@@ -297,16 +298,12 @@ function displayMAT(text) {
 
     }
 
-    const matSubmitBtn = document.querySelector("#MAT button"); // The submit button for MAT
-    matSubmitBtn.onclick = function() {
-        // Gather user answers from each select
-        // Example: userAnswers = ["c","a","d","b"] matching correctAnswerVector on server
-        let selects = document.querySelectorAll("#MAT select");
-        let userAnswers = [];
-        for (let i = 0; i < selects.length; i++) {
-            userAnswers.push(selects[i].value);
-        }
+    const MATSubmitBtn = document.getElementById("MATSubmitBtn");
+    MATSubmitBtn.onclick = function() {
 
+
+
+        // Ensure Topic is set before fetch
         if (!Topic || Topic.length === 0) {
             alert("No topic selected.");
             return;
@@ -314,27 +311,32 @@ function displayMAT(text) {
 
         ConvertTopicFormat();
 
-        fetch(`http://localhost:8200/${Topic}/MAT/validate`, {
+        fetch(`http://localhost:8200/${Topic}/TF/validate`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ answers: userAnswers })
+            body: JSON.stringify({ answer: selectedOption })
         })
         .then(resp => {
-            if(!resp.ok) throw new Error("Network not ok");
+            if (!resp.ok) {
+                throw new Error("Network response was not ok");
+            }
             return resp.json();
         })
         .then(result => {
+            console.log("Validation result from server:", result);
             if (result.isCorrect) {
-                AnswerTracker(true);
                 alert("Correct!");
+                document.getElementById("ListOfTopics").style.display = "block";
+                document.getElementById("MAT").style.display = "none";
+                AnswerTracker(true);
             } else {
+                alert("Incorrect!");
                 AnswerTracker(false);
-                alert("Incorrect! One or more matches were wrong.");
             }
         })
         .catch(error => {
-            AnswerTracker(false);
-            alert("Error validating matches. Please try again.");
+            console.error("Validation error:", error);
+            alert("Error validating answer. Please try again.");
         });
     };
 }
@@ -363,15 +365,7 @@ function displayMC(text) {
 
     const mcSubmitBtn = document.getElementById("mcSubmitBtn");
     mcSubmitBtn.onclick = function() {
-        // Find selected radio button
-        const radios = document.getElementsByName("MC");
-        let selectedOption = "";
-        for (let i = 0; i < radios.length; i++) {
-            if (radios[i].checked) {
-                selectedOption = radios[i].value; // should be 'a', 'b', 'c', or 'd'
-                break;
-            }
-        }
+        selectedOption = getRadioValue("MC");
 
         if (!selectedOption) {
             alert("Please select an answer.");
@@ -400,17 +394,22 @@ function displayMC(text) {
         .then(result => {
             console.log("MC Validation result from server:", result);
             if (result.isCorrect) {
-                AnswerTracker(true);
                 alert("Correct!");
+                document.getElementById("ListOfTopics").style.display = "block";
+                document.getElementById("MC").style.display = "none";
+                AnswerTracker(true);
             } else {
+                alert("Incorrect!")
                 AnswerTracker(false);
-                alert("Incorrect! The correct answer is: " + result.correctAnswer);
             }
         })
         .catch(error => {
             console.error("MC Validation error:", error);
             alert("Error validating answer. Please try again.");
         });
+
+        document.getElementById("ListOfTopics").style.display = "block";
+        document.getElementById("MC").style.display = "none";
     };
 }
 
@@ -429,20 +428,11 @@ function displayTF(text) {
         document.getElementById("falseText").innerText = text.falseText;
     }
 
-    const tfSubmitBtn = document.querySelector("#TF button");
-    tfSubmitBtn.onclick = function() {
-        let userAnswer = "";
-        // Suppose #optionTrue is value="a", #optionFalse is value="b"
-        if (document.getElementById("optionTrue").checked) {
-            userAnswer = "a";
-        } else if (document.getElementById("optionFalse").checked) {
-            userAnswer = "b";
-        } else {
-            AnswerTracker(false);
-            alert("Please select True or False.");
-            return;
-        }
+    const TFSubmitBtn = document.getElementById("TFSubmitBtn");
+    TFSubmitBtn.onclick = function() {
+        selectedOption = getRadioValue("TF");
 
+        // Ensure Topic is set before fetch
         if (!Topic || Topic.length === 0) {
             alert("No topic selected.");
             return;
@@ -453,23 +443,28 @@ function displayTF(text) {
         fetch(`http://localhost:8200/${Topic}/TF/validate`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ answer: userAnswer })
+            body: JSON.stringify({ answer: selectedOption })
         })
         .then(resp => {
-            if(!resp.ok) throw new Error("Network not ok");
+            if (!resp.ok) {
+                throw new Error("Network response was not ok");
+            }
             return resp.json();
         })
         .then(result => {
+            console.log("Validation result from server:", result);
             if (result.isCorrect) {
-                AnswerTracker(true);
                 alert("Correct!");
+                document.getElementById("ListOfTopics").style.display = "block";
+                document.getElementById("TF").style.display = "none";
+                AnswerTracker(true);
             } else {
+                alert("Incorrect!");
                 AnswerTracker(false);
-                alert("Incorrect! The correct answer is: " + result.correctAnswer);
             }
         })
         .catch(error => {
-            AnswerTracker(false);
+            console.error("Validation error:", error);
             alert("Error validating answer. Please try again.");
         });
     };
@@ -485,4 +480,15 @@ function ConvertTopicFormat() {
         Topic = "SoftwareEngineering"
     else if (Topic == "VC")
         Topic = "VersionControl"
+}
+
+function getRadioValue(name) {
+    const radios = document.getElementsByName(name);
+        let selectedOption = "";
+        for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                selectedOption = radios[i].value; // should be 'a', 'b', 'c', or 'd'
+                return selectedOption;
+            }
+        }
 }
