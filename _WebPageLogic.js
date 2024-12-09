@@ -177,14 +177,56 @@ function displayFIB(text) {
         document.getElementById("word3").innerText = "ERROR: Double check server";
         document.getElementById("word4").innerText = "ERROR: Double check server";
         document.getElementById("word5").innerText = "ERROR: Double check server";
+
+        // Optionally, set the values to something or leave them empty if "error"
+        document.getElementById("word1").value = "";
+        document.getElementById("word2").value = "";
+        document.getElementById("word3").value = "";
+        document.getElementById("word4").value = "";
+        document.getElementById("word5").value = "";
     } else {
         document.getElementById("FIBQuestion").innerText = text.questionTextFIB;
-        // Safely set each word if they exist
-        if (text.wordBank && text.wordBank.length > 0) document.getElementById("word1").innerText = text.wordBank[0];
-        if (text.wordBank && text.wordBank.length > 1) document.getElementById("word2").innerText = text.wordBank[1];
-        if (text.wordBank && text.wordBank.length > 2) document.getElementById("word3").innerText = text.wordBank[2];
-        if (text.wordBank && text.wordBank.length > 3) document.getElementById("word4").innerText = text.wordBank[3];
-        if (text.wordBank && text.wordBank.length > 4) document.getElementById("word5").innerText = text.wordBank[4];
+
+        // Safely set each word and its value
+        if (text.wordBank && text.wordBank.length > 0) {
+            document.getElementById("word1").value = text.wordBank[0];
+            document.getElementById("word1").innerText = text.wordBank[0];
+        } else {
+            document.getElementById("word1").value = "";
+            document.getElementById("word1").innerText = "";
+        }
+
+        if (text.wordBank && text.wordBank.length > 1) {
+            document.getElementById("word2").value = text.wordBank[1];
+            document.getElementById("word2").innerText = text.wordBank[1];
+        } else {
+            document.getElementById("word2").value = "";
+            document.getElementById("word2").innerText = "";
+        }
+
+        if (text.wordBank && text.wordBank.length > 2) {
+            document.getElementById("word3").value = text.wordBank[2];
+            document.getElementById("word3").innerText = text.wordBank[2];
+        } else {
+            document.getElementById("word3").value = "";
+            document.getElementById("word3").innerText = "";
+        }
+
+        if (text.wordBank && text.wordBank.length > 3) {
+            document.getElementById("word4").value = text.wordBank[3];
+            document.getElementById("word4").innerText = text.wordBank[3];
+        } else {
+            document.getElementById("word4").value = "";
+            document.getElementById("word4").innerText = "";
+        }
+
+        if (text.wordBank && text.wordBank.length > 4) {
+            document.getElementById("word5").value = text.wordBank[4];
+            document.getElementById("word5").innerText = text.wordBank[4];
+        } else {
+            document.getElementById("word5").value = "";
+            document.getElementById("word5").innerText = "";
+        }
     }
 
     const fibSubmitBtn = document.getElementById("fibSubmitBtn");
@@ -209,6 +251,7 @@ function displayFIB(text) {
             return resp.json();
         })
         .then(result => {
+            console.log("Validation result from server:", result);
             if (result.isCorrect) {
                 AnswerTracker(true);
                 alert("Correct!");
@@ -289,12 +332,11 @@ function displayMC(text) {
 
     if (text == "error") {
         document.getElementById("MCQuestion").innerText = "ERROR: Double check server";
-
         document.getElementById("option1").innerText = "ERROR: Double check server";
         document.getElementById("option2").innerText = "ERROR: Double check server";
         document.getElementById("option3").innerText = "ERROR: Double check server";
         document.getElementById("option4").innerText = "ERROR: Double check server";
-    } else {    
+    } else {
         //Display Question
         document.getElementById("MCQuestion").innerText = text.questionTextMC;
 
@@ -304,7 +346,58 @@ function displayMC(text) {
         document.getElementById("option3").innerText = text.optionC;
         document.getElementById("option4").innerText = text.optionD;
     }
+
+    const mcSubmitBtn = document.getElementById("mcSubmitBtn");
+    mcSubmitBtn.onclick = function() {
+        // Find selected radio button
+        const radios = document.getElementsByName("MC");
+        let selectedOption = "";
+        for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                selectedOption = radios[i].value; // should be 'a', 'b', 'c', or 'd'
+                break;
+            }
+        }
+
+        if (!selectedOption) {
+            alert("Please select an answer.");
+            return;
+        }
+
+        // Ensure Topic is set before fetch
+        if (!Topic || Topic.length === 0) {
+            alert("No topic selected.");
+            return;
+        }
+
+        fetch(`http://localhost:8200/${Topic}/MC/validate`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ answer: selectedOption })
+        })
+        .then(resp => {
+            if (!resp.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return resp.json();
+        })
+        .then(result => {
+            console.log("MC Validation result from server:", result);
+            if (result.isCorrect) {
+                AnswerTracker(true);
+                alert("Correct!");
+            } else {
+                AnswerTracker(false);
+                alert("Incorrect! The correct answer is: " + result.correctAnswer);
+            }
+        })
+        .catch(error => {
+            console.error("MC Validation error:", error);
+            alert("Error validating answer. Please try again.");
+        });
+    };
 }
+
 
 function displayTF(text) {
     

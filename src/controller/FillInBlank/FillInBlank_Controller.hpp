@@ -89,13 +89,16 @@ class FillInBlank_Controller : public oatpp::web::server::api::ApiController {
   // ===========================
 
   ADD_CORS(validateFIBAnswer)
-  ENDPOINT("POST", "/{topic}/FIB/validate", validateFIBAnswer,
-           PATH(String, topic),
-           BODY_DTO(Object<AnswerSubmission>, answerDto)) {
+ENDPOINT("POST", "/{topic}/FIB/validate", validateFIBAnswer,
+         PATH(String, topic),
+         BODY_DTO(Object<AnswerSubmission>, answerDto)) {
 
-    // Convert oatpp::String to std::string using c_str()
-    std::string topicStr = std::string(topic->c_str());
-    std::string path = "src/QuestionData/" + topicStr + "/FillInBlank.json";
+  OATPP_LOGI("validateFIBAnswer", "Topic: %s", topic->c_str());
+  OATPP_LOGI("validateFIBAnswer", "User Answer: %s", answerDto->answer->c_str());
+
+  try {
+    std::string path = "src/QuestionData/" + std::string(topic->c_str()) + "/FillInBlank.json";
+    OATPP_LOGI("validateFIBAnswer", "Path: %s", path.c_str());
 
     FillInBlank question(path);
     std::string userAnswer = std::string(answerDto->answer->c_str());
@@ -110,7 +113,12 @@ class FillInBlank_Controller : public oatpp::web::server::api::ApiController {
     }
 
     return createDtoResponse(Status::CODE_200, resultDto);
+  } catch (const std::exception& e) {
+    OATPP_LOGE("validateFIBAnswer", "Exception: %s", e.what());
+    return createResponse(Status::CODE_500, "Internal Server Error");
   }
+}
+
 
 };
 
