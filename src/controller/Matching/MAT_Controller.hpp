@@ -9,6 +9,7 @@
 #include "oatpp/core/macro/codegen.hpp"
 #include "oatpp/core/macro/component.hpp"
 #include "oatpp/web/server/api/ApiController.hpp"
+#include "src/dto/AnswerSubmission_DTO.hpp"
 
 #include OATPP_CODEGEN_BEGIN(ApiController)  ///< Begin Codegen
 
@@ -117,6 +118,31 @@ class MAT_Controller : public oatpp::web::server::api::ApiController {
 
     return createDtoResponse(Status::CODE_200, obj_dto);
   }  // GET SoftwareEngineering MAT
+
+  ADD_CORS(validateMATAnswer)
+  ENDPOINT("POST", "/{topic}/MAT/validate", validateMATAnswer,
+         PATH(String, topic),
+         BODY_DTO(Object<MultipleAnswersSubmission>, answerDto)) {
+
+  std::string topicStr = topic->c_str();
+  std::string path = "src/QuestionData/" + topicStr + "/Matching.json";
+
+  Matching MAT_question(path);
+
+  // answerDto->answers is a Vector<String>
+  // Convert Vector<String> to std::vector<std::string>
+  std::vector<std::string> userAnswers;
+  for (auto &ans : *answerDto->answers) {
+    userAnswers.push_back(ans->c_str());
+  }
+
+  bool isCorrect = MAT_question.validateAllAnswers(userAnswers);
+
+  auto resultDto = ValidationResult::createShared();
+  resultDto->isCorrect = isCorrect;
+
+  return createDtoResponse(Status::CODE_200, resultDto);
+}
 
 };  // End of Controller
 

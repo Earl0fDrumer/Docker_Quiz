@@ -17,6 +17,11 @@ class ValidationResult : public oatpp::DTO {
   DTO_FIELD(String, correctAnswer); // Only used if isCorrect = false
 };
 
+class MultipleAnswersSubmission : public oatpp::DTO {
+  DTO_INIT(MultipleAnswersSubmission, DTO)
+  DTO_FIELD(Vector<String>, answers); // A vector of answers (strings)
+};
+
 #include OATPP_CODEGEN_END(DTO)
 
 #endif /* ANSWERSUBMISSION_DTO_HPP */

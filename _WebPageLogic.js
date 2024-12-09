@@ -277,55 +277,25 @@ function displayMAT(text) {
 
     if (text == "error") {
         document.getElementById("MATQuestion").innerText = "ERROR: Double check server";
-
         document.getElementById("termA").innerText = "ERROR: Double check server";
         document.getElementById("termB").innerText = "ERROR: Double check server";
         document.getElementById("termC").innerText = "ERROR: Double check server";
         document.getElementById("termD").innerText = "ERROR: Double check server";
-
-        var result = document.getElementsByClassName("defA");
-        Array.from(result).forEach(element => {
-            element.innerText = "ERROR: Double check server";
-        });
-        var result = document.getElementsByClassName("defB");
-        Array.from(result).forEach(element => {
-            element.innerText = "ERROR: Double check server";
-        });
-        var result = document.getElementsByClassName("defC");
-        Array.from(result).forEach(element => {
-            element.innerText = "ERROR: Double check server";
-        });
-        var result = document.getElementsByClassName("defD");
-        Array.from(result).forEach(element => {
-            element.innerText = "ERROR: Double check server";
-        });
-    } else {    
-        //Display Question
+        // Set definitions to ERROR as well
+    } else {
         document.getElementById("MATQuestion").innerText = text.questionTextMAT;
-
-        //Display terms
         document.getElementById("termA").innerText = text.termA;
         document.getElementById("termB").innerText = text.termB;
         document.getElementById("termC").innerText = text.termC;
         document.getElementById("termD").innerText = text.termD;
 
-         //Display definitions for each drop down menu
-         var result = document.getElementsByClassName("defA");
-         Array.from(result).forEach(element => {
-             element.innerText = text.definitionA;
-         });
-         var result = document.getElementsByClassName("defB");
-         Array.from(result).forEach(element => {
-             element.innerText = text.definitionB;
-         });
-         var result = document.getElementsByClassName("defC");
-         Array.from(result).forEach(element => {
-             element.innerText = text.definitionC;
-         });
-         var result = document.getElementsByClassName("defD");
-         Array.from(result).forEach(element => {
-             element.innerText = text.definitionD;
-         });
+        // Assuming you have <select> elements for each term where user selects definitions:
+        // Assign definitions to the option elements in each select. For simplicity:
+        let selects = document.querySelectorAll("#MAT select");
+        // For example, first select corresponds to termA:
+        // set each <option> value or text to 'a','b','c','d'
+        // The user will choose matches. Then on submit, you gather their chosen values.
+
     }
 
     const MATSubmitBtn = document.getElementById("MATSubmitBtn");
@@ -370,6 +340,7 @@ function displayMAT(text) {
         });
     };
 }
+
 
 function displayMC(text) {
     document.getElementById("ListOfQuestionTypes").style.display = "none";
@@ -444,20 +415,15 @@ function displayMC(text) {
 
 
 function displayTF(text) {
-    
     document.getElementById("ListOfQuestionTypes").style.display = "none";
     document.getElementById("TF").style.display = "block";
 
     if (text == "error") {
         document.getElementById("TFQuestion").innerText = "ERROR: Double check server";
-
         document.getElementById("trueText").innerText = "ERROR: Double check server";
         document.getElementById("falseText").innerText = "ERROR: Double check server";
-    } else {    
-        //Display Question
+    } else {
         document.getElementById("TFQuestion").innerText = text.questionTextTF;
-
-        //Display answers
         document.getElementById("trueText").innerText = text.trueText;
         document.getElementById("falseText").innerText = text.falseText;
     }
@@ -503,6 +469,7 @@ function displayTF(text) {
         });
     };
 }
+
 
 function ConvertTopicFormat() {
     if (Topic == "DP")
