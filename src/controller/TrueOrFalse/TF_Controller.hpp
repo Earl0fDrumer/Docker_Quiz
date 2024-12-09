@@ -8,6 +8,7 @@
 #include "oatpp/core/macro/codegen.hpp"
 #include "oatpp/core/macro/component.hpp"
 #include "oatpp/web/server/api/ApiController.hpp"
+#include "src/dto/AnswerSubmission_DTO.hpp"
 
 #include OATPP_CODEGEN_BEGIN(ApiController)  ///< Begin Codegen
 
@@ -79,6 +80,26 @@ class TF_Controller : public oatpp::web::server::api::ApiController {
 
     return createDtoResponse(Status::CODE_200, dto);
   }  // GET Version Control TF
+
+  ADD_CORS(validateTFAnswer)
+ENDPOINT("POST", "/{topic}/TF/validate", validateTFAnswer,
+         PATH(String, topic),
+         BODY_DTO(Object<AnswerSubmission>, answerDto)) {
+  std::string topicStr = topic->c_str();
+  std::string path = "src/QuestionData/" + topicStr + "/TrueFalse.json";
+  
+  TrueOrFalse question(path);
+  std::string userAnswer = std::string(answerDto->answer->c_str());
+
+  std::string validationMsg = question.validateAnswer(userAnswer);
+  bool isCorrect = (validationMsg == "Correct!");
+  
+  nlohmann::json response;
+  response["isCorrect"] = isCorrect;
+  
+  return createResponse(Status::CODE_200, response.dump().c_str());
+}
+
 };
 
 #include OATPP_CODEGEN_END(ApiController)  ///< End Codegen

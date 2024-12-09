@@ -16,11 +16,14 @@
 
 class Random_Controller : public oatpp::web::server::api::ApiController {
  public:
-  Random_Controller(OATPP_COMPONENT(std::shared_ptr<ObjectMapper>, objectMapper))
+  Random_Controller(
+    OATPP_COMPONENT(std::shared_ptr<ObjectMapper>, objectMapper))
       : oatpp::web::server::api::ApiController(objectMapper) {}
 
   ADD_CORS(getRandomByTopic)
-  ENDPOINT("GET", "/{topic}/random", getRandomByTopic, PATH(oatpp::String, topic)) {
+  ENDPOINT("GET", "/{topic}/random",
+            getRandomByTopic,
+            PATH(oatpp::String, topic)) {
     // Map topic to folder
     std::string topicFolder = RandomRequest::mapTopicToFolder(topic->c_str());
 
@@ -28,7 +31,11 @@ class Random_Controller : public oatpp::web::server::api::ApiController {
     std::string selectedFile = RandomRequest::selectRandomQuestionFile();
 
     // Load questions
-    std::string filePath = "src/QuestionData/" + topicFolder + "/" + selectedFile;
+    std::string filePath =
+      "src/QuestionData/" +
+      topicFolder +
+      "/" +
+      selectedFile;
     RandomRequest loader(topicFolder);
     auto questions = loader.loadQuestions(filePath);
 
@@ -84,7 +91,11 @@ class Random_Controller : public oatpp::web::server::api::ApiController {
     std::string selectedFile = RandomRequest::selectRandomQuestionFile();
 
     // Load questions from the randomized topic and file
-    std::string filePath = "src/QuestionData/" + randomTopicFolder + "/" + selectedFile;
+    std::string filePath =
+      "src/QuestionData/" +
+      randomTopicFolder +
+      "/" +
+      selectedFile;
     RandomRequest loader(randomTopicFolder);
     auto questions = loader.loadQuestions(filePath);
 
@@ -93,6 +104,7 @@ class Random_Controller : public oatpp::web::server::api::ApiController {
     // Generate DTO based on the question type
     if (selectedFile == "FillInBlank.json") {
       auto dto = Result_FIB::createShared();
+      dto->topic = randomTopicFolder;
       dto->questionTextFIB = selectedQuestion.getQuestionText();
       dto->wordBank = oatpp::Vector<oatpp::String>::createShared();
       for (const auto& word : selectedQuestion.getAnswers()) {
@@ -102,6 +114,7 @@ class Random_Controller : public oatpp::web::server::api::ApiController {
 
     } else if (selectedFile == "MultipleChoice.json") {
       auto dto = Result_MC::createShared();
+      dto->topic = randomTopicFolder;
       dto->questionTextMC = selectedQuestion.getQuestionText();
       dto->optionA = selectedQuestion.getAnswers()[0].c_str();
       dto->optionB = selectedQuestion.getAnswers()[1].c_str();
@@ -111,6 +124,7 @@ class Random_Controller : public oatpp::web::server::api::ApiController {
 
     } else if (selectedFile == "TrueFalse.json") {
       auto dto = Result_TF::createShared();
+      dto->topic = randomTopicFolder;
       dto->questionTextTF = selectedQuestion.getQuestionText();
       dto->trueText = selectedQuestion.getAnswers()[0].c_str();
       dto->falseText = selectedQuestion.getAnswers()[1].c_str();
@@ -118,6 +132,7 @@ class Random_Controller : public oatpp::web::server::api::ApiController {
 
     } else /* must be Matching.json */ {
       auto dto = Result_MAT::createShared();
+      dto->topic = randomTopicFolder;
       dto->questionTextMAT = selectedQuestion.getQuestionText();
       dto->termA = selectedQuestion.getAnswers()[0].c_str();
       dto->termB = selectedQuestion.getAnswers()[1].c_str();

@@ -5,6 +5,7 @@
 #include "src/service/MultipleChoice/MC_Question.hpp"
 #include "src/dto/SeleneDTOs.hpp"
 #include "src/dto/MC_DTOs.hpp"
+#include "dto/AnswerSubmission_DTO.hpp"
 #include "oatpp/core/macro/codegen.hpp"
 #include "oatpp/core/macro/component.hpp"
 #include "oatpp/web/server/api/ApiController.hpp"
@@ -28,8 +29,8 @@ class MC_Controller : public oatpp::web::server::api::ApiController {
 
     MultipleChoice question(path);
     dto->questionTextMC = question.getQuestionText();
-
     std::vector<std::string> answers = question.getAnswers();
+
     if (answers.size() < 4) {
       throw std::runtime_error("Insufficient answers provided in question");
     }
@@ -40,7 +41,7 @@ class MC_Controller : public oatpp::web::server::api::ApiController {
     dto->optionD = answers[3];
 
     return createDtoResponse(Status::CODE_200, dto);
-  }  // GET Design Patterns MC
+  }
 
   ADD_CORS(getOOD_MCQuestion)
   ENDPOINT("GET", "/OOD/MC", getOOD_MCQuestion) {
@@ -49,8 +50,8 @@ class MC_Controller : public oatpp::web::server::api::ApiController {
 
     MultipleChoice question(path);
     dto->questionTextMC = question.getQuestionText();
-
     std::vector<std::string> answers = question.getAnswers();
+
     if (answers.size() < 4) {
       throw std::runtime_error("Insufficient answers provided in question");
     }
@@ -61,7 +62,7 @@ class MC_Controller : public oatpp::web::server::api::ApiController {
     dto->optionD = answers[3];
 
     return createDtoResponse(Status::CODE_200, dto);
-  }  // GET Object-Oriented_Design MC
+  }
 
   ADD_CORS(getSE_MCQuestion)
   ENDPOINT("GET", "/SE/MC", getSE_MCQuestion) {
@@ -70,8 +71,8 @@ class MC_Controller : public oatpp::web::server::api::ApiController {
 
     MultipleChoice question(path);
     dto->questionTextMC = question.getQuestionText();
-
     std::vector<std::string> answers = question.getAnswers();
+
     if (answers.size() < 4) {
       throw std::runtime_error("Insufficient answers provided in question");
     }
@@ -82,7 +83,7 @@ class MC_Controller : public oatpp::web::server::api::ApiController {
     dto->optionD = answers[3];
 
     return createDtoResponse(Status::CODE_200, dto);
-  }  // GET Software Engineering MC
+  }
 
   ADD_CORS(getVC_MCQuestion)
   ENDPOINT("GET", "/VC/MC", getVC_MCQuestion) {
@@ -91,8 +92,8 @@ class MC_Controller : public oatpp::web::server::api::ApiController {
 
     MultipleChoice question(path);
     dto->questionTextMC = question.getQuestionText();
-
     std::vector<std::string> answers = question.getAnswers();
+
     if (answers.size() < 4) {
       throw std::runtime_error("Insufficient answers provided in question");
     }
@@ -103,7 +104,39 @@ class MC_Controller : public oatpp::web::server::api::ApiController {
     dto->optionD = answers[3];
 
     return createDtoResponse(Status::CODE_200, dto);
-  }  // GET Version Control MC
+  }
+
+  // NEW POST Endpoint for MC Validation
+  ADD_CORS(validateMCAnswer)
+  ENDPOINT("POST", "/{topic}/MC/validate", validateMCAnswer,
+           PATH(String, topic),
+           BODY_DTO(Object<AnswerSubmission>, answerDto)) {
+
+    // Convert oatpp::String to std::string using c_str()
+    std::string topicStr = std::string(topic->c_str());
+    std::string path = "src/QuestionData/" + topicStr + "/MultipleChoice.json";
+
+    try {
+      MultipleChoice question(path);
+      std::string userAnswer = std::string(answerDto->answer->c_str());
+      std::string validationMsg = question.validateAnswer(userAnswer);
+
+      auto resultDto = ValidationResult::createShared();
+      if (validationMsg == "Correct!") {
+        resultDto->isCorrect = true;
+      } else {
+        resultDto->isCorrect = false;
+        // Return correct answer key (e.g., "b")
+        resultDto->correctAnswer = question.getCorrectAnswer().c_str();
+      }
+
+      return createDtoResponse(Status::CODE_200, resultDto);
+    } catch (const std::exception &e) {
+      OATPP_LOGE("validateMCAnswer", "Exception: %s", e.what());
+      return createResponse(Status::CODE_500, "Internal Server Error");
+    }
+  }
+
 };
 
 #include OATPP_CODEGEN_END(ApiController)  ///< End Codegen
