@@ -22,55 +22,62 @@ void DP_MAT_Test::onRun() {
 
   // Run test
   runner.run(
-      [this, &runner] {  // Keep this format, capture `runner`
+      [this, &runner] {
         // Get client connection provider for Api Client
-        OATPP_COMPONENT(std::shared_ptr
-          <oatpp::network::ClientConnectionProvider>, clientConnectionProvider);
+        OATPP_COMPONENT(std::shared_ptr<oatpp::network::
+        ClientConnectionProvider>,
+                        clientConnectionProvider);
 
         // Get object mapper component
-        OATPP_COMPONENT(std::shared_ptr
-          <oatpp::data::mapping::ObjectMapper>, objectMapper);
+        OATPP_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>,
+                        objectMapper);
 
-        // Create http request executor for Api Client
-        auto requestExecutor =
-            oatpp::web::client::HttpRequestExecutor::
-              createShared(clientConnectionProvider);
+        // Create HTTP request executor for API client
+        auto requestExecutor = oatpp::web::client::HttpRequestExecutor::
+                                createShared(clientConnectionProvider);
 
         // Create Test API client
         auto client = MyApiTestClient::createShared
-          (requestExecutor, objectMapper);
+        (requestExecutor, objectMapper);
 
         // Call server API
         auto response = client->getDP_MATQuestion();
         OATPP_ASSERT(response->getStatusCode() == 200);
 
         // Read response body as DPResult_MAT DTO
-        auto message = response->readBodyToDto<oatpp::
-          Object<Result_MAT>>(objectMapper.get());
+        auto message = response->
+        readBodyToDto<oatpp::Object<Result_MAT>>(
+                          objectMapper.get());
 
         // Assert that received message is as expected
         OATPP_ASSERT(message);
         OATPP_ASSERT(message->questionTextMAT == "What is:");
 
+        // Match terms
         OATPP_ASSERT(message->termA == "an Abstract Factory?");
         OATPP_ASSERT(message->termB == "a Builder?");
         OATPP_ASSERT(message->termC == "a Factory Method?");
         OATPP_ASSERT(message->termD == "a Singleton?");
 
-        std::string s = "a creational design pattern that provides "
-        "an interface for creating objects in a superclass, "
-        "but allows subclasses to alter the type of objects "
-        "that will be created.";
+        // Match definitions (order: ["a", "b", "c", "d"])
+        std::string s;
+
+        s = "a creational design pattern that lets you produce families of "
+            "related objects without specifying their concrete classes.";
         OATPP_ASSERT(message->definitionA == s);
-        s = "a creational design pattern that lets you produce families of"
-        " related objects without specifying their concrete classes.";
+
+        s = "a creational design pattern that lets you construct"
+            " complex objects step by step.";
         OATPP_ASSERT(message->definitionB == s);
-        s = "a creational design pattern that lets you ensure "
-        "that a class has only one instance, while providing a "
-        "global access point to this instance.";
+
+        s = "a creational design pattern that provides an interface for"
+            " creating objects in a superclass, but allows subclasses to "
+            "alter the type of objects that will be created.";
         OATPP_ASSERT(message->definitionC == s);
-        s = "a creational design pattern that lets "
-        "you construct complex objects step by step.";
+
+        s = "a creational design pattern that lets you ensure that a class has "
+            "only one instance, while providing a global access point to this "
+            "instance.";
         OATPP_ASSERT(message->definitionD == s);
       },
       std::chrono::minutes(10) /* test timeout */);
