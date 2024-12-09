@@ -24,11 +24,12 @@ void DP_MAT_Test::onRun() {
   runner.run(
       [this, &runner] {
         // Get client connection provider for Api Client
-        OATPP_COMPONENT(std::shared_ptr<oatpp::network::ClientConnectionProvider>, 
+        OATPP_COMPONENT(std::shared_ptr<oatpp::network::
+        ClientConnectionProvider>,
                         clientConnectionProvider);
 
         // Get object mapper component
-        OATPP_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>, 
+        OATPP_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>,
                         objectMapper);
 
         // Create HTTP request executor for API client
@@ -36,14 +37,16 @@ void DP_MAT_Test::onRun() {
                                 createShared(clientConnectionProvider);
 
         // Create Test API client
-        auto client = MyApiTestClient::createShared(requestExecutor, objectMapper);
+        auto client = MyApiTestClient::createShared
+        (requestExecutor, objectMapper);
 
         // Call server API
         auto response = client->getDP_MATQuestion();
         OATPP_ASSERT(response->getStatusCode() == 200);
 
         // Read response body as DPResult_MAT DTO
-        auto message = response->readBodyToDto<oatpp::Object<Result_MAT>>(
+        auto message = response->
+        readBodyToDto<oatpp::Object<Result_MAT>>(
                           objectMapper.get());
 
         // Assert that received message is as expected
@@ -63,13 +66,13 @@ void DP_MAT_Test::onRun() {
             "related objects without specifying their concrete classes.";
         OATPP_ASSERT(message->definitionA == s);
 
-        s = "a creational design pattern that lets you construct complex objects "
-            "step by step.";
+        s = "a creational design pattern that lets you construct"
+            " complex objects step by step.";
         OATPP_ASSERT(message->definitionB == s);
 
-        s = "a creational design pattern that provides an interface for creating "
-            "objects in a superclass, but allows subclasses to alter the type of "
-            "objects that will be created.";
+        s = "a creational design pattern that provides an interface for"
+            " creating objects in a superclass, but allows subclasses to "
+            "alter the type of objects that will be created.";
         OATPP_ASSERT(message->definitionC == s);
 
         s = "a creational design pattern that lets you ensure that a class has "

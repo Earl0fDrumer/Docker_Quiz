@@ -23,11 +23,12 @@ void OOD_MAT_Test::onRun() {
   runner.run(
       [this, &runner] {
         // Get client connection provider for Api Client
-        OATPP_COMPONENT(std::shared_ptr<oatpp::network::ClientConnectionProvider>, 
+        OATPP_COMPONENT
+        (std::shared_ptr<oatpp::network::ClientConnectionProvider>,
                         clientConnectionProvider);
 
         // Get object mapper component
-        OATPP_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>, 
+        OATPP_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>,
                         objectMapper);
 
         // Create HTTP request executor for API client
@@ -35,7 +36,8 @@ void OOD_MAT_Test::onRun() {
                                 createShared(clientConnectionProvider);
 
         // Create Test API client
-        auto client = MyApiTestClient::createShared(requestExecutor, objectMapper);
+        auto client = MyApiTestClient::createShared
+        (requestExecutor, objectMapper);
 
         // Call server API
         auto response = client->getOOD_MATQuestion();
@@ -69,7 +71,8 @@ void OOD_MAT_Test::onRun() {
         s = "A special type of function called to create an object.";
         OATPP_ASSERT(message->definitionC == s);
 
-        s = "A procedure that defines the behavior of objects created from a class.";
+        s = "A procedure that defines the behavior of objects"
+            " created from a class.";
         OATPP_ASSERT(message->definitionD == s);
       },
       std::chrono::minutes(10) /* test timeout */);
