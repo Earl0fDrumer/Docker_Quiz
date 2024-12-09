@@ -140,12 +140,16 @@ function QuestionSelector(Type) {
             document.getElementById("ListOfTopics").style.display = "none";
 
             if (text.questionTextFIB != null) {
+                Topic = text.topic;
                 DisplayAndValidateFIB(text);
             } else if (text.questionTextMAT != null) {
+                Topic = text.topic;
                 DisplayAndValidateMAT(text);
             } else if (text.questionTextMC != null) {
+                Topic = text.topic;
                 DisplayAndValidateMC(text);
             } else if (text.questionTextTF != null) {
+                Topic = text.topic;
                 DisplayAndValidateTF(text);
             }
         })
@@ -323,53 +327,6 @@ function DisplayAndValidateMAT(text) {
             element.innerText = text.definitionD;
         });
     }
-
-    const MATSubmitBtn = document.getElementById("MATSubmitBtn");
-    MATSubmitBtn.onclick = function() {
-        let selectedAnswers = new Array(4);
-        
-        selectedAnswers.push(document.getElementById("MATAnswerSelect1").value);
-        selectedAnswers.push(document.getElementById("MATAnswerSelect2").value);
-        selectedAnswers.push(document.getElementById("MATAnswerSelect3").value);
-        selectedAnswers.push(document.getElementById("MATAnswerSelect4").value);
-        
-
-        // Ensure Topic is set before fetch
-        if (!Topic || Topic.length === 0) {
-            alert("No topic selected.");
-            return;
-        }
-
-        ConvertTopicFormat();
-
-        fetch(`http://localhost:8200/${Topic}/MAT/validate`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ answer: selectedAnswers })
-        })
-        .then(resp => {
-            if (!resp.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return resp.json();
-        })
-        .then(result => {
-            console.log("Validation result from server:", result);
-            if (result.isCorrect) {
-                alert("Correct!");
-                document.getElementById("ListOfTopics").style.display = "block";
-                document.getElementById("MAT").style.display = "none";
-                AnswerTracker(true);
-            } else {
-                alert("Incorrect!");
-                AnswerTracker(false);
-            }
-        })
-        .catch(error => {
-            console.error("Validation error:", error);
-            alert("Error validating answer. Please try again.");
-        });
-    };
 }
 
 
@@ -438,9 +395,6 @@ function DisplayAndValidateMC(text) {
             console.error("MC Validation error:", error);
             alert("Error validating answer. Please try again.");
         });
-
-        document.getElementById("ListOfTopics").style.display = "block";
-        document.getElementById("MC").style.display = "none";
     };
 }
 
