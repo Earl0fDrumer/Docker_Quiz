@@ -8,7 +8,6 @@ function AnswerTracker(isCorrect) {
     } else {
         IncorrectAnswers++;
     }
-
     document.getElementById("CorrectAnswerTracker").innerText = "Correct Answers: " + CorrectAnswers;
     document.getElementById("IncorrectAnswerTracker").innerText = "Incorrect Answers: " + IncorrectAnswers;
 }
@@ -17,7 +16,7 @@ function fetchTopics() {
     fetch("http://localhost:8200/topics")
     .then((resp) => {
         if (!resp.ok) {
-            throw new Error("HTTP error: ${resp.status}");
+            throw new Error(`HTTP error: ${resp.status}`);
         }
         return resp.json();
     })
@@ -138,7 +137,6 @@ function QuestionSelector(Type) {
         })
         .then((text) => {
             document.getElementById("ListOfTopics").style.display = "none";
-
             if (text.questionTextFIB != null) {
                 Topic = text.topic;
                 DisplayAndValidateFIB(text);
@@ -194,10 +192,10 @@ function DisplayAndValidateFIB(text) {
         if (text.wordBank && text.wordBank.length > 0) {
             document.getElementById("word1").value = text.wordBank[0];
             document.getElementById("word1").innerText = text.wordBank[0];
-        } else {
+            } else {
             document.getElementById("word1").value = "";
             document.getElementById("word1").innerText = "";
-        }
+            }
 
         if (text.wordBank && text.wordBank.length > 1) {
             document.getElementById("word2").value = text.wordBank[1];
@@ -241,7 +239,6 @@ function DisplayAndValidateFIB(text) {
             alert("No topic selected.");
             return;
         }
-
         ConvertTopicFormat();
 
         fetch(`http://localhost:8200/${Topic}/FIB/validate`, {
@@ -256,7 +253,6 @@ function DisplayAndValidateFIB(text) {
             return resp.json();
         })
         .then(result => {
-            console.log("Validation result from server:", result);
             if (result.isCorrect) {
                 alert("Correct!");
                 document.getElementById("ListOfTopics").style.display = "block";
@@ -279,40 +275,80 @@ function DisplayAndValidateMAT(text) {
     document.getElementById("ListOfQuestionTypes").style.display = "none";
     document.getElementById("MAT").style.display = "block";
 
-    if (text == "error") {
+    if (text === "error") {
         document.getElementById("MATQuestion").innerText = "ERROR: Double check server";
-        document.getElementById("termA").innerText = "ERROR: Double check server";
-        document.getElementById("termB").innerText = "ERROR: Double check server";
-        document.getElementById("termC").innerText = "ERROR: Double check server";
-        document.getElementById("termD").innerText = "ERROR: Double check server";
+        document.getElementById("termA").innerText = "ERROR";
+        document.getElementById("termB").innerText = "ERROR";
+        document.getElementById("termC").innerText = "ERROR";
+        document.getElementById("termD").innerText = "ERROR";
+        return;
+    }
 
-        var result = document.getElementsByClassName("defA");
-        Array.from(result).forEach(element => {
-            element.innerText = "ERROR: Double check server";
-        });
-        var result = document.getElementsByClassName("defB");
-        Array.from(result).forEach(element => {
-            element.innerText = "ERROR: Double check server";
-        });
-        var result = document.getElementsByClassName("defC");
-        Array.from(result).forEach(element => {
-            element.innerText = "ERROR: Double check server";
-        });
-        var result = document.getElementsByClassName("defD");
-        Array.from(result).forEach(element => {
-            element.innerText = "ERROR: Double check server";
-        });
-    } else {
-        document.getElementById("MATQuestion").innerText = text.questionTextMAT;
-        document.getElementById("termA").innerText = text.termA;
-        document.getElementById("termB").innerText = text.termB;
-        document.getElementById("termC").innerText = text.termC;
-        document.getElementById("termD").innerText = text.termD;
+    document.getElementById("MATQuestion").innerText = text.questionTextMAT;
+    document.getElementById("termA").innerText = text.termA;
+    document.getElementById("termB").innerText = text.termB;
+    document.getElementById("termC").innerText = text.termC;
+    document.getElementById("termD").innerText = text.termD;
 
-        //Display definitions for each drop down menu
-        var result = document.getElementsByClassName("defA");
-        Array.from(result).forEach(element => {
-            element.innerText = text.definitionA;
+    // Populate definition options for each select
+    document.querySelector("#selectA .defA").innerText = text.definitionA;
+    document.querySelector("#selectA .defB").innerText = text.definitionB;
+    document.querySelector("#selectA .defC").innerText = text.definitionC;
+    document.querySelector("#selectA .defD").innerText = text.definitionD;
+
+    document.querySelector("#selectB .defA").innerText = text.definitionA;
+    document.querySelector("#selectB .defB").innerText = text.definitionB;
+    document.querySelector("#selectB .defC").innerText = text.definitionC;
+    document.querySelector("#selectB .defD").innerText = text.definitionD;
+
+    document.querySelector("#selectC .defA").innerText = text.definitionA;
+    document.querySelector("#selectC .defB").innerText = text.definitionB;
+    document.querySelector("#selectC .defC").innerText = text.definitionC;
+    document.querySelector("#selectC .defD").innerText = text.definitionD;
+
+    document.querySelector("#selectD .defA").innerText = text.definitionA;
+    document.querySelector("#selectD .defB").innerText = text.definitionB;
+    document.querySelector("#selectD .defC").innerText = text.definitionC;
+    document.querySelector("#selectD .defD").innerText = text.definitionD;
+
+    const matSubmitBtn = document.querySelector("#MAT button");
+    matSubmitBtn.onclick = function() {
+        let userAnswers = [
+            document.getElementById("selectA").value,
+            document.getElementById("selectB").value,
+            document.getElementById("selectC").value,
+            document.getElementById("selectD").value
+        ];
+
+        if (!Topic || Topic.length === 0) {
+            alert("No topic selected.");
+            return;
+        }
+
+        ConvertTopicFormat();
+
+        fetch(`http://localhost:8200/${Topic}/MAT/validate`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ answers: userAnswers })
+        })
+        .then(resp => {
+            if(!resp.ok) throw new Error("Network not ok");
+            return resp.json();
+        })
+        .then(result => {
+            if (result.isCorrect) {
+                alert("Correct!");
+                AnswerTracker(true);
+            } else {
+                alert("Incorrect! One or more matches were wrong.");
+                AnswerTracker(false);
+            }
+        })
+        .catch(error => {
+            console.error("MAT Validation error:", error);
+            AnswerTracker(false);
+            alert("Error validating answer. Please try again.");
         });
         var result = document.getElementsByClassName("defB");
         Array.from(result).forEach(element => {
@@ -341,10 +377,7 @@ function DisplayAndValidateMC(text) {
         document.getElementById("option3").innerText = "ERROR: Double check server";
         document.getElementById("option4").innerText = "ERROR: Double check server";
     } else {
-        //Display Question
         document.getElementById("MCQuestion").innerText = text.questionTextMC;
-
-        //Display options
         document.getElementById("option1").innerText = text.optionA;
         document.getElementById("option2").innerText = text.optionB;
         document.getElementById("option3").innerText = text.optionC;
@@ -353,14 +386,12 @@ function DisplayAndValidateMC(text) {
 
     const mcSubmitBtn = document.getElementById("mcSubmitBtn");
     mcSubmitBtn.onclick = function() {
-        selectedOption = getRadioValue("MC");
-
+        let selectedOption = getRadioValue("MC");
         if (!selectedOption) {
             alert("Please select an answer.");
             return;
         }
 
-        // Ensure Topic is set before fetch
         if (!Topic || Topic.length === 0) {
             alert("No topic selected.");
             return;
@@ -380,7 +411,6 @@ function DisplayAndValidateMC(text) {
             return resp.json();
         })
         .then(result => {
-            console.log("MC Validation result from server:", result);
             if (result.isCorrect) {
                 alert("Correct!");
                 document.getElementById("ListOfTopics").style.display = "block";
@@ -415,9 +445,7 @@ function DisplayAndValidateTF(text) {
 
     const TFSubmitBtn = document.getElementById("TFSubmitBtn");
     TFSubmitBtn.onclick = function() {
-        selectedOption = getRadioValue("TF");
-
-        // Ensure Topic is set before fetch
+        let selectedOption = getRadioValue("TF");
         if (!Topic || Topic.length === 0) {
             alert("No topic selected.");
             return;
@@ -437,7 +465,6 @@ function DisplayAndValidateTF(text) {
             return resp.json();
         })
         .then(result => {
-            console.log("Validation result from server:", result);
             if (result.isCorrect) {
                 alert("Correct!");
                 document.getElementById("ListOfTopics").style.display = "block";
@@ -455,7 +482,6 @@ function DisplayAndValidateTF(text) {
     };
 }
 
-
 function ConvertTopicFormat() {
     if (Topic == "DP")
         Topic = "DesignPatterns"
@@ -469,11 +495,10 @@ function ConvertTopicFormat() {
 
 function getRadioValue(name) {
     const radios = document.getElementsByName(name);
-        let selectedOption = "";
-        for (let i = 0; i < radios.length; i++) {
-            if (radios[i].checked) {
-                selectedOption = radios[i].value; // should be 'a', 'b', 'c', or 'd'
-                return selectedOption;
-            }
+    for (let i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            return radios[i].value;
         }
+    }
+    return "";
 }

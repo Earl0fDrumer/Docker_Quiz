@@ -29,11 +29,11 @@
     <div id="ListOfQuestionTypes" style="display:none;">
         <h2>Select a Question Type:</h2>
         <ul>
-            <li><a id="Q1" onclick="QuestionSelector('FIB')">Fill in the Blank</a></li>
-            <li><a id="Q2" onclick="QuestionSelector('MAT')">Matching</a></li>
-            <li><a id="Q3" onclick="QuestionSelector('MC')">Multiple Choice</a></li>
-            <li><a id="Q4" onclick="QuestionSelector('TF')">True/False</a></li>
-            <li><a id="randQ" onclick="QuestionSelector('RandType')">Random Type</a></li>
+            <li><a onclick="QuestionSelector('FIB')">Fill in the Blank</a></li>
+            <li><a onclick="QuestionSelector('MAT')">Matching</a></li>
+            <li><a onclick="QuestionSelector('MC')">Multiple Choice</a></li>
+            <li><a onclick="QuestionSelector('TF')">True/False</a></li>
+            <li><a onclick="QuestionSelector('RandType')">Random Type</a></li>
         </ul>
     </div>
 
@@ -51,40 +51,41 @@
 
     <div id="MAT" style="display: none;">
         <h2 id="MATQuestion"></h2>
+
         <h3 id="termA"></h3>
-        <select>
-            <option></option>
-            <option class="defA"></option>
-            <option class="defB"></option>
-            <option class="defC"></option>
-            <option class="defD"></option>
+        <select id="selectA">
+            <option value="">Select definition</option>
+            <option class="defA" value="a"></option>
+            <option class="defB" value="b"></option>
+            <option class="defC" value="c"></option>
+            <option class="defD" value="d"></option>
         </select>
 
         <h3 id="termB"></h3>
-        <select>
-            <option></option>
-            <option class="defA"></option>
-            <option class="defB"></option>
-            <option class="defC"></option>
-            <option class="defD"></option>
+        <select id="selectB">
+            <option value="">Select definition</option>
+            <option class="defA" value="a"></option>
+            <option class="defB" value="b"></option>
+            <option class="defC" value="c"></option>
+            <option class="defD" value="d"></option>
         </select>
 
         <h3 id="termC"></h3>
-        <select>
-            <option></option>
-            <option class="defA"></option>
-            <option class="defB"></option>
-            <option class="defC"></option>
-            <option class="defD"></option>
+        <select id="selectC">
+            <option value="">Select definition</option>
+            <option class="defA" value="a"></option>
+            <option class="defB" value="b"></option>
+            <option class="defC" value="c"></option>
+            <option class="defD" value="d"></option>
         </select>
 
         <h3 id="termD"></h3>
-        <select>
-            <option></option>
-            <option class="defA"></option>
-            <option class="defB"></option>
-            <option class="defC"></option>
-            <option class="defD"></option>
+        <select id="selectD">
+            <option value="">Select definition</option>
+            <option class="defA" value="a"></option>
+            <option class="defB" value="b"></option>
+            <option class="defC" value="c"></option>
+            <option class="defD" value="d"></option>
         </select> <br><br>
 
         <button>Submit</button>
