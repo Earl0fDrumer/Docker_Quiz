@@ -1,5 +1,6 @@
-# Selene
-This is the base code for the course project. Adapt as needed.
+# Docker Quiz
+This is a project that I worked on for my Introduction to Software Engineering class. I was working alongside Patryk Blach, Jason Tran, and Nicolas Cedeno. I was personally responsible for the matching portion along with making sure that the code base passed the style checks, coverage checks, and memory checks. I also spent a long time debugging and organizing the project.
+
 To run the HTML, use "firefox _WebPageDesign.html"
 
  * **List all topics:** [http://localhost:8200/topics](http://localhost:8200/topics)
